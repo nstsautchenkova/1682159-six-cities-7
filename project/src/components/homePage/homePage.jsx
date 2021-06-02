@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Card from '../components/card.jsx';
+import Card from '../card/card.jsx';
 
 function HomePage(props) {
-  const { rentalOfferCout } = props;
-  const { cardsCout } = props;
-  const cards = Array(cardsCout).fill('').map((card, i) => <Card key={i.toString()} card={card} />);
+  const { rentalOfferCout, cardsCout } = props;
+  const cards = new Array(cardsCout).fill('').map((card, i) => <Card key={i.toString()} card={card} />);
 
   return (
     <>

@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import HomePage from '../homePage.jsx';
+import HomePage from '../homePage/homePage.jsx';
 
 function App(props) {
-  const { rentalOfferCout } = props;
-  const { cardsCout } = props;
+  const { rentalOfferCout, cardsCout } = props;
   return (
     <HomePage
       rentalOfferCout={rentalOfferCout}
