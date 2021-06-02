@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@htmlacademy/cra-template": "^1.0.4"
+  }
+}
