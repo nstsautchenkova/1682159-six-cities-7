@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute } from '../../const.js';
-import HomePage from '../homePage/homePage.jsx';
-import LoginPage from '../loginPage/loginPage.jsx';
-import FavoritesPage from '../favoritesPage/favoritesPage.jsx';
-import RoomPage from '../roomPage/roomPage.jsx';
-import HotFoundPage from '../notFoundPage/notFoundPage.jsx';
+import HomePage from '../home-page/home-page.jsx';
+import LoginPage from '../login-page/login-page.jsx';
+import FavoritesPage from '../favorites-page/favorites-page.jsx';
+import RoomPage from '../room-page/room-page.jsx';
+import HotFoundPage from '../not-found-page/not-found-page.jsx';
 function App(props) {
   const { rentalOfferCout, cardsCout } = props;
   return (
