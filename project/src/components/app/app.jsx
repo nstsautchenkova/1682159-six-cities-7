@@ -1,14 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import HomePage from '../homePage/homePage.jsx';
-
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { AppRoute } from '../../const.js';
+import HomePage from '../home-page/home-page.jsx';
+import LoginPage from '../login-page/login-page.jsx';
+import FavoritesPage from '../favorites-page/favorites-page.jsx';
+import RoomPage from '../room-page/room-page.jsx';
+import HotFoundPage from '../not-found-page/not-found-page.jsx';
 function App(props) {
   const { rentalOfferCout, cardsCout } = props;
   return (
-    <HomePage
-      rentalOfferCout={rentalOfferCout}
-      cardsCout={cardsCout}
-    />
+    <BrowserRouter>
+      <Switch>
+        <Route exact path={AppRoute.MAIN}>
+          <HomePage
+            rentalOfferCout={rentalOfferCout}
+            cardsCout={cardsCout}
+          />
+        </Route>
+        <Route exact path={AppRoute.SIGN_IN}>
+          <LoginPage />
+        </Route>
+        <Route exact path={AppRoute.FAVORITES}>
+          <FavoritesPage />
+        </Route>
+        <Route exact path={AppRoute.OFFER_$ID} component={RoomPage} />
+        <Route>
+          <HotFoundPage />
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 
