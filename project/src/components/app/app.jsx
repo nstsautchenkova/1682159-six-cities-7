@@ -6,7 +6,7 @@ import HomePage from '../homePage/homePage.jsx';
 import LoginPage from '../loginPage/loginPage.jsx';
 import FavoritesPage from '../favoritesPage/favoritesPage.jsx';
 import RoomPage from '../roomPage/roomPage.jsx';
-import Page404 from '../404/404.jsx';
+import HotFoundPage from '../notFoundPage/notFoundPage.jsx';
 function App(props) {
   const { rentalOfferCout, cardsCout } = props;
   return (
@@ -24,9 +24,9 @@ function App(props) {
         <Route exact path={AppRoute.FAVORITES}>
           <FavoritesPage />
         </Route>
-        <Route exact path="/offer/:id?" component={RoomPage} />
+        <Route exact path={AppRoute.OFFER_$ID} component={RoomPage} />
         <Route>
-          <Page404 />
+          <HotFoundPage />
         </Route>
       </Switch>
     </BrowserRouter>

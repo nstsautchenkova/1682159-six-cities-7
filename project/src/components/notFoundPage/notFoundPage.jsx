@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../header/header.jsx';
 
-function Page404(props) {
+function HotFoundPage(props) {
   return (
     <>
       <div style={{ display: 'none' }}>
@@ -52,4 +52,4 @@ function Page404(props) {
   );
 }
 
-export default Page404;
+export default HotFoundPage;
