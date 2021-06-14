@@ -1,21 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
+import offerType from '../offers-prop/offers-prop.js';
+import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { AppRoute } from '../../const.js';
+import { getRatingInPercents } from '../../utils.js';
 
-function Card() {
+function Card(props) {
+  const { offers } = props;
+  const history = useHistory();
+
+  const [isCardActive, setCardActive] = useState({
+    cardActiveId: '',
+  });
+  const { cardActiveId } = isCardActive;
+  const cardActiveKey = (evt) => {
+    setCardActive({ cardActiveId: evt });
+  };
+  const link = `${AppRoute.OFFER}/${offers.id}`;
 
   return (
-    <article className="cities__place-card place-card">
+    <article
+      className='cities__place-card place-card'
+      onMouseEnter={() => {
+        cardActiveKey(offers.id);
+      }}
+    >
+      <div style={{ display: 'none' }}>idActiveCard: {cardActiveId}</div>
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
-          <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place image" />
-        </a>
+        <Link to={link}>
+          <img className="place-card__image" src={offers.previewImage} width="260" height="200" alt="Place image" />
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;80</b>
+            <b className="place-card__price-value">€{offers.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
+          <button
+            className={offers.isFavorite ? 'place-card__bookmark-button button place-card__bookmark-button--active' : 'place-card__bookmark-button button'}
+            type="button"
+            onClick={() => offers.isFavorite && history.push(AppRoute.FAVORITES)}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
@@ -24,19 +50,20 @@ function Card() {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }}></span>
+            <span style={{ width: `${getRatingInPercents(offers.rating)}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">Wood and stone place</a>
+          <Link to={link}>{offers.title}</Link>
         </h2>
-        <p className="place-card__type">Private room</p>
+        <p className="place-card__type">{offers.type}</p>
       </div>
     </article>
-
   );
-
 }
 
+Card.propTypes = {
+  offers: offerType.isRequired,
+};
 export default Card;

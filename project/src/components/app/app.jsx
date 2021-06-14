@@ -7,24 +7,28 @@ import LoginPage from '../login-page/login-page.jsx';
 import FavoritesPage from '../favorites-page/favorites-page.jsx';
 import RoomPage from '../room-page/room-page.jsx';
 import HotFoundPage from '../not-found-page/not-found-page.jsx';
+import offerType from '../offers-prop/offers-prop.js';
+
 function App(props) {
-  const { rentalOfferCout, cardsCout } = props;
+  const { rentalOfferCout, offers } = props;
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
           <HomePage
             rentalOfferCout={rentalOfferCout}
-            cardsCout={cardsCout}
+            offers={offers}
           />
         </Route>
         <Route exact path={AppRoute.SIGN_IN}>
           <LoginPage />
         </Route>
         <Route exact path={AppRoute.FAVORITES}>
-          <FavoritesPage />
+          <FavoritesPage offers={offers} />
         </Route>
-        <Route exact path={AppRoute.OFFER_$ID} component={RoomPage} />
+        <Route exact path={AppRoute.OFFER_$ID} component={RoomPage}>
+          <RoomPage offers={offers} />
+        </Route>
         <Route>
           <HotFoundPage />
         </Route>
@@ -35,6 +39,6 @@ function App(props) {
 
 App.propTypes = {
   rentalOfferCout: PropTypes.number.isRequired,
-  cardsCout: PropTypes.number.isRequired,
+  offers: PropTypes.arrayOf(offerType).isRequired,
 };
 export default App;
