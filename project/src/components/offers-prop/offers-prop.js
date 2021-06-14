@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 
-export default PropTypes.shape({
+const offerType = PropTypes.exact({
   bedrooms: PropTypes.number.isRequired,
-  city: PropTypes.shape({
-    location: PropTypes.shape({
+  city: PropTypes.exact({
+    location: PropTypes.exact({
       latitude: PropTypes.number.isRequired,
       longitude: PropTypes.number.isRequired,
     }).isRequired,
@@ -11,7 +11,7 @@ export default PropTypes.shape({
   }).isRequired,
   description: PropTypes.string.isRequired,
   goods: PropTypes.arrayOf(PropTypes.string).isRequired,
-  host: PropTypes.shape({
+  host: PropTypes.exact({
     avatarUrl: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
     isPro: PropTypes.bool.isRequired,
@@ -21,7 +21,7 @@ export default PropTypes.shape({
   images: PropTypes.arrayOf(PropTypes.string).isRequired,
   isFavorite: PropTypes.bool.isRequired,
   isPremium: PropTypes.bool.isRequired,
-  location: PropTypes.shape({
+  location: PropTypes.exact({
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
     iszoomPro: PropTypes.number.isRequired,
@@ -33,5 +33,7 @@ export default PropTypes.shape({
   title: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
 }).isRequired;
+
+export default offerType;
 
 

@@ -1,15 +1,13 @@
 import React from 'react';
 import Header from '../header/header.jsx';
 import Footer from '../footer/footer.jsx';
-import OfferProp from '../offers-prop/offers-prop.js';
+import offerType from '../offers-prop/offers-prop.js';
 import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
 import { AppRoute } from '../../const.js';
+import { getRatingInPercents } from '../../utils.js';
 
 function FavoritesPage(props) {
   const { offers } = props;
-  const history = useHistory();
-
   return (
     <>
       <div style={{ display: 'none' }}>
@@ -36,28 +34,7 @@ function FavoritesPage(props) {
               <ul className="favorites__list">
                 {offers.map((offer, id) => {
                   const key = `${id}-${offer.id}`;
-                  let offerRatingValue = 0;
-                  if (offer.rating > 4) {
-                    offerRatingValue = '100%';
-                  } else if (offer.rating > 3) {
-                    offerRatingValue = '80%';
-                  } else if (offer.rating > 2) {
-                    offerRatingValue = '60%';
-                  } else if (offer.rating > 1) {
-                    offerRatingValue = '40%';
-                  }
-                  else if (offer.rating > 0) {
-                    offerRatingValue = '20%';
-                  }
-                  const offerRating = {
-                    width: offerRatingValue,
-                  };
-
                   const link = `${AppRoute.OFFER_$ID}-${offer.id}`;
-                  function handleClick() {
-                    history.push(link);
-                  }
-
                   if (offer.isFavorite) {
                     return (
                       <li className="favorites__locations-items">
@@ -72,7 +49,7 @@ function FavoritesPage(props) {
 
                           <article key={key} className="favorites__card place-card">
                             <div className="favorites__image-wrapper place-card__image-wrapper">
-                              <Link onClick={() => handleClick()}>
+                              <Link to={link}>
                                 <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place image" />
                               </Link>
                             </div>
@@ -93,12 +70,12 @@ function FavoritesPage(props) {
                               </div>
                               <div className="place-card__rating rating">
                                 <div className="place-card__stars rating__stars">
-                                  <span style={offerRating}></span>
+                                  <span style={{ width: `${getRatingInPercents(offer.rating)}%` }}></span>
                                   <span className="visually-hidden">Rating</span>
                                 </div>
                               </div>
                               <h2 className="place-card__name">
-                                <Link onClick={() => handleClick()}>{offer.title}</Link>
+                                <Link to={link}>{offer.title}</Link>
                               </h2>
                               <p className="place-card__type">{offer.type}</p>
                             </div>
@@ -120,6 +97,6 @@ function FavoritesPage(props) {
 }
 
 FavoritesPage.propTypes = {
-  offers: OfferProp,
+  offers: offerType,
 };
 export default FavoritesPage;

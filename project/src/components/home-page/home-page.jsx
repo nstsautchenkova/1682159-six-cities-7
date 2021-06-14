@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import OfferProp from '../offers-prop/offers-prop.js';
+import offerType from '../offers-prop/offers-prop.js';
 import Header from '../header/header.jsx';
 import OfferList from '../offers-list/offers-list.jsx';
 
@@ -85,7 +85,7 @@ function HomePage(props) {
 
 HomePage.propTypes = {
   rentalOfferCout: PropTypes.number.isRequired,
-  offers: OfferProp,
+  offers: offerType,
 };
 
 export default HomePage;

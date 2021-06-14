@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 
 function FormComment(props) {
   const [formCommentDate, setformCommentDate] = useState();
-  const handleChangeComment = (event) => {
-    setformCommentDate(event.target.value);
+  const handleChangeComment = (evt) => {
+    setformCommentDate(evt.target.value);
   };
 
   const [formCommentRating, setformCommentRating] = useState();
-  const handleChangeRating = (event) => {
-    setformCommentRating(event.target.value);
+  const handleChangeRating = (evt) => {
+    setformCommentRating(evt.target.value);
   };
 
   return (

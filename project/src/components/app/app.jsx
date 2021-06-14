@@ -7,7 +7,7 @@ import LoginPage from '../login-page/login-page.jsx';
 import FavoritesPage from '../favorites-page/favorites-page.jsx';
 import RoomPage from '../room-page/room-page.jsx';
 import HotFoundPage from '../not-found-page/not-found-page.jsx';
-import OfferProp from '../offers-prop/offers-prop.js';
+import offerType from '../offers-prop/offers-prop.js';
 
 function App(props) {
   const { rentalOfferCout, offers } = props;
@@ -39,6 +39,6 @@ function App(props) {
 
 App.propTypes = {
   rentalOfferCout: PropTypes.number.isRequired,
-  offers: PropTypes.arrayOf(OfferProp).isRequired,
+  offers: PropTypes.arrayOf(offerType).isRequired,
 };
 export default App;

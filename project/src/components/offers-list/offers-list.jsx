@@ -1,32 +1,27 @@
 import React, { useState } from 'react';
-import OfferProp from '../offers-prop/offers-prop.js';
+import offerType from '../offers-prop/offers-prop.js';
+import { SortType } from '../../const.js';
 import Card from '../card/card.jsx';
-
+import getSortedOffers from './helpers.js';
 function OfferList(props) {
   const { offers } = props;
-  //const offerPriceLowToHigh = offers.map((offer) => offer.price).sort((a, b) => a - b); // От дешёвых к дорогим
-  //const offerPriceHighToLow = offers.map((offer) => offer.price).sort((a, b) => b - a); // От дорогих к дешёвым
-  //const offerTopRatedFirst = offers.map((offer) => offer.rating).sort((a, b) => b - a); // От высокого рейтинга к низкому
 
-  // Filter open
   const [isOpen, setOpen] = useState(false);
   const placesOptionsOpen = () => {
     setOpen(!isOpen);
   };
 
-  // FILTER options choice
   const [isPlacesOptionActive, setPlacesOptionActive] = useState(0);
-
-  const [isPlacesFilter, setPlacesFilter] = useState({
+  const [placesFilter, setPlacesFilter] = useState({
     placesOptions: [
-      'Popular',
-      'Price: low to high',
-      'Price: high to low',
-      'Top rated first',
+      SortType.POPULAR,
+      SortType.TO_HIGHT,
+      SortType.TO_LOW,
+      SortType.TOP_RATE,
     ],
-    filterValue: 'Popular',
+    filterValue: SortType.POPULAR,
   });
-  const { placesOptions, filterValue } = isPlacesFilter;
+  const { placesOptions, filterValue } = placesFilter;
 
   const createPlacesOption = placesOptions.map((value, index) => (
     <li
@@ -46,20 +41,8 @@ function OfferList(props) {
     </li>
   ));
 
-  // FILTER
+  const sortedOffers = getSortedOffers(offers, filterValue);
 
-  // Отрисовка карточки
-  const renderOffersCards = () => {
-    switch (filterValue) {
-      case 'Popular': return <Card offers={offers} />;
-      case 'Price: low to high': return 'Price: low to high';
-      case 'Price: high to low': return 'Price: high to low';
-      case 'Top rated first': return 'Top rated first';
-      default: return <Card offers={offers} />;
-    }
-  };
-
-  ///////////////////////////////////////////////////////
   return (
     <>
       <form className="places__sorting" action="#" method="get">
@@ -76,12 +59,12 @@ function OfferList(props) {
       </form>
 
       <div className="cities__places-list places__list tabs__content">
-        {renderOffersCards()}
+        {sortedOffers.map((offer) => <Card offers={offer} id={offer.id} key={offer.id} />)}
       </div>
     </>
   );
 }
 OfferList.propTypes = {
-  offers: OfferProp,
+  offers: offerType,
 };
 export default OfferList;

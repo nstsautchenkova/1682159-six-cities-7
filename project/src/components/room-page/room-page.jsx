@@ -1,11 +1,11 @@
 import React from 'react';
 import Header from '../header/header.jsx';
 import FormComment from '../form-comment/form-comment.jsx';
-import OfferProp from '../offers-prop/offers-prop.js';
+import offerType from '../offers-prop/offers-prop.js';
 import { useHistory } from 'react-router-dom';
 import { AppRoute } from '../../const.js';
+import { getRatingInPercents } from '../../utils.js';
 import { useLocation } from 'react-router-dom';
-
 function RoomPage(props) {
   const { offers } = props;
   const history = useHistory();
@@ -32,22 +32,6 @@ function RoomPage(props) {
         <main className="page__main page__main--property">
 
           {offers.map((offer) => {
-            let offerRatingValue = 0;
-            if (offer.rating > 4) {
-              offerRatingValue = '100%';
-            } else if (offer.rating > 3) {
-              offerRatingValue = '80%';
-            } else if (offer.rating > 2) {
-              offerRatingValue = '60%';
-            } else if (offer.rating > 1) {
-              offerRatingValue = '40%';
-            }
-            else if (offer.rating > 0) {
-              offerRatingValue = '20%';
-            }
-            const offerRating = {
-              width: offerRatingValue,
-            };
             const link = `${AppRoute.OFFER_$ID}-${offer.id}`;
             if (link === location.pathname) {
               return (
@@ -63,13 +47,13 @@ function RoomPage(props) {
                   </div>
                   <div className="property__container container">
                     <div className="property__wrapper">
-                      {offer.isPremium === true ? <div className="property__mark"><span>Premium</span></div> : ''}
+                      {offer.isPremium ? <div className="property__mark"><span>Premium</span></div> : ''}
                       <div className="property__name-wrapper">
                         <h1 className="property__name">{offer.title}</h1>
                         <button
-                          className={offer.isFavorite === true ? 'property__bookmark-button button property__bookmark-button--active' : 'property__bookmark-button button'}
+                          className={offer.isFavorite ? 'property__bookmark-button button property__bookmark-button--active' : 'property__bookmark-button button'}
                           type="button"
-                          onClick={() => offer.isFavorite === true ? history.push(AppRoute.FAVORITES) : offer.isFavorite = true}
+                          onClick={() => offer.isFavorite ? history.push(AppRoute.FAVORITES) : offer.isFavorite = true}
                         >
                           <svg className="property__bookmark-icon" width="31" height="33">
                             <use xlinkHref="#icon-bookmark"></use>
@@ -79,7 +63,7 @@ function RoomPage(props) {
                       </div>
                       <div className="property__rating rating">
                         <div className="property__stars rating__stars">
-                          <span style={offerRating}></span>
+                          <span style={{ width: `${getRatingInPercents(offer.rating)}%` }}></span>
                           <span className="visually-hidden">Rating</span>
                         </div>
                         <span className="property__rating-value rating__value">{offer.rating}</span>
@@ -108,7 +92,7 @@ function RoomPage(props) {
                             <img className="property__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                           </div>
                           <span className="property__user-name">{offer.host.name}</span>
-                          {offer.host.isPro === true ? <span className="property__user-status">Pro</span> : ''}
+                          {offer.host.isPro ? <span className="property__user-status">Pro</span> : ''}
                         </div>
                         <div className="property__description">
                           <p className="property__text">
@@ -233,6 +217,6 @@ function RoomPage(props) {
   );
 }
 RoomPage.propTypes = {
-  offers: OfferProp,
+  offers: offerType,
 };
 export default RoomPage;
