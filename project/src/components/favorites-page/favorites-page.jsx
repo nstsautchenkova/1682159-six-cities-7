@@ -32,9 +32,9 @@ function FavoritesPage(props) {
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
               <ul className="favorites__list">
-                {offers.map((offer, id) => {
-                  const key = `${id}-${offer.id}`;
-                  const link = `${AppRoute.OFFER_$ID}-${offer.id}`;
+                {offers.map((offer) => {
+                  const key = `${offer.id}`;
+                  const link = `${AppRoute.OFFER}/${offer.id}`;
                   if (offer.isFavorite) {
                     return (
                       <li className="favorites__locations-items">
@@ -97,6 +97,6 @@ function FavoritesPage(props) {
 }
 
 FavoritesPage.propTypes = {
-  offers: offerType,
+  offers: offerType.isRequired,
 };
 export default FavoritesPage;

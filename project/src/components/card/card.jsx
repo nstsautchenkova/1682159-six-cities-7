@@ -16,7 +16,7 @@ function Card(props) {
   const cardActiveKey = (evt) => {
     setCardActive({ cardActiveId: evt });
   };
-  const link = `${AppRoute.OFFER_$ID}-${offers.id}`;
+  const link = `${AppRoute.OFFER}/${offers.id}`;
 
   return (
     <article
@@ -40,7 +40,7 @@ function Card(props) {
           <button
             className={offers.isFavorite ? 'place-card__bookmark-button button place-card__bookmark-button--active' : 'place-card__bookmark-button button'}
             type="button"
-            onClick={() => offers.isFavorite ? history.push(AppRoute.FAVORITES) : offers.isFavorite = true}
+            onClick={() => offers.isFavorite && history.push(AppRoute.FAVORITES)}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
@@ -64,6 +64,6 @@ function Card(props) {
 }
 
 Card.propTypes = {
-  offers: offerType,
+  offers: offerType.isRequired,
 };
 export default Card;

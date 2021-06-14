@@ -13,17 +13,11 @@ function OfferList(props) {
 
   const [isPlacesOptionActive, setPlacesOptionActive] = useState(0);
   const [placesFilter, setPlacesFilter] = useState({
-    placesOptions: [
-      SortType.POPULAR,
-      SortType.TO_HIGHT,
-      SortType.TO_LOW,
-      SortType.TOP_RATE,
-    ],
-    filterValue: SortType.POPULAR,
+    placesOptionsTitle: SortType.POPULAR,
   });
-  const { placesOptions, filterValue } = placesFilter;
+  const { placesOptionsTitle } = placesFilter;
 
-  const createPlacesOption = placesOptions.map((value, index) => (
+  const createPlacesOption = Object.values(SortType).map((value, index) => (
     <li
       key={index.toString()}
       tabIndex="0"
@@ -31,7 +25,7 @@ function OfferList(props) {
         setPlacesOptionActive(index);
         setPlacesFilter((prevValue) => ({
           ...prevValue,
-          filterValue: value,
+          placesOptionsTitle: value,
         }));
         placesOptionsOpen();
       }}
@@ -41,14 +35,14 @@ function OfferList(props) {
     </li>
   ));
 
-  const sortedOffers = getSortedOffers(offers, filterValue);
+  const sortedOffers = getSortedOffers(offers, placesOptionsTitle);
 
   return (
     <>
       <form className="places__sorting" action="#" method="get">
         <span className="places__sorting-caption">Sort by </span>
         <span className="places__sorting-type" tabIndex="0" onClick={placesOptionsOpen}>
-          {filterValue}
+          {placesOptionsTitle}
           <svg className="places__sorting-arrow" width="7" height="4">
             <use xlinkHref="#icon-arrow-select"></use>
           </svg>
@@ -65,6 +59,6 @@ function OfferList(props) {
   );
 }
 OfferList.propTypes = {
-  offers: offerType,
+  offers: offerType.isRequired,
 };
 export default OfferList;

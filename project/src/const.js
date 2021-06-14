@@ -3,6 +3,7 @@ const AppRoute = {
   SIGN_IN: '/login',
   FAVORITES: '/favorites',
   OFFER_$ID: '/offer/:id',
+  OFFER: '/offer',
 };
 const RatingSetting = {
   MAX_PERCENTS: 100,

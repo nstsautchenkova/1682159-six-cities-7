@@ -85,7 +85,7 @@ function HomePage(props) {
 
 HomePage.propTypes = {
   rentalOfferCout: PropTypes.number.isRequired,
-  offers: offerType,
+  offers: offerType.isRequired,
 };
 
 export default HomePage;

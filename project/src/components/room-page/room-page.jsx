@@ -32,7 +32,7 @@ function RoomPage(props) {
         <main className="page__main page__main--property">
 
           {offers.map((offer) => {
-            const link = `${AppRoute.OFFER_$ID}-${offer.id}`;
+            const link = `${AppRoute.OFFER}/${offer.id}`;
             if (link === location.pathname) {
               return (
                 <section className="property">
@@ -47,13 +47,13 @@ function RoomPage(props) {
                   </div>
                   <div className="property__container container">
                     <div className="property__wrapper">
-                      {offer.isPremium ? <div className="property__mark"><span>Premium</span></div> : ''}
+                      {offer.isPremium && <div className="property__mark"><span>Premium</span></div>}
                       <div className="property__name-wrapper">
                         <h1 className="property__name">{offer.title}</h1>
                         <button
                           className={offer.isFavorite ? 'property__bookmark-button button property__bookmark-button--active' : 'property__bookmark-button button'}
                           type="button"
-                          onClick={() => offer.isFavorite ? history.push(AppRoute.FAVORITES) : offer.isFavorite = true}
+                          onClick={() => offer.isFavorite && history.push(AppRoute.FAVORITES)}
                         >
                           <svg className="property__bookmark-icon" width="31" height="33">
                             <use xlinkHref="#icon-bookmark"></use>
@@ -92,7 +92,7 @@ function RoomPage(props) {
                             <img className="property__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                           </div>
                           <span className="property__user-name">{offer.host.name}</span>
-                          {offer.host.isPro ? <span className="property__user-status">Pro</span> : ''}
+                          {offer.host.isPro && <span className="property__user-status">Pro</span>}
                         </div>
                         <div className="property__description">
                           <p className="property__text">
@@ -217,6 +217,6 @@ function RoomPage(props) {
   );
 }
 RoomPage.propTypes = {
-  offers: offerType,
+  offers: offerType.isRequired,
 };
 export default RoomPage;
