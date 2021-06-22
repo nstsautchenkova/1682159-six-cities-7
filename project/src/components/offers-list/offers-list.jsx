@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import offerType from '../offers-prop/offers-prop.js';
+import PropTypes from 'prop-types';
 import { SortType } from '../../const.js';
 import Card from '../card/card.jsx';
 import getSortedOffers from './helpers.js';
 function OfferList(props) {
-  const { offers } = props;
+  const { offers, onOfferHover } = props;
 
   const [isOpen, setOpen] = useState(false);
   const placesOptionsOpen = () => {
@@ -36,7 +37,6 @@ function OfferList(props) {
   ));
 
   const sortedOffers = getSortedOffers(offers, placesOptionsTitle);
-
   return (
     <>
       <form className="places__sorting" action="#" method="get">
@@ -51,14 +51,16 @@ function OfferList(props) {
           {createPlacesOption}
         </ul>
       </form>
-
       <div className="cities__places-list places__list tabs__content">
-        {sortedOffers.map((offer) => <Card offers={offer} id={offer.id} key={offer.id} />)}
+        {sortedOffers.map((offer) =>
+          <Card offers={offer} id={offer.id} key={offer.id} onOfferHover={onOfferHover} />,
+        )}
       </div>
     </>
   );
 }
 OfferList.propTypes = {
   offers: offerType.isRequired,
+  onOfferHover: PropTypes.func.isRequired,
 };
 export default OfferList;

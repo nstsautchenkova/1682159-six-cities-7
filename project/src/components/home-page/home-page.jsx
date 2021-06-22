@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import offerType from '../offers-prop/offers-prop.js';
 import Header from '../header/header.jsx';
 import OfferList from '../offers-list/offers-list.jsx';
-
+import Map from '../map/map.jsx';
+import cityType from '../city-prop/city-prop.js';
 function HomePage(props) {
-  const { rentalOfferCout, offers } = props;
+  const { rentalOfferCout, offers, defaultCity, onOfferHover, selectedOffer } = props;
   return (
     <>
       <div style={{ display: 'none' }}>
@@ -68,11 +69,17 @@ function HomePage(props) {
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">{rentalOfferCout} places to stay in Amsterdam</b>
-                <OfferList offers={offers} />
+                <OfferList offers={offers} onOfferHover={onOfferHover} />
               </section>
 
               <div className="cities__right-section">
-                <section className="cities__map map"></section>
+                <section className="cities__map map">
+                  <Map
+                    defaultCity={defaultCity}
+                    offers={offers}
+                    selectedOffer={selectedOffer}
+                  />
+                </section>
               </div>
 
             </div>
@@ -86,6 +93,9 @@ function HomePage(props) {
 HomePage.propTypes = {
   rentalOfferCout: PropTypes.number.isRequired,
   offers: offerType.isRequired,
+  defaultCity: PropTypes.exact(cityType).isRequired,
+  onOfferHover: PropTypes.func.isRequired,
+  selectedOffer: PropTypes.node.isRequired,
 };
 
 export default HomePage;
