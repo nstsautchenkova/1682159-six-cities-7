@@ -9,15 +9,15 @@ import RoomPage from '../room-page/room-page.jsx';
 import HotFoundPage from '../not-found-page/not-found-page.jsx';
 import offerType from '../offers-prop/offers-prop.js';
 import cityType from '../city-prop/city-prop.js';
+import getOfferById from '../../helpers.js';
 function App(props) {
   const { rentalOfferCout, offers, defaultCity } = props;
-  const [selectedOffer, setSelectedOffer] = useState({});
+  const [selectedOffer, setSelectedOffer] = useState({
+    id: null,
+  });
 
   const onOfferHover = (offerId) => {
-    const currentOffer = offers.find((offer) =>
-      offer.id === offerId,
-    );
-    setSelectedOffer(currentOffer);
+    setSelectedOffer(getOfferById(offers, offerId));
   };
   return (
     <BrowserRouter>
