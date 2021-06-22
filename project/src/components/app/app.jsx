@@ -12,9 +12,7 @@ import cityType from '../city-prop/city-prop.js';
 import getOfferById from '../../helpers.js';
 function App(props) {
   const { rentalOfferCout, offers, defaultCity } = props;
-  const [selectedOffer, setSelectedOffer] = useState({
-    id: null,
-  });
+  const [selectedOffer, setSelectedOffer] = useState(null);
 
   const onOfferHover = (offerId) => {
     setSelectedOffer(getOfferById(offers, offerId));

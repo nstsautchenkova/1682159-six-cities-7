@@ -25,7 +25,6 @@ function Map(props) {
     iconAnchor: [14, 39],
   });
 
-  //selectedOffer.id
   useEffect(() => {
     if (map) {
       offers.forEach((offer) => {
@@ -34,7 +33,7 @@ function Map(props) {
             lat: offer.location.latitude,
             lng: offer.location.longitude,
           }, {
-            icon: (offer.id === selectedOffer.id)
+            icon: (selectedOffer && selectedOffer.id === offer.id)
               ? hoverIcon
               : defaultIcon,
           })
