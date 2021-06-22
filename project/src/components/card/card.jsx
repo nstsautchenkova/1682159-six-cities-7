@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import offerType from '../offers-prop/offers-prop.js';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
@@ -6,26 +7,19 @@ import { AppRoute } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
 
 function Card(props) {
-  const { offers } = props;
+  const { offers, onOfferHover } = props;
   const history = useHistory();
-
-  const [isCardActive, setCardActive] = useState({
-    cardActiveId: '',
-  });
-  const { cardActiveId } = isCardActive;
-  const cardActiveKey = (evt) => {
-    setCardActive({ cardActiveId: evt });
-  };
   const link = `${AppRoute.OFFER}/${offers.id}`;
 
+  const cardHoverHandler = () => {
+    onOfferHover(offers.id);
+  };
   return (
     <article
+      id={offers.id}
       className='cities__place-card place-card'
-      onMouseEnter={() => {
-        cardActiveKey(offers.id);
-      }}
+      onMouseEnter={cardHoverHandler}
     >
-      <div style={{ display: 'none' }}>idActiveCard: {cardActiveId}</div>
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={link}>
           <img className="place-card__image" src={offers.previewImage} width="260" height="200" alt="Place image" />
@@ -65,5 +59,6 @@ function Card(props) {
 
 Card.propTypes = {
   offers: offerType.isRequired,
+  onOfferHover: PropTypes.func.isRequired,
 };
 export default Card;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { AppRoute } from '../../const.js';
@@ -8,9 +8,17 @@ import FavoritesPage from '../favorites-page/favorites-page.jsx';
 import RoomPage from '../room-page/room-page.jsx';
 import HotFoundPage from '../not-found-page/not-found-page.jsx';
 import offerType from '../offers-prop/offers-prop.js';
-
+import cityType from '../city-prop/city-prop.js';
 function App(props) {
-  const { rentalOfferCout, offers } = props;
+  const { rentalOfferCout, offers, defaultCity } = props;
+  const [selectedOffer, setSelectedOffer] = useState({});
+
+  const onOfferHover = (offerId) => {
+    const currentOffer = offers.find((offer) =>
+      offer.id === offerId,
+    );
+    setSelectedOffer(currentOffer);
+  };
   return (
     <BrowserRouter>
       <Switch>
@@ -18,6 +26,9 @@ function App(props) {
           <HomePage
             rentalOfferCout={rentalOfferCout}
             offers={offers}
+            defaultCity={defaultCity}
+            onOfferHover={onOfferHover}
+            selectedOffer={selectedOffer}
           />
         </Route>
         <Route exact path={AppRoute.SIGN_IN}>
@@ -40,5 +51,6 @@ function App(props) {
 App.propTypes = {
   rentalOfferCout: PropTypes.number.isRequired,
   offers: PropTypes.arrayOf(offerType).isRequired,
+  defaultCity: PropTypes.exact(cityType).isRequired,
 };
 export default App;
