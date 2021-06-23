@@ -11,43 +11,36 @@ function FormComment(props) {
     setformCommentRating(evt.target.value);
   };
 
-  const ratingStarCout = Array.from({ length: 5 }, (v, k) => k + 1);
-  const getRaitingStarTitle = (id) => {
-    let raitingStarTitle = '';
-    switch (id) {
-      case 5: raitingStarTitle = 'perfect'; break;
-      case 4: raitingStarTitle = 'good'; break;
-      case 3: raitingStarTitle = 'not bad'; break;
-      case 2: raitingStarTitle = 'badly'; break;
-      case 1: raitingStarTitle = 'terribly'; break;
-      default: raitingStarTitle = 'terribly';
-    }
-    return raitingStarTitle;
+  const ratingToValues = {
+    perfect: '5',
+    good: '4',
+    notBad: '3',
+    badly: '2',
+    terribly: '1',
   };
-
-  const createRatingStar = ratingStarCout.map((i) => (
-    <>
-      <input
-        className="form__rating-input visually-hidden"
-        name="rating"
-        value={formCommentRating}
-        id={`${i}-stars`}
-        type="radio"
-        onChange={handleChangeRating}
-      />
-      <label htmlFor={`${i}-stars`} className="reviews__rating-label form__rating-label" title={getRaitingStarTitle(i)}>
-        <svg className="form__star-image" width="37" height="33">
-          <use xlinkHref="#icon-star"></use>
-        </svg>
-      </label>
-    </>
-  ));
+  const ratingsEntries = Object.entries(ratingToValues);
 
   return (
     <form className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        {createRatingStar}
+        {ratingsEntries.map(([name, value]) => (
+          <>
+            <input
+              className="form__rating-input visually-hidden"
+              name="rating"
+              value={formCommentRating}
+              id={`${value}-stars`}
+              type="radio"
+              onChange={handleChangeRating}
+            />
+            <label htmlFor={`${value}-stars`} className="reviews__rating-label form__rating-label" title={name}>
+              <svg className="form__star-image" width="37" height="33">
+                <use xlinkHref="#icon-star"></use>
+              </svg>
+            </label>
+          </>
+        ))}
       </div>
       <textarea
         className="reviews__textarea form__textarea"
