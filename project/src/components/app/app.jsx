@@ -8,10 +8,11 @@ import FavoritesPage from '../favorites-page/favorites-page.jsx';
 import RoomPage from '../room-page/room-page.jsx';
 import HotFoundPage from '../not-found-page/not-found-page.jsx';
 import offerType from '../offers-prop/offers-prop.js';
+import reviewsType from '../reviews-props/reviews-props.js';
 import cityType from '../city-prop/city-prop.js';
-import getOfferById from '../../helpers.js';
+import { getOfferById } from '../../utils.js';
 function App(props) {
-  const { rentalOfferCout, offers, defaultCity } = props;
+  const { rentalOfferCout, offers, defaultCity, reviews } = props;
   const [selectedOffer, setSelectedOffer] = useState(null);
 
   const onOfferHover = (offerId) => {
@@ -36,7 +37,11 @@ function App(props) {
           <FavoritesPage offers={offers} />
         </Route>
         <Route exact path={AppRoute.OFFER_$ID} component={RoomPage}>
-          <RoomPage offers={offers} />
+          <RoomPage
+            offers={offers}
+            reviews={reviews}
+            defaultCity={defaultCity}
+          />
         </Route>
         <Route>
           <HotFoundPage />
@@ -50,5 +55,6 @@ App.propTypes = {
   rentalOfferCout: PropTypes.number.isRequired,
   offers: PropTypes.arrayOf(offerType).isRequired,
   defaultCity: PropTypes.exact(cityType).isRequired,
+  reviews: reviewsType.isRequired,
 };
 export default App;

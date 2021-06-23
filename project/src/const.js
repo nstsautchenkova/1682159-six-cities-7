@@ -15,4 +15,6 @@ const SortType = {
   TO_LOW: 'Price: high to low',
   TOP_RATE: 'Top rated first',
 };
-export { AppRoute, SortType, RatingSetting };
+const REVIEWS_COUT = 10;
+const OFFER_COUT = 3;
+export { AppRoute, SortType, RatingSetting, REVIEWS_COUT, OFFER_COUT };
