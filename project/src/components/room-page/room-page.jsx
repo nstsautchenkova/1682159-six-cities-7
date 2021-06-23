@@ -1,13 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { AppRoute } from '../../const.js';
+import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { getRatingInPercents } from '../../utils.js';
+import offerType from '../offers-prop/offers-prop.js';
+import reviewsType from '../reviews-props/reviews-props.js';
+import cityType from '../city-prop/city-prop.js';
 import Header from '../header/header.jsx';
 import FormComment from '../form-comment/form-comment.jsx';
-import offerType from '../offers-prop/offers-prop.js';
-import { useHistory } from 'react-router-dom';
-import { AppRoute } from '../../const.js';
-import { getRatingInPercents } from '../../utils.js';
-import { useLocation } from 'react-router-dom';
+import ReviewsList from '../reviews/reviews-list.jsx';
+import MapReviews from '../map/reviews-map.jsx';
+import OtherPlaces from '../other-places/other-places-list.jsx';
 function RoomPage(props) {
-  const { offers } = props;
+  const { offers, reviews, defaultCity } = props;
   const history = useHistory();
   const location = useLocation();
 
@@ -100,10 +106,18 @@ function RoomPage(props) {
                           </p>
                         </div>
                       </div>
-                      <FormComment />
+                      <section className="property__reviews reviews">
+                        <ReviewsList reviews={reviews} />
+                        <FormComment />
+                      </section>
                     </div>
                   </div>
-                  <section className="property__map map"></section>
+                  <section className="property__map map" style={{maxWidth: '1144px', margin:'0 auto 50px'}}>
+                    <MapReviews
+                      defaultCity={defaultCity}
+                      offers={offers}
+                    />
+                  </section>
                 </section>
               );
             }
@@ -112,103 +126,7 @@ function RoomPage(props) {
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
-              <div className="near-places__list places__list">
-                <article className="near-places__card place-card">
-                  <div className="near-places__image-wrapper place-card__image-wrapper">
-                    <a href="#">
-                      <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place image" />
-                    </a>
-                  </div>
-                  <div className="place-card__info">
-                    <div className="place-card__price-wrapper">
-                      <div className="place-card__price">
-                        <b className="place-card__price-value">&euro;80</b>
-                        <span className="place-card__price-text">&#47;&nbsp;night</span>
-                      </div>
-                      <button className="place-card__bookmark-button place-card__bookmark-button--active button" type="button">
-                        <svg className="place-card__bookmark-icon" width="18" height="19">
-                          <use xlinkHref="#icon-bookmark"></use>
-                        </svg>
-                        <span className="visually-hidden">In bookmarks</span>
-                      </button>
-                    </div>
-                    <div className="place-card__rating rating">
-                      <div className="place-card__stars rating__stars">
-                        <span style={{ width: '80%' }}></span>
-                        <span className="visually-hidden">Rating</span>
-                      </div>
-                    </div>
-                    <h2 className="place-card__name">
-                      <a href="#">Wood and stone place</a>
-                    </h2>
-                    <p className="place-card__type">Private room</p>
-                  </div>
-                </article>
-
-                <article className="near-places__card place-card">
-                  <div className="near-places__image-wrapper place-card__image-wrapper">
-                    <a href="#">
-                      <img className="place-card__image" src="img/apartment-02.jpg" width="260" height="200" alt="Place image" />
-                    </a>
-                  </div>
-                  <div className="place-card__info">
-                    <div className="place-card__price-wrapper">
-                      <div className="place-card__price">
-                        <b className="place-card__price-value">&euro;132</b>
-                        <span className="place-card__price-text">&#47;&nbsp;night</span>
-                      </div>
-                      <button className="place-card__bookmark-button button" type="button">
-                        <svg className="place-card__bookmark-icon" width="18" height="19">
-                          <use xlinkHref="#icon-bookmark"></use>
-                        </svg>
-                        <span className="visually-hidden">To bookmarks</span>
-                      </button>
-                    </div>
-                    <div className="place-card__rating rating">
-                      <div className="place-card__stars rating__stars">
-                        <span style={{ width: '80%' }}></span>
-                        <span className="visually-hidden">Rating</span>
-                      </div>
-                    </div>
-                    <h2 className="place-card__name">
-                      <a href="#">Canal View Prinsengracht</a>
-                    </h2>
-                    <p className="place-card__type">Apartment</p>
-                  </div>
-                </article>
-
-                <article className="near-places__card place-card">
-                  <div className="near-places__image-wrapper place-card__image-wrapper">
-                    <a href="#">
-                      <img className="place-card__image" src="img/apartment-03.jpg" width="260" height="200" alt="Place image" />
-                    </a>
-                  </div>
-                  <div className="place-card__info">
-                    <div className="place-card__price-wrapper">
-                      <div className="place-card__price">
-                        <b className="place-card__price-value">&euro;180</b>
-                        <span className="place-card__price-text">&#47;&nbsp;night</span>
-                      </div>
-                      <button className="place-card__bookmark-button button" type="button">
-                        <svg className="place-card__bookmark-icon" width="18" height="19">
-                          <use xlinkHref="#icon-bookmark"></use>
-                        </svg>
-                        <span className="visually-hidden">To bookmarks</span>
-                      </button>
-                    </div>
-                    <div className="place-card__rating rating">
-                      <div className="place-card__stars rating__stars">
-                        <span style={{ width: '80%' }}></span>
-                        <span className="visually-hidden">Rating</span>
-                      </div>
-                    </div>
-                    <h2 className="place-card__name">
-                      <a href="#">Nice, cozy, warm big bed apartment</a>
-                    </h2>
-                    <p className="place-card__type">Apartment</p>
-                  </div>
-                </article>
-              </div>
+              <OtherPlaces offers={offers}/>
             </section>
           </div>
         </main>
@@ -218,5 +136,7 @@ function RoomPage(props) {
 }
 RoomPage.propTypes = {
   offers: offerType.isRequired,
+  reviews: reviewsType.isRequired,
+  defaultCity: PropTypes.exact(cityType).isRequired,
 };
 export default RoomPage;

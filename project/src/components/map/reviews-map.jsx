@@ -5,28 +5,30 @@ import useMap from './use-map.js';
 import PropTypes from 'prop-types';
 import offerType from '../offers-prop/offers-prop.js';
 import cityType from '../city-prop/city-prop.js';
-import { getDefaultMapIcon, getHoverMapIcon} from '../../utils.js';
-function Map(props) {
-  const { defaultCity, offers, selectedOffer } = props;
+import { OFFER_COUT } from '../../const.js';
+import { getDefaultMapIcon } from '../../utils.js';
+
+function MapReviews(props) {
+  const { defaultCity, offers } = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, defaultCity);
 
+  const reviewsOffersMap = offers.slice(0, OFFER_COUT);
+
   useEffect(() => {
     if (map) {
-      offers.forEach((offer) => {
+      reviewsOffersMap.forEach((offer) => {
         leaflet
           .marker({
             lat: offer.location.latitude,
             lng: offer.location.longitude,
           }, {
-            icon: (selectedOffer && selectedOffer.id === offer.id)
-              ? getHoverMapIcon(leaflet)
-              : getDefaultMapIcon(leaflet),
+            icon: getDefaultMapIcon(leaflet),
           })
           .addTo(map);
       });
     }
-  }, [map, offers, selectedOffer]);
+  }, [map, offers]);
 
   return (
     <>
@@ -40,10 +42,9 @@ function Map(props) {
     </>
   );
 }
-Map.propTypes = {
+MapReviews.propTypes = {
   offers: offerType.isRequired,
   defaultCity: PropTypes.exact(cityType).isRequired,
-  selectedOffer: PropTypes.node.isRequired,
 };
 
-export default Map;
+export default MapReviews;
