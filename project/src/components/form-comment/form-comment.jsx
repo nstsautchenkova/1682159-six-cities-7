@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import ratingToValues from '../form-comment/common.js';
+import getRatingsEntries from '../form-comment/helpers.js';
 
 function FormComment(props) {
   const [formCommentDate, setformCommentDate] = useState();
@@ -11,14 +13,7 @@ function FormComment(props) {
     setformCommentRating(evt.target.value);
   };
 
-  const ratingToValues = {
-    perfect: '5',
-    good: '4',
-    notBad: '3',
-    badly: '2',
-    terribly: '1',
-  };
-  const ratingsEntries = Object.entries(ratingToValues);
+  const ratingsEntries = getRatingsEntries(ratingToValues);
 
   return (
     <form className="reviews__form form" action="#" method="post">
