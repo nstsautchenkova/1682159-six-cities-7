@@ -55,6 +55,6 @@ App.propTypes = {
   rentalOfferCout: PropTypes.number.isRequired,
   offers: PropTypes.arrayOf(offerType).isRequired,
   defaultCity: PropTypes.exact(cityType).isRequired,
-  reviews: reviewsType.isRequired,
+  reviews: PropTypes.arrayOf(reviewsType).isRequired,
 };
 export default App;

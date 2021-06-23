@@ -4,8 +4,7 @@ import ReviewsItem from '../reviews/reviews-item.jsx';
 
 function ReviewsList(props) {
   const { reviews } = props;
-  const getReviewsCout = () => reviews.length;
-  const reviewsCout = getReviewsCout();
+  const reviewsCout = reviews.length;
   return (
     <>
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewsCout}</span></h2>

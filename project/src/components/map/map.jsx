@@ -5,25 +5,11 @@ import useMap from './use-map.js';
 import PropTypes from 'prop-types';
 import offerType from '../offers-prop/offers-prop.js';
 import cityType from '../city-prop/city-prop.js';
-import pin from './pin.svg';
-import pinActive from './pin-active.svg';
-
+import { getDefaultMapIcon, getHoverMapIcon} from '../../utils.js';
 function Map(props) {
   const { defaultCity, offers, selectedOffer } = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, defaultCity);
-
-  const defaultIcon = leaflet.icon({
-    iconUrl: pin,
-    iconSize: [28, 39],
-    iconAnchor: [14, 39],
-  });
-
-  const hoverIcon = leaflet.icon({
-    iconUrl: pinActive,
-    iconSize: [28, 39],
-    iconAnchor: [14, 39],
-  });
 
   useEffect(() => {
     if (map) {
@@ -34,8 +20,8 @@ function Map(props) {
             lng: offer.location.longitude,
           }, {
             icon: (selectedOffer && selectedOffer.id === offer.id)
-              ? hoverIcon
-              : defaultIcon,
+              ? getHoverMapIcon(leaflet)
+              : getDefaultMapIcon(leaflet),
           })
           .addTo(map);
       });

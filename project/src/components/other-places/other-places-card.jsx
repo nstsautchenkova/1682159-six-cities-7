@@ -1,13 +1,11 @@
 import React from 'react';
 import offerType from '../offers-prop/offers-prop.js';
 import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
 import { AppRoute } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
 
 function OtherPlacesCard(props) {
   const { offers } = props;
-  const history = useHistory();
   const link = `${AppRoute.OFFER}/${offers.id}`;
 
   return (
@@ -26,7 +24,6 @@ function OtherPlacesCard(props) {
           <button
             className={offers.isFavorite ? 'place-card__bookmark-button button place-card__bookmark-button--active' : 'place-card__bookmark-button button'}
             type="button"
-            onClick={() => offers.isFavorite && history.push(AppRoute.FAVORITES)}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>

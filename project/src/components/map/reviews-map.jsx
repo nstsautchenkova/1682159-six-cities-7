@@ -5,20 +5,16 @@ import useMap from './use-map.js';
 import PropTypes from 'prop-types';
 import offerType from '../offers-prop/offers-prop.js';
 import cityType from '../city-prop/city-prop.js';
-import pin from './pin.svg';
 import { OFFER_COUT } from '../../const.js';
+import { getDefaultMapIcon } from '../../utils.js';
 
 function MapReviews(props) {
   const { defaultCity, offers } = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, defaultCity);
 
-  const defaultIcon = leaflet.icon({
-    iconUrl: pin,
-    iconSize: [28, 39],
-    iconAnchor: [14, 39],
-  });
   const reviewsOffersMap = offers.slice(0, OFFER_COUT);
+
   useEffect(() => {
     if (map) {
       reviewsOffersMap.forEach((offer) => {
@@ -27,7 +23,7 @@ function MapReviews(props) {
             lat: offer.location.latitude,
             lng: offer.location.longitude,
           }, {
-            icon: defaultIcon,
+            icon: getDefaultMapIcon(leaflet),
           })
           .addTo(map);
       });
