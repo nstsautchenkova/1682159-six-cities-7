@@ -18,6 +18,10 @@ function OfferList(props) {
   });
   const { placesOptionsTitle } = placesFilter;
 
+  /*const cardHoverHandler = () => {
+    onOfferHover(offers.id);
+  }; */
+
   const createPlacesOption = Object.values(SortType).map((value, index) => (
     <li
       key={index.toString()}
@@ -35,8 +39,9 @@ function OfferList(props) {
       {value}
     </li>
   ));
-
+  const activeCity = 'Paris';
   const sortedOffers = getSortedOffers(offers, placesOptionsTitle);
+
   return (
     <>
       <form className="places__sorting" action="#" method="get">
@@ -52,9 +57,25 @@ function OfferList(props) {
         </ul>
       </form>
       <div className="cities__places-list places__list tabs__content">
-        {sortedOffers.map((offer) =>
-          <Card offers={offer} id={offer.id} key={offer.id} onOfferHover={onOfferHover} />,
-        )}
+        {/* {offers.map((offer) => {
+          if (offer.city.name === activeCity) {
+            return (
+              <div>
+                <Card offers={offer} id={offer.id} key={offer.id} onOfferHover={onOfferHover} />
+              </div>
+            );
+          }
+        })} */}
+        {sortedOffers.map((sOffer) => {
+          if (sOffer.city.name === activeCity) {
+            return (
+              <Card offers={sOffer} id={sOffer.id} key={sOffer.id} onOfferHover={onOfferHover} />
+            );
+          }
+        })}
+        {/* {sortedOffers.map((sortedOffer) =>
+          <Card offers={sortedOffer} id={sortedOffer.id} key={sortedOffer.id} onOfferHover={onOfferHover} />,
+        )} */}
       </div>
     </>
   );

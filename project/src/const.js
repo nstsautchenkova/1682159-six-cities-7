@@ -1,5 +1,6 @@
 const REVIEWS_COUT = 10;
 const OFFER_COUT = 3;
+const ACTIVE_CITY = 'Paris';
 const AppRoute = {
   MAIN: '/',
   SIGN_IN: '/login',
@@ -17,4 +18,4 @@ const SortType = {
   TO_LOW: 'Price: high to low',
   TOP_RATE: 'Top rated first',
 };
-export { AppRoute, SortType, RatingSetting, REVIEWS_COUT, OFFER_COUT };
+export { AppRoute, SortType, RatingSetting, REVIEWS_COUT, OFFER_COUT, ACTIVE_CITY };

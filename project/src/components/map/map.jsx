@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import useMap from './use-map.js';
 import PropTypes from 'prop-types';
 import offerType from '../offers-prop/offers-prop.js';
-import cityType from '../city-prop/city-prop.js';
+import defaultCityType from '../default-city-prop/default-city-prop.js';
 import { getDefaultMapIcon, getHoverMapIcon} from '../../utils.js';
 function Map(props) {
   const { defaultCity, offers, selectedOffer } = props;
@@ -42,7 +42,7 @@ function Map(props) {
 }
 Map.propTypes = {
   offers: offerType.isRequired,
-  defaultCity: PropTypes.exact(cityType).isRequired,
+  defaultCity: PropTypes.exact(defaultCityType).isRequired,
   selectedOffer: PropTypes.node.isRequired,
 };
 
