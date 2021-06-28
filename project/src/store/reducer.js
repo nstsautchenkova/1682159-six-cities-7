@@ -1,10 +1,12 @@
-import {ActionType} from './action';
-import {сities} from '../mocks/сities.js';
+import { ActionType } from './action';
 import offers from '../mocks/offers.js';
+import { ACTIVE_CITY } from '../const.js';
+
+const getOffers = (activeCity, rezultOffers) => rezultOffers.filter((offer) => offer.city.name === activeCity);
 
 const initialState = {
-  activeCity: сities.Paris, // city.name
-  listOffers: offers, // offers.city.name
+  defaultCity: ACTIVE_CITY,
+  listOffers: getOffers(ACTIVE_CITY, offers),
 };
 
 const reducer = (state = initialState, action) => {
@@ -12,12 +14,12 @@ const reducer = (state = initialState, action) => {
     case ActionType.SELECT_CITY:
       return {
         ...state,
-        activeCity: state.activeCity,
+        defaultCity: action.activeCity,
       };
     case ActionType.SELECT_LIST_RENT:
       return {
         ...state,
-        listOffers: state.listRent,
+        listOffers: getOffers(action.activeCity, offers),
       };
     default:
       return state;
@@ -25,4 +27,4 @@ const reducer = (state = initialState, action) => {
 };
 
 
-export {reducer};
+export { reducer };

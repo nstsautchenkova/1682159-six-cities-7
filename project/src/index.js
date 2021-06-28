@@ -10,9 +10,6 @@ import { createStore } from 'redux';
 import { reducer } from './store/reducer';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
-const Setting = {
-  RENTAL_OFFERS_COUT: 31,
-};
 const store = createStore(
   reducer,
   composeWithDevTools(),
@@ -22,7 +19,6 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <App
-        rentalOfferCout={Setting.RENTAL_OFFERS_COUT}
         offers={offers}
         defaultCity={defaultCity}
         reviews={reviews}

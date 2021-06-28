@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import { SortType } from '../../const.js';
 import Card from '../card/card.jsx';
 import getSortedOffers from './helpers.js';
+
+import { connect } from 'react-redux';
 function OfferList(props) {
-  const { offers, onOfferHover } = props;
+  const { onOfferHover, activeCity, listOffers } = props;
 
   const [isOpen, setOpen] = useState(false);
   const placesOptionsOpen = () => {
@@ -17,11 +19,6 @@ function OfferList(props) {
     placesOptionsTitle: SortType.POPULAR,
   });
   const { placesOptionsTitle } = placesFilter;
-
-  /*const cardHoverHandler = () => {
-    onOfferHover(offers.id);
-  }; */
-
   const createPlacesOption = Object.values(SortType).map((value, index) => (
     <li
       key={index.toString()}
@@ -39,11 +36,10 @@ function OfferList(props) {
       {value}
     </li>
   ));
-  const activeCity = 'Paris';
-  const sortedOffers = getSortedOffers(offers, placesOptionsTitle);
-
+  const sortedOffers = getSortedOffers(listOffers, placesOptionsTitle);
   return (
     <>
+      <b className="places__found">{listOffers.length} places to stay in {activeCity}</b>
       <form className="places__sorting" action="#" method="get">
         <span className="places__sorting-caption">Sort by </span>
         <span className="places__sorting-type" tabIndex="0" onClick={placesOptionsOpen}>
@@ -57,31 +53,22 @@ function OfferList(props) {
         </ul>
       </form>
       <div className="cities__places-list places__list tabs__content">
-        {/* {offers.map((offer) => {
-          if (offer.city.name === activeCity) {
-            return (
-              <div>
-                <Card offers={offer} id={offer.id} key={offer.id} onOfferHover={onOfferHover} />
-              </div>
-            );
-          }
-        })} */}
-        {sortedOffers.map((sOffer) => {
-          if (sOffer.city.name === activeCity) {
-            return (
-              <Card offers={sOffer} id={sOffer.id} key={sOffer.id} onOfferHover={onOfferHover} />
-            );
-          }
-        })}
-        {/* {sortedOffers.map((sortedOffer) =>
-          <Card offers={sortedOffer} id={sortedOffer.id} key={sortedOffer.id} onOfferHover={onOfferHover} />,
-        )} */}
+        {sortedOffers.map((offer) =>
+          <Card offers={offer} id={offer.id} key={offer.id} onOfferHover={onOfferHover} />,
+        )}
       </div>
     </>
   );
 }
+const mapStateToProps = (state) => ({
+  activeCity: state.defaultCity,
+  listOffers: state.listOffers,
+});
 OfferList.propTypes = {
-  offers: offerType.isRequired,
   onOfferHover: PropTypes.func.isRequired,
+  activeCity: PropTypes.node.isRequired,
+  listOffers: offerType.isRequired,
 };
-export default OfferList;
+
+export { OfferList };
+export default connect(mapStateToProps, null)(OfferList);

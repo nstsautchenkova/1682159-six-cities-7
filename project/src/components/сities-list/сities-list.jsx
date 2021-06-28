@@ -1,34 +1,20 @@
-//import React, { useState } from 'react';
 import React from 'react';
 import PropTypes from 'prop-types';
 import сitiesType from '../сities-prop/сities-prop.js';
 
 import { connect } from 'react-redux';
 import { ActionCreator } from '../../store/action.js';
-
 function CitiesList(props) {
   const { сities, onSelectCity, activeCity } = props;
-  /* const [isActive, setActive] = useState({
-    activeName: 'Paris',
-  });
-  const { activeName } = isActive; */
   return (
-    <ul className="locations__list tabs__list" id={typeof(activeCity)}>
+    <ul className="locations__list tabs__list">
       {Object.values(сities).map((сityItem) => (
-        <li className="locations__item" key={сityItem.name}>
+        <li className="locations__item" key={сityItem.name} onClick={onSelectCity}>
           <a
-            /* onClick={() => {
-              setActive();
-              setActive((prevName) => ({
-                ...prevName,
-                activeName: сityItem.name,
-              }));
-            }} */
-            onClick={onSelectCity}
             className={activeCity === сityItem.name ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'}
             href="#"
           >
-            <span>{сityItem.name}<p>{activeCity}</p></span>
+            <span>{сityItem.name}</span>
           </a>
         </li>
       ))}
@@ -37,19 +23,21 @@ function CitiesList(props) {
 }
 
 const mapStateToProps = (state) => ({
-  activeCity: state.activeCity,
+  activeCity: state.defaultCity,
+  listOffers:state.listOffers,
 });
 const mapDispatchToProps = (dispatch) => ({
-  onSelectCity() {
-    const activeCity = 'q';
+  onSelectCity(evt) {
+    const activeCity = evt.target.textContent;
     dispatch(ActionCreator.selectCity(activeCity));
+    dispatch(ActionCreator.selectListRent(activeCity));
   },
 });
 
 CitiesList.propTypes = {
   сities: PropTypes.exact(сitiesType).isRequired,
   onSelectCity: PropTypes.func.isRequired,
-  activeCity: PropTypes.exact(сitiesType).isRequired,
+  activeCity: PropTypes.node.isRequired,
 };
 
 export { CitiesList };

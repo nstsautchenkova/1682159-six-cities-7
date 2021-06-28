@@ -226,16 +226,16 @@ const offers = [
     isFavorite: true,
     isPremium: true,
     location: {
-      latitude: 52.3909553943508,
+      latitude: 52.369553943508,
       longitude: 4.85309666406198,
       zoom: 8,
     },
     maxAdults: 4,
-    previewImage: 'img/apartment-02.jpg',
+    previewImage: 'img/room.jpg',
     price: 12000,
     rating: 3,
     title: 'Beautiful & luxurious studio at great location',
-    type: 'Apartment',
+    type: 'Room',
   },
 ];
 
