@@ -1,21 +1,9 @@
-const сities = {
-  Paris: {
-    name: 'Paris',
-  },
-  Cologne: {
-    name: 'Cologne',
-  },
-  Brussels: {
-    name: 'Brussels',
-  },
-  Amsterdam: {
-    name: 'Amsterdam',
-  },
-  Hamburg: {
-    name: 'Hamburg',
-  },
-  Dusseldorf: {
-    name: 'Dusseldorf',
-  },
+const OfferCity = {
+  PARIS: 'Paris',
+  COLOGNE: 'Cologne',
+  BRUSSELS: 'Brussels',
+  AMSTERDAM: 'Amsterdam',
+  HAMBURG: 'Hamburg',
+  DUSSELDORF: 'Dusseldorf',
 };
-export { сities };
+export { OfferCity };

@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 
-const defaultCityType = PropTypes.exact({
+const сityType = PropTypes.exact({
   title: PropTypes.string.isRequired,
   latitude: PropTypes.number.isRequired,
   longitude: PropTypes.number.isRequired,
   zoom: PropTypes.number.isRequired,
 }).isRequired;
 
-export default defaultCityType;
+export default сityType;
 
 

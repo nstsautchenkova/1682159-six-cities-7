@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import offerType from '../offers-prop/offers-prop.js';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import offerType from '../offers-prop/offers-prop.js';
 import { SortType } from '../../const.js';
 import Card from '../card/card.jsx';
 import getSortedOffers from './helpers.js';
 
-import { connect } from 'react-redux';
 function OfferList(props) {
   const { onOfferHover, activeCity, listOffers } = props;
 

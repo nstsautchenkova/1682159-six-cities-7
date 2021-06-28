@@ -1,20 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import сitiesType from '../сities-prop/сities-prop.js';
-
 import { connect } from 'react-redux';
 import { ActionCreator } from '../../store/action.js';
+import PropTypes from 'prop-types';
+import сitiesType from '../сities-prop/сities-prop.js';
 function CitiesList(props) {
-  const { сities, onSelectCity, activeCity } = props;
+  const { OfferCity, onSelectCity, activeCity } = props;
   return (
     <ul className="locations__list tabs__list">
-      {Object.values(сities).map((сityItem) => (
-        <li className="locations__item" key={сityItem.name} onClick={onSelectCity}>
+      {Object.values(OfferCity).map((city) => (
+        <li className="locations__item" key={city} onClick={onSelectCity}>
           <a
-            className={activeCity === сityItem.name ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'}
+            className={activeCity === city ? 'locations__item-link tabs__item tabs__item--active' : 'locations__item-link tabs__item'}
             href="#"
           >
-            <span>{сityItem.name}</span>
+            <span>{city}</span>
           </a>
         </li>
       ))}
@@ -35,7 +34,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 CitiesList.propTypes = {
-  сities: PropTypes.exact(сitiesType).isRequired,
+  OfferCity: PropTypes.exact(сitiesType).isRequired,
   onSelectCity: PropTypes.func.isRequired,
   activeCity: PropTypes.node.isRequired,
 };

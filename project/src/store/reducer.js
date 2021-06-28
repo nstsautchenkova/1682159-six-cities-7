@@ -1,25 +1,25 @@
 import { ActionType } from './action';
 import offers from '../mocks/offers.js';
-import { ACTIVE_CITY } from '../const.js';
+import { OfferCity } from '../mocks/сities.js';
 
-const getOffers = (activeCity, rezultOffers) => rezultOffers.filter((offer) => offer.city.name === activeCity);
+const getOffersByCity  = (activeCity, rezultOffers) => rezultOffers.filter((offer) => offer.city.name === activeCity);
 
 const initialState = {
-  defaultCity: ACTIVE_CITY,
-  listOffers: getOffers(ACTIVE_CITY, offers),
+  defaultCity: OfferCity.PARIS,
+  listOffers: getOffersByCity(OfferCity.PARIS, offers),
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.SELECT_CITY:
+    case (ActionType.SELECT_CITY):
       return {
         ...state,
         defaultCity: action.activeCity,
       };
-    case ActionType.SELECT_LIST_RENT:
+    case (ActionType.SELECT_LIST_RENT):
       return {
         ...state,
-        listOffers: getOffers(action.activeCity, offers),
+        listOffers: getOffersByCity(action.activeCity, offers),
       };
     default:
       return state;

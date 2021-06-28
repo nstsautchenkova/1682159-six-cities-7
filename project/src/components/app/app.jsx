@@ -9,11 +9,11 @@ import RoomPage from '../room-page/room-page.jsx';
 import HotFoundPage from '../not-found-page/not-found-page.jsx';
 import offerType from '../offers-prop/offers-prop.js';
 import reviewsType from '../reviews-props/reviews-props.js';
-import defaultCityType from '../default-city-prop/default-city-prop.js';
+import сityType from '../city-prop/city-prop.js';
 import { getOfferById } from '../../utils.js';
 import сitiesType from '../сities-prop/сities-prop.js';
 function App(props) {
-  const { rentalOfferCout, offers, defaultCity, reviews, сities } = props;
+  const { rentalOfferCout, offers, defaultCity, reviews, OfferCity } = props;
   const [selectedOffer, setSelectedOffer] = useState(null);
 
   const onOfferHover = (offerId) => {
@@ -29,7 +29,7 @@ function App(props) {
             defaultCity={defaultCity}
             onOfferHover={onOfferHover}
             selectedOffer={selectedOffer}
-            сities={сities}
+            OfferCity={OfferCity}
           />
         </Route>
         <Route exact path={AppRoute.SIGN_IN}>
@@ -56,8 +56,8 @@ function App(props) {
 App.propTypes = {
   rentalOfferCout: PropTypes.number.isRequired,
   offers: PropTypes.arrayOf(offerType).isRequired,
-  defaultCity: PropTypes.exact(defaultCityType).isRequired,
+  defaultCity: PropTypes.exact(сityType).isRequired,
   reviews: PropTypes.arrayOf(reviewsType).isRequired,
-  сities: PropTypes.exact(сitiesType).isRequired,
+  OfferCity: PropTypes.exact(сitiesType).isRequired,
 };
 export default App;

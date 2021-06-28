@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/app/app';
-import offers from './mocks/offers.js';
-import reviews from './mocks/reviews.js';
-import { defaultCity } from './mocks/default-city.js';
-import { сities } from './mocks/сities.js';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { reducer } from './store/reducer';
 import {composeWithDevTools} from 'redux-devtools-extension';
+import App from './components/app/app';
+import offers from './mocks/offers.js';
+import reviews from './mocks/reviews.js';
+import { defaultCity } from './mocks/default-city.js';
+import { OfferCity } from './mocks/сities.js';
 
 const store = createStore(
   reducer,
@@ -22,7 +22,7 @@ ReactDOM.render(
         offers={offers}
         defaultCity={defaultCity}
         reviews={reviews}
-        сities={сities}
+        OfferCity={OfferCity}
       />
     </Provider>
   </React.StrictMode>,
