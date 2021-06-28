@@ -8,7 +8,7 @@ import App from './components/app/app';
 import offers from './mocks/offers.js';
 import reviews from './mocks/reviews.js';
 import { defaultCity } from './mocks/default-city.js';
-import { OfferCity } from './mocks/сities.js';
+import { OfferCity } from '../src/const.js';
 
 const store = createStore(
   reducer,
