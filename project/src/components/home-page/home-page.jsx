@@ -4,9 +4,11 @@ import offerType from '../offers-prop/offers-prop.js';
 import Header from '../header/header.jsx';
 import OfferList from '../offers-list/offers-list.jsx';
 import Map from '../map/map.jsx';
-import cityType from '../city-prop/city-prop.js';
+import сityType from '../city-prop/city-prop.js';
+import CitiesList from '../сities-list/сities-list.jsx';
+import сitiesType from '../сities-prop/сities-prop.js';
 function HomePage(props) {
-  const { rentalOfferCout, offers, defaultCity, onOfferHover, selectedOffer } = props;
+  const { offers, defaultCity, onOfferHover, selectedOffer, OfferCity } = props;
   return (
     <>
       <div style={{ display: 'none' }}>
@@ -29,38 +31,7 @@ function HomePage(props) {
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">
             <section className="locations container">
-              <ul className="locations__list tabs__list">
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Paris</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Cologne</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Brussels</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item tabs__item--active">
-                    <span>Amsterdam</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Hamburg</span>
-                  </a>
-                </li>
-                <li className="locations__item">
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>Dusseldorf</span>
-                  </a>
-                </li>
-              </ul>
+              <CitiesList OfferCity={OfferCity} />
             </section>
           </div>
 
@@ -68,7 +39,6 @@ function HomePage(props) {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{rentalOfferCout} places to stay in Amsterdam</b>
                 <OfferList offers={offers} onOfferHover={onOfferHover} />
               </section>
 
@@ -91,11 +61,11 @@ function HomePage(props) {
 }
 
 HomePage.propTypes = {
-  rentalOfferCout: PropTypes.number.isRequired,
   offers: offerType.isRequired,
-  defaultCity: PropTypes.exact(cityType).isRequired,
+  defaultCity: PropTypes.exact(сityType).isRequired,
   onOfferHover: PropTypes.func.isRequired,
   selectedOffer: PropTypes.node.isRequired,
+  OfferCity: PropTypes.exact(сitiesType).isRequired,
 };
 
 export default HomePage;

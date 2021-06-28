@@ -1,10 +1,10 @@
 import React, { useRef, useEffect } from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import useMap from './use-map.js';
 import PropTypes from 'prop-types';
+import useMap from './use-map.js';
 import offerType from '../offers-prop/offers-prop.js';
-import cityType from '../city-prop/city-prop.js';
+import сityType from '../city-prop/city-prop.js';
 import { OFFER_COUT } from '../../const.js';
 import { getDefaultMapIcon } from '../../utils.js';
 
@@ -44,7 +44,7 @@ function MapReviews(props) {
 }
 MapReviews.propTypes = {
   offers: offerType.isRequired,
-  defaultCity: PropTypes.exact(cityType).isRequired,
+  defaultCity: PropTypes.exact(сityType).isRequired,
 };
 
 export default MapReviews;

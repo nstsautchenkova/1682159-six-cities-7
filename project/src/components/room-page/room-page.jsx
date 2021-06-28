@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { AppRoute } from '../../const.js';
 import { useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { AppRoute } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
 import offerType from '../offers-prop/offers-prop.js';
 import reviewsType from '../reviews-props/reviews-props.js';
-import cityType from '../city-prop/city-prop.js';
+import сityType from '../city-prop/city-prop.js';
 import Header from '../header/header.jsx';
 import FormComment from '../form-comment/form-comment.jsx';
 import ReviewsList from '../reviews/reviews-list.jsx';
@@ -137,6 +137,6 @@ function RoomPage(props) {
 RoomPage.propTypes = {
   offers: offerType.isRequired,
   reviews: reviewsType.isRequired,
-  defaultCity: PropTypes.exact(cityType).isRequired,
+  defaultCity: PropTypes.exact(сityType).isRequired,
 };
 export default RoomPage;

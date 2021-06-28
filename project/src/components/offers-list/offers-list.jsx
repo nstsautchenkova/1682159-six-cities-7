@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import offerType from '../offers-prop/offers-prop.js';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import offerType from '../offers-prop/offers-prop.js';
 import { SortType } from '../../const.js';
 import Card from '../card/card.jsx';
 import getSortedOffers from './helpers.js';
+
 function OfferList(props) {
-  const { offers, onOfferHover } = props;
+  const { onOfferHover, activeCity, listOffers } = props;
 
   const [isOpen, setOpen] = useState(false);
   const placesOptionsOpen = () => {
@@ -17,7 +19,6 @@ function OfferList(props) {
     placesOptionsTitle: SortType.POPULAR,
   });
   const { placesOptionsTitle } = placesFilter;
-
   const createPlacesOption = Object.values(SortType).map((value, index) => (
     <li
       key={index.toString()}
@@ -35,10 +36,10 @@ function OfferList(props) {
       {value}
     </li>
   ));
-
-  const sortedOffers = getSortedOffers(offers, placesOptionsTitle);
+  const sortedOffers = getSortedOffers(listOffers, placesOptionsTitle);
   return (
     <>
+      <b className="places__found">{listOffers.length} places to stay in {activeCity}</b>
       <form className="places__sorting" action="#" method="get">
         <span className="places__sorting-caption">Sort by </span>
         <span className="places__sorting-type" tabIndex="0" onClick={placesOptionsOpen}>
@@ -59,8 +60,15 @@ function OfferList(props) {
     </>
   );
 }
+const mapStateToProps = (state) => ({
+  activeCity: state.defaultCity,
+  listOffers: state.listOffers,
+});
 OfferList.propTypes = {
-  offers: offerType.isRequired,
   onOfferHover: PropTypes.func.isRequired,
+  activeCity: PropTypes.node.isRequired,
+  listOffers: offerType.isRequired,
 };
-export default OfferList;
+
+export { OfferList };
+export default connect(mapStateToProps, null)(OfferList);

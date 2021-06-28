@@ -1,8 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../header/header.jsx';
 import Footer from '../footer/footer.jsx';
 import offerType from '../offers-prop/offers-prop.js';
-import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import offerType from '../offers-prop/offers-prop.js';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { AppRoute } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
+import offerType from '../offers-prop/offers-prop.js';
 
 function Card(props) {
   const { offers, onOfferHover } = props;

@@ -17,4 +17,12 @@ const SortType = {
   TO_LOW: 'Price: high to low',
   TOP_RATE: 'Top rated first',
 };
-export { AppRoute, SortType, RatingSetting, REVIEWS_COUT, OFFER_COUT };
+const OfferCity = {
+  PARIS: 'Paris',
+  COLOGNE: 'Cologne',
+  BRUSSELS: 'Brussels',
+  AMSTERDAM: 'Amsterdam',
+  HAMBURG: 'Hamburg',
+  DUSSELDORF: 'Dusseldorf',
+};
+export { AppRoute, SortType, RatingSetting, REVIEWS_COUT, OFFER_COUT, OfferCity};
