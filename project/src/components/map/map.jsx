@@ -11,10 +11,10 @@ function Map(props) {
   const { defaultCity, selectedOffer, listOffers } = props;
   const mapRef = useRef(null);
   const map = useMap(mapRef, defaultCity);
+  const markerLayer = leaflet.layerGroup();
 
   const renderMarker = (offer) => {
-    const markerLayer = leaflet.layerGroup().addTo(map);
-    markerLayer.clearLayers();
+    markerLayer.addTo(map);
     const marker = leaflet.marker(
       {
         lat: offer.location.latitude,
@@ -36,6 +36,11 @@ function Map(props) {
         renderMarker(offer);
       });
     }
+    return () => {
+      if (map) {
+        markerLayer.clearLayers();
+      }
+    };
   }, [map, listOffers, selectedOffer]);
 
   return (
