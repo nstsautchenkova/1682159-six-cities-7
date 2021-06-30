@@ -63,6 +63,7 @@ function OfferList(props) {
 const mapStateToProps = (state) => ({
   activeCity: state.defaultCity,
   listOffers: state.listOffers,
+  offers: state.offers,
 });
 OfferList.propTypes = {
   onOfferHover: PropTypes.func.isRequired,

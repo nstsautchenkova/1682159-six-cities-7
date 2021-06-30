@@ -5,36 +5,32 @@ import 'leaflet/dist/leaflet.css';
 import PropTypes from 'prop-types';
 import useMap from './use-map.js';
 import offerType from '../offers-prop/offers-prop.js';
-import сityType from '../city-prop/city-prop.js';
 import { getDefaultMapIcon, getHoverMapIcon } from '../../utils.js';
-
+import сityType from '../city-prop/city-prop.js';
 function Map(props) {
-  const { defaultCity, selectedOffer, listOffers } = props;
+  const { selectedOffer, listOffers, defaultCityMap } = props;
   const mapRef = useRef(null);
-  const map = useMap(mapRef, defaultCity);
+  const map = useMap(mapRef, defaultCityMap);
   const markerLayer = leaflet.layerGroup();
-
-  const renderMarker = (offer) => {
-    markerLayer.addTo(map);
-    const marker = leaflet.marker(
-      {
-        lat: offer.location.latitude,
-        lng: offer.location.longitude,
-      },
-      {
-        icon: (selectedOffer && selectedOffer.id === offer.id)
-          ? getHoverMapIcon(leaflet)
-          : getDefaultMapIcon(leaflet),
-      },
-    );
-    marker
-      .addTo(markerLayer);
-  };
 
   useEffect(() => {
     if (map) {
       listOffers.forEach((offer) => {
-        renderMarker(offer);
+        markerLayer.addTo(map);
+        const marker = leaflet.marker(
+          {
+            lat: offer.location.latitude,
+            lng: offer.location.longitude,
+          },
+          {
+            icon: (selectedOffer && selectedOffer.id === offer.id)
+              ? getHoverMapIcon(leaflet)
+              : getDefaultMapIcon(leaflet),
+          },
+        );
+        marker
+          .addTo(markerLayer);
+        map.panTo(new leaflet.LatLng(defaultCityMap.lat, defaultCityMap.lng));
       });
     }
     return () => {
@@ -55,11 +51,12 @@ function Map(props) {
 }
 const mapStateToProps = (state) => ({
   listOffers: state.listOffers,
+  defaultCityMap: state.defaultCityMap,
 });
 Map.propTypes = {
-  defaultCity: PropTypes.exact(сityType).isRequired,
   selectedOffer: PropTypes.node.isRequired,
   listOffers: offerType.isRequired,
+  defaultCityMap: PropTypes.exact(сityType).isRequired,
 };
 
 export { Map };

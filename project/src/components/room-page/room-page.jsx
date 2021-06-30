@@ -1,19 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { AppRoute } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
 import offerType from '../offers-prop/offers-prop.js';
 import reviewsType from '../reviews-props/reviews-props.js';
-import сityType from '../city-prop/city-prop.js';
 import Header from '../header/header.jsx';
 import FormComment from '../form-comment/form-comment.jsx';
 import ReviewsList from '../reviews/reviews-list.jsx';
-import MapReviews from '../map/reviews-map.jsx';
+import MapRoomPage from '../map/room-page-map.jsx';
 import OtherPlaces from '../other-places/other-places-list.jsx';
 function RoomPage(props) {
-  const { offers, reviews, defaultCity } = props;
+  const { offers, reviews } = props;
   const history = useHistory();
   const location = useLocation();
 
@@ -53,13 +52,13 @@ function RoomPage(props) {
                   </div>
                   <div className="property__container container">
                     <div className="property__wrapper">
-                      {offer.isPremium && <div className="property__mark"><span>Premium</span></div>}
+                      {offer.is_premium && <div className="property__mark"><span>Premium</span></div>}
                       <div className="property__name-wrapper">
                         <h1 className="property__name">{offer.title}</h1>
                         <button
-                          className={offer.isFavorite ? 'property__bookmark-button button property__bookmark-button--active' : 'property__bookmark-button button'}
+                          className={offer.is_favorite ? 'property__bookmark-button button property__bookmark-button--active' : 'property__bookmark-button button'}
                           type="button"
-                          onClick={() => offer.isFavorite && history.push(AppRoute.FAVORITES)}
+                          onClick={() => offer.is_favorite && history.push(AppRoute.FAVORITES)}
                         >
                           <svg className="property__bookmark-icon" width="31" height="33">
                             <use xlinkHref="#icon-bookmark"></use>
@@ -77,7 +76,7 @@ function RoomPage(props) {
                       <ul className="property__features">
                         <li className="property__feature property__feature--entire">{offer.type}</li>
                         <li className="property__feature property__feature--bedrooms">{offer.bedrooms} Bedrooms</li>
-                        <li className="property__feature property__feature--adults">Max {offer.maxAdults} adults</li>
+                        <li className="property__feature property__feature--adults">Max {offer.max_adults} adults</li>
                       </ul>
                       <div className="property__price">
                         <b className="property__price-value">&euro;{offer.price}</b>
@@ -95,10 +94,10 @@ function RoomPage(props) {
                         <h2 className="property__host-title">Meet the host</h2>
                         <div className="property__host-user user">
                           <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                            <img className="property__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
+                            <img className="property__avatar user__avatar" src={offer.host.avatar_url} width="74" height="74" alt="Host avatar" />
                           </div>
                           <span className="property__user-name">{offer.host.name}</span>
-                          {offer.host.isPro && <span className="property__user-status">Pro</span>}
+                          {offer.host.is_pro && <span className="property__user-status">Pro</span>}
                         </div>
                         <div className="property__description">
                           <p className="property__text">
@@ -112,11 +111,8 @@ function RoomPage(props) {
                       </section>
                     </div>
                   </div>
-                  <section className="property__map map" style={{maxWidth: '1144px', margin:'0 auto 50px'}}>
-                    <MapReviews
-                      defaultCity={defaultCity}
-                      offers={offers}
-                    />
+                  <section className="property__map map" style={{ maxWidth: '1144px', margin: '0 auto 50px' }}>
+                    <MapRoomPage />
                   </section>
                 </section>
               );
@@ -126,7 +122,7 @@ function RoomPage(props) {
           <div className="container">
             <section className="near-places places">
               <h2 className="near-places__title">Other places in the neighbourhood</h2>
-              <OtherPlaces offers={offers}/>
+              <OtherPlaces />
             </section>
           </div>
         </main>
@@ -134,9 +130,12 @@ function RoomPage(props) {
     </>
   );
 }
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+});
 RoomPage.propTypes = {
   offers: offerType.isRequired,
   reviews: reviewsType.isRequired,
-  defaultCity: PropTypes.exact(сityType).isRequired,
 };
-export default RoomPage;
+//export default RoomPage;
+export default connect(mapStateToProps, null)(RoomPage);

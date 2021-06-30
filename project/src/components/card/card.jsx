@@ -22,7 +22,7 @@ function Card(props) {
     >
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={link}>
-          <img className="place-card__image" src={offers.previewImage} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={offers.preview_image} width="260" height="200" alt="Place image" />
         </Link>
       </div>
       <div className="place-card__info">
@@ -32,9 +32,9 @@ function Card(props) {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={offers.isFavorite ? 'place-card__bookmark-button button place-card__bookmark-button--active' : 'place-card__bookmark-button button'}
+            className={offers.is_favorite ? 'place-card__bookmark-button button place-card__bookmark-button--active' : 'place-card__bookmark-button button'}
             type="button"
-            onClick={() => offers.isFavorite && history.push(AppRoute.FAVORITES)}
+            onClick={() => offers.is_favorite && history.push(AppRoute.FAVORITES)}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
