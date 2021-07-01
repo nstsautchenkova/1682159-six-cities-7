@@ -1,17 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Header from '../header/header.jsx';
 import Footer from '../footer/footer.jsx';
 import offerType from '../offers-prop/offers-prop.js';
 import { AppRoute } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
-import { connect } from 'react-redux';
-
 function FavoritesPage(props) {
   const { offers } = props;
 
   const getFavorites = (offersFavorite) => {
-    if (offersFavorite.is_favorite) {
+    if (offersFavorite.isFavorite) {
       return (
         <section className="favorites">
           <h1 className="favorites__title">Saved listing</h1>
@@ -19,13 +18,13 @@ function FavoritesPage(props) {
             {offers.map((offer) => {
               const key = `${offer.id}`;
               const link = `${AppRoute.OFFER}/${offer.id}`;
-              if (offer.is_favorite) {
+              if (offer.isFavorite) {
                 return (
                   <li className="favorites__locations-items">
                     <div className="favorites__locations locations locations--current">
                       <div className="locations__item">
                         <a className="locations__item-link" href="#">
-                          <span>{offer.city.name}</span>
+                          <span>{offer.cityName}</span>
                         </a>
                       </div>
                     </div>
@@ -34,7 +33,7 @@ function FavoritesPage(props) {
                       <article key={key} className="favorites__card place-card">
                         <div className="favorites__image-wrapper place-card__image-wrapper">
                           <Link to={link}>
-                            <img className="place-card__image" src={offer.preview_image} width="150" height="110" alt="Place image" />
+                            <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place image" />
                           </Link>
                         </div>
                         <div className="favorites__card-info place-card__info">

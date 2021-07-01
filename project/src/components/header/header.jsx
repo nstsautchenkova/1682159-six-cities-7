@@ -2,10 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { AuthorizationStatus } from '../../const.js';
+import { AuthorizationStatus, AppRoute } from '../../const.js';
 import Logo from '../logo/logo.jsx';
 import { logout } from '../../store/api-actions.js';
-
 function Header(props) {
   const { authorizationStatus, signOut, userEmail } = props;
   return (
@@ -20,7 +19,7 @@ function Header(props) {
               {authorizationStatus === AuthorizationStatus.AUTH ?
                 <>
                   <li className="header__nav-item user">
-                    <Link className="header__nav-link header__nav-link--profile" to='/favorites'>
+                    <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVORITES}>
                       <div className="header__avatar-wrapper user__avatar-wrapper">
                       </div>
                       <span className="header__user-name user__name">{userEmail}</span>
@@ -33,7 +32,7 @@ function Header(props) {
                         evt.preventDefault();
                         signOut();
                       }}
-                      to='/'
+                      to={AppRoute.MAIN}
                     >
                       <span className="header__signout">Sign out</span>
                     </Link>

@@ -1,14 +1,17 @@
 import { ActionCreator } from './action.js';
 import { AuthorizationStatus, AppRoute, APIRoute } from '../const.js';
+import { mapOffersToClient } from '../utils.js';
 
 const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS)
-    .then(({ data }) => dispatch(ActionCreator.loadOffers(data)))
+    .then(({ data }) => mapOffersToClient(data))
+    .then((offers) => dispatch(ActionCreator.loadOffers(offers)))
 );
 
 const fetchNearbyList = (offerId) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.OFFERS}/${offerId}${APIRoute.NEARBY}`)
-    .then(({ data }) => dispatch(ActionCreator.nearbyList(data)))
+    .then(({ data }) => mapOffersToClient(data))
+    .then((nearby) => dispatch(ActionCreator.nearbyList(nearby)))
 );
 
 const checkAuth = () => (dispatch, _getState, api) => (
