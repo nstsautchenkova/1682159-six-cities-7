@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import offerType from '../offers-prop/offers-prop.js';
 import Header from '../header/header.jsx';
 import OfferList from '../offers-list/offers-list.jsx';
 import Map from '../map/map.jsx';
-import сityType from '../city-prop/city-prop.js';
 import CitiesList from '../сities-list/сities-list.jsx';
-import сitiesType from '../сities-prop/сities-prop.js';
 function HomePage(props) {
-  const { offers, defaultCity, onOfferHover, selectedOffer, OfferCity } = props;
+  const { onOfferHover, selectedOffer } = props;
   return (
     <>
       <div style={{ display: 'none' }}>
@@ -31,7 +28,7 @@ function HomePage(props) {
           <h1 className="visually-hidden">Cities</h1>
           <div className="tabs">
             <section className="locations container">
-              <CitiesList OfferCity={OfferCity} />
+              <CitiesList />
             </section>
           </div>
 
@@ -39,14 +36,12 @@ function HomePage(props) {
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
-                <OfferList offers={offers} onOfferHover={onOfferHover} />
+                <OfferList onOfferHover={onOfferHover} />
               </section>
 
               <div className="cities__right-section">
                 <section className="cities__map map">
                   <Map
-                    defaultCity={defaultCity}
-                    offers={offers}
                     selectedOffer={selectedOffer}
                   />
                 </section>
@@ -61,11 +56,8 @@ function HomePage(props) {
 }
 
 HomePage.propTypes = {
-  offers: offerType.isRequired,
-  defaultCity: PropTypes.exact(сityType).isRequired,
   onOfferHover: PropTypes.func.isRequired,
   selectedOffer: PropTypes.node.isRequired,
-  OfferCity: PropTypes.exact(сitiesType).isRequired,
 };
 
 export default HomePage;

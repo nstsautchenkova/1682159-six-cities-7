@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { connect } from 'react-redux';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import PropTypes from 'prop-types';
@@ -8,12 +9,11 @@ import сityType from '../city-prop/city-prop.js';
 import { OFFER_COUT } from '../../const.js';
 import { getDefaultMapIcon } from '../../utils.js';
 
-function MapReviews(props) {
-  const { defaultCity, offers } = props;
+function MapRoomPage(props) {
+  const { defaultCityMap, nearby } = props;
   const mapRef = useRef(null);
-  const map = useMap(mapRef, defaultCity);
-
-  const reviewsOffersMap = offers.slice(0, OFFER_COUT);
+  const map = useMap(mapRef, defaultCityMap);
+  const reviewsOffersMap = nearby.slice(0, OFFER_COUT);
 
   useEffect(() => {
     if (map) {
@@ -26,9 +26,10 @@ function MapReviews(props) {
             icon: getDefaultMapIcon(leaflet),
           })
           .addTo(map);
+        map.panTo(new leaflet.LatLng(offer.location.latitude, offer.location.longitude));
       });
     }
-  }, [map, offers]);
+  }, [map, nearby]);
 
   return (
     <>
@@ -42,9 +43,14 @@ function MapReviews(props) {
     </>
   );
 }
-MapReviews.propTypes = {
-  offers: offerType.isRequired,
-  defaultCity: PropTypes.exact(сityType).isRequired,
+const mapStateToProps = (state) => ({
+  defaultCityMap: state.defaultCityMap,
+  nearby: state.nearby,
+});
+MapRoomPage.propTypes = {
+  nearby: offerType.isRequired,
+  defaultCityMap: PropTypes.exact(сityType).isRequired,
 };
 
-export default MapReviews;
+//export default MapReviews;
+export default connect(mapStateToProps, null)(MapRoomPage);

@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 
 const сityType = PropTypes.exact({
-  title: PropTypes.string.isRequired,
   latitude: PropTypes.number.isRequired,
   longitude: PropTypes.number.isRequired,
   zoom: PropTypes.number.isRequired,
