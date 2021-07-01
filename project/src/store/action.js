@@ -3,12 +3,18 @@ const ActionType = {
   SELECT_LIST_RENT: 'citiesList/selectListRent',
   DEFAULT_CITY_MAP: 'map/defaultCityMap',
   LOAD_OFFERS: 'data/loadOffers',
+  NEARBY_LIST: 'data/nearbyList',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
-  NEARBY_LIST: 'data/nearbyList',
+  REDIRECT_TO_ROUTE: 'game/redirectToRoute',
+  USER_EMAIL: 'data/login',
 };
 
 const ActionCreator = {
+  userEmail: (login) => ({
+    type: ActionType.USER_EMAIL,
+    payload: login,
+  }),
   selectCity: (activeCity) => ({
     type: ActionType.SELECT_CITY,
     activeCity,
@@ -25,6 +31,10 @@ const ActionCreator = {
     type: ActionType.LOAD_OFFERS,
     payload: offers,
   }),
+  nearbyList: (nearby) => ({
+    type: ActionType.NEARBY_LIST,
+    payload: nearby,
+  }),
   requireAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status,
@@ -32,9 +42,9 @@ const ActionCreator = {
   logout: () => ({
     type: ActionType.LOGOUT,
   }),
-  nearbyList: (nearby) => ({
-    type: ActionType.NEARBY_LIST,
-    payload: nearby,
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url,
   }),
 };
 export { ActionType, ActionCreator };

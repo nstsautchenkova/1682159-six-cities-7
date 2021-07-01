@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { Switch, Route, Router as BrowserRouter } from 'react-router-dom';
 import { AppRoute } from '../../const.js';
 import HomePage from '../home-page/home-page.jsx';
 import LoginPage from '../login-page/login-page.jsx';
@@ -11,10 +11,12 @@ import HotFoundPage from '../not-found-page/not-found-page.jsx';
 import offerType from '../offers-prop/offers-prop.js';
 import reviewsType from '../reviews-props/reviews-props.js';
 import сityType from '../city-prop/city-prop.js';
-import { getOfferById } from '../../utils.js';
+import { getOfferById, isCheckedAuth } from '../../utils.js';
 import сitiesType from '../сities-prop/сities-prop.js';
 import { Preloader } from '../preloader/preloader.jsx';
 import { AuthorizationStatus } from '../../const.js';
+import PrivateRoute from '../private-route/private-route';
+import browserHistory from '../../browser-history.js';
 function App(props) {
   const { rentalOfferCout, offers, defaultCity, reviews, OfferCity } = props;
   const [selectedOffer, setSelectedOffer] = useState(null);
@@ -24,15 +26,14 @@ function App(props) {
   };
 
   const { authorizationStatus, isDataLoaded } = props;
-  const isCheckedAuth = (status) => status === AuthorizationStatus.UNKNOWN;
-  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
+  if (isCheckedAuth(authorizationStatus, AuthorizationStatus) || !isDataLoaded) {
     return (
       <Preloader />
     );
   }
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path={AppRoute.MAIN}>
           <HomePage
@@ -47,9 +48,13 @@ function App(props) {
         <Route exact path={AppRoute.SIGN_IN}>
           <LoginPage />
         </Route>
-        <Route exact path={AppRoute.FAVORITES}>
-          <FavoritesPage offers={offers} />
-        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoute.FAVORITES}
+          render={() => (
+            <FavoritesPage />
+          )}
+        />
         <Route exact path={AppRoute.OFFER_$ID} component={RoomPage}>
           <RoomPage
             offers={offers}

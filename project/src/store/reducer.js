@@ -10,29 +10,36 @@ const getMapByCity = (activeCity, rezultOffers) => {
 
 const initialState = {
   defaultCity: OfferCity.PARIS.name,
-  offers: [],
+  defaultCityMap: OfferCity.PARIS.location,
   listOffers: [],
+  offers: [],
+  nearby: [],
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   isDataLoaded: false,
-  defaultCityMap: OfferCity.PARIS.location,
-  nearby: [],
+  userEmail:'',
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case (ActionType.SELECT_CITY): {
+    case ActionType.USER_EMAIL: {
+      return {
+        ...state,
+        userEmail: action.payload,
+      };
+    }
+    case ActionType.SELECT_CITY: {
       return {
         ...state,
         defaultCity: action.activeCity,
       };
     }
-    case (ActionType.SELECT_LIST_RENT): {
+    case ActionType.SELECT_LIST_RENT: {
       return {
         ...state,
-        listOffers: getOffersByCity(state.defaultCity, state.offers),
+        listOffers: getOffersByCity(action.activeCity, state.offers),
       };
     }
-    case (ActionType.LOAD_OFFERS): {
+    case ActionType.LOAD_OFFERS: {
       return {
         ...state,
         offers: action.payload,
@@ -40,25 +47,25 @@ const reducer = (state = initialState, action) => {
         isDataLoaded: true,
       };
     }
-    case (ActionType.REQUIRED_AUTHORIZATION): {
+    case ActionType.REQUIRED_AUTHORIZATION: {
       return {
         ...state,
         authorizationStatus: action.payload,
       };
     }
-    case (ActionType.LOGOUT): {
+    case ActionType.LOGOUT: {
       return {
         ...state,
         authorizationStatus: AuthorizationStatus.NO_AUTH,
       };
     }
-    case (ActionType.DEFAULT_CITY_MAP): {
+    case ActionType.DEFAULT_CITY_MAP: {
       return {
         ...state,
         defaultCityMap: getMapByCity(action.activeCity, OfferCity),
       };
     }
-    case (ActionType.NEARBY_LIST): {
+    case ActionType.NEARBY_LIST: {
       return {
         ...state,
         nearby: action.payload,

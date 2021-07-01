@@ -6,11 +6,14 @@ const TIMEOUT = 5000;
 const HttpCode = {
   UNAUTHORIZED: 401,
 };
-
+const token = localStorage.getItem('token') ?? '';
 const createAPI = (onUnauthorized) => {
   const api = axios.create({
     baseURL: BACKEND_URL,
     timeout: TIMEOUT,
+    headers: {
+      'x-token': token,
+    },
   });
 
   const onSuccess = (response) => response;

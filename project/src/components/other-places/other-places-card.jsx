@@ -1,21 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import offerType from '../offers-prop/offers-prop.js';
 import { AppRoute } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
+import { fetchNearbyList } from '../../store/api-actions.js';
+import { connect } from 'react-redux';
 
 function OtherPlacesCard(props) {
-  const { offers } = props;
+  const { offers, getNearbyId } = props;
   const link = `${AppRoute.OFFER}/${offers.id}`;
-
   return (
-    <article id={offers.id} className="near-places__card place-card">
+    <article id={offers.id} className="near-places__card place-card" onClick={getNearbyId}>
       <div className="near-places__image-wrapper place-card__image-wrapper">
         <Link
           to={link}
           onClick={() => window.scrollTo(0, 0)}
         >
-          <img className="place-card__image" src={offers.preview_image} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={offers.previewImage} width="260" height="200" alt="Place image" />
         </Link>
       </div>
       <div className="place-card__info">
@@ -25,7 +27,7 @@ function OtherPlacesCard(props) {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={offers.is_favorite ? 'place-card__bookmark-button button place-card__bookmark-button--active' : 'place-card__bookmark-button button'}
+            className={offers.isFavorite ? 'place-card__bookmark-button button place-card__bookmark-button--active' : 'place-card__bookmark-button button'}
             type="button"
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
@@ -48,8 +50,14 @@ function OtherPlacesCard(props) {
     </article>
   );
 }
-
+const mapDispatchToProps = (dispatch) => ({
+  getNearbyId(evt) {
+    dispatch(fetchNearbyList(evt.currentTarget.id));
+  },
+});
 OtherPlacesCard.propTypes = {
   offers: offerType.isRequired,
+  getNearbyId: PropTypes.func.isRequired,
 };
-export default OtherPlacesCard;
+//export default OtherPlacesCard;
+export default connect(null, mapDispatchToProps)(OtherPlacesCard);

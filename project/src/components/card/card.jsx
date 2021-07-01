@@ -2,27 +2,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { AppRoute } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
 import offerType from '../offers-prop/offers-prop.js';
-
+import { AuthorizationStatus } from '../../const.js';
+import { fetchNearbyList } from '../../store/api-actions.js';
 function Card(props) {
-  const { offers, onOfferHover } = props;
+  const { offers, onOfferHover, getNearbyId } = props;
   const history = useHistory();
   const link = `${AppRoute.OFFER}/${offers.id}`;
+  const { authorizationStatus } = props;
 
   const cardHoverHandler = () => {
     onOfferHover(offers.id);
   };
+
   return (
     <article
       id={offers.id}
       className='cities__place-card place-card'
       onMouseEnter={cardHoverHandler}
+      onClick={getNearbyId}
     >
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={link}>
-          <img className="place-card__image" src={offers.preview_image} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={offers.previewImage} width="260" height="200" alt="Place image" />
         </Link>
       </div>
       <div className="place-card__info">
@@ -32,9 +37,9 @@ function Card(props) {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={offers.is_favorite ? 'place-card__bookmark-button button place-card__bookmark-button--active' : 'place-card__bookmark-button button'}
+            className={offers.isFavorite ? 'place-card__bookmark-button button place-card__bookmark-button--active' : 'place-card__bookmark-button button'}
             type="button"
-            onClick={() => offers.is_favorite && history.push(AppRoute.FAVORITES)}
+            onClick={() => authorizationStatus === AuthorizationStatus.AUTH ? history.push(AppRoute.FAVORITES) : history.push(AppRoute.SIGN_IN)}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
@@ -56,9 +61,19 @@ function Card(props) {
     </article>
   );
 }
-
+const mapStateToProps = (state) => ({
+  authorizationStatus: state.authorizationStatus,
+});
+const mapDispatchToProps = (dispatch) => ({
+  getNearbyId(evt) {
+    dispatch(fetchNearbyList(evt.currentTarget.id));
+  },
+});
 Card.propTypes = {
   offers: offerType.isRequired,
   onOfferHover: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  getNearbyId: PropTypes.func.isRequired,
 };
-export default Card;
+//export default Card;
+export default connect(mapStateToProps,mapDispatchToProps)(Card);

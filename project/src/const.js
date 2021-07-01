@@ -17,14 +17,6 @@ const SortType = {
   TO_LOW: 'Price: high to low',
   TOP_RATE: 'Top rated first',
 };
-/* const OfferCity = {
-  PARIS: 'Paris',
-  COLOGNE: 'Cologne',
-  BRUSSELS: 'Brussels',
-  AMSTERDAM: 'Amsterdam',
-  HAMBURG: 'Hamburg',
-  DUSSELDORF: 'Dusseldorf',
-}; */
 const OfferCity = {
   PARIS: {
     name: 'Paris',
@@ -84,7 +76,6 @@ const APIRoute = {
   OFFERS: '/hotels',
   LOGIN: '/login',
   LOGOUT: '/logout',
-  //NEARBY: `/hotels/:${hotelIid}/nearby`,
-  NEARBY: `hotels/${1}/nearby`,
+  NEARBY: '/nearby',
 };
 export { AppRoute, SortType, RatingSetting, REVIEWS_COUT, OFFER_COUT, OfferCity, AuthorizationStatus, APIRoute };
