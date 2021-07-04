@@ -1,6 +1,6 @@
 import { ActionCreator } from './action.js';
 import { AuthorizationStatus, AppRoute, APIRoute } from '../const.js';
-import { mapOffersToClient } from '../utils.js';
+import { mapOffersToClient, mapCommentsToClient } from '../utils.js';
 
 const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS)
@@ -12,6 +12,11 @@ const fetchNearbyList = (offerId) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.OFFERS}/${offerId}${APIRoute.NEARBY}`)
     .then(({ data }) => mapOffersToClient(data))
     .then((nearby) => dispatch(ActionCreator.nearbyList(nearby)))
+);
+const fetchComments = (reviewsId) => (dispatch, _getState, api) => (
+  api.get(`${APIRoute.REVIEWS}/${reviewsId}`)
+    .then(({ data }) => mapCommentsToClient(data))
+    .then((reviews) => dispatch(ActionCreator.reviewsList(reviews)))
 );
 
 const checkAuth = () => (dispatch, _getState, api) => (
@@ -34,4 +39,9 @@ const logout = () => (dispatch, _getState, api) => (
     .then(() => dispatch(ActionCreator.logout()))
 );
 
-export { fetchOffersList, fetchNearbyList, checkAuth, login, logout };
+const newComments = ({ comment, rating }) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.COMMENT}/${localStorage.getItem('offerId')}`, { comment, rating })
+    .then(() => dispatch(ActionCreator.newComment(comment, rating)))
+);
+
+export { fetchOffersList, fetchNearbyList, checkAuth, login, logout, fetchComments, newComments };

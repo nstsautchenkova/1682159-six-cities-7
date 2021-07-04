@@ -1,4 +1,4 @@
-const reviews = [
+/* const reviews = [
   {
     id: 1,
     avatarUrl: 'img/avatar-max.jpg',
@@ -25,3 +25,4 @@ const reviews = [
 ];
 
 export default reviews;
+ */

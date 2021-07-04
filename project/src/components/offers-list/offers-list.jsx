@@ -5,8 +5,6 @@ import offerType from '../offers-prop/offers-prop.js';
 import { SortType } from '../../const.js';
 import Card from '../card/card.jsx';
 import getSortedOffers from './helpers.js';
-import { mapOffersToClient } from '../../utils.js';
-
 function OfferList(props) {
   const { onOfferHover, activeCity, listOffers } = props;
 
@@ -38,7 +36,7 @@ function OfferList(props) {
     </li>
   ));
 
-  const sortedOffers = getSortedOffers(mapOffersToClient(listOffers), placesOptionsTitle);
+  const sortedOffers = getSortedOffers(listOffers, placesOptionsTitle);
   return (
     <>
       <b className="places__found">{listOffers.length} places to stay in {activeCity}</b>

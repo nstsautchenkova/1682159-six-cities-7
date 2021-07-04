@@ -7,11 +7,12 @@ import { AppRoute } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
 import offerType from '../offers-prop/offers-prop.js';
 import { AuthorizationStatus } from '../../const.js';
-import { fetchNearbyList } from '../../store/api-actions.js';
+import { fetchNearbyList, fetchComments } from '../../store/api-actions.js';
 function Card(props) {
   const { offers, onOfferHover, getNearbyId } = props;
   const history = useHistory();
-  const link = `${AppRoute.OFFER}/${offers.id}`;
+  const getLinkOffer = () => `${AppRoute.OFFER}/${offers.id}`;
+  const link = getLinkOffer;
   const { authorizationStatus } = props;
 
   const cardHoverHandler = () => {
@@ -66,7 +67,9 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
   getNearbyId(evt) {
+    localStorage.setItem('offerId', evt.currentTarget.id);
     dispatch(fetchNearbyList(evt.currentTarget.id));
+    dispatch(fetchComments(evt.currentTarget.id));
   },
 });
 Card.propTypes = {
@@ -76,4 +79,4 @@ Card.propTypes = {
   getNearbyId: PropTypes.func.isRequired,
 };
 //export default Card;
-export default connect(mapStateToProps,mapDispatchToProps)(Card);
+export default connect(mapStateToProps, mapDispatchToProps)(Card);

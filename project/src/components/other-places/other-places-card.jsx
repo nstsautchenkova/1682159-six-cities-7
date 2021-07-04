@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import offerType from '../offers-prop/offers-prop.js';
 import { AppRoute } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
-import { fetchNearbyList } from '../../store/api-actions.js';
+import { fetchNearbyList, fetchComments } from '../../store/api-actions.js';
 import { connect } from 'react-redux';
 
 function OtherPlacesCard(props) {
@@ -53,6 +53,7 @@ function OtherPlacesCard(props) {
 const mapDispatchToProps = (dispatch) => ({
   getNearbyId(evt) {
     dispatch(fetchNearbyList(evt.currentTarget.id));
+    dispatch(fetchComments(evt.currentTarget.id));
   },
 });
 OtherPlacesCard.propTypes = {

@@ -1,9 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+//import { Redirect } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { AppRoute } from '../../const.js';
-import { getRatingInPercents, mapOffersToClient } from '../../utils.js';
+import { AppRoute, AuthorizationStatus } from '../../const.js';
+import { getRatingInPercents } from '../../utils.js';
 import offerType from '../offers-prop/offers-prop.js';
 import reviewsType from '../reviews-props/reviews-props.js';
 import Header from '../header/header.jsx';
@@ -11,10 +13,22 @@ import FormComment from '../form-comment/form-comment.jsx';
 import ReviewsList from '../reviews/reviews-list.jsx';
 import MapRoomPage from '../map/room-page-map.jsx';
 import OtherPlaces from '../other-places/other-places-list.jsx';
+import NotFoundPage from '../not-found-page/not-found-page.jsx';
 function RoomPage(props) {
-  const { offers, reviews } = props;
+  const { offers, reviews, authorizationStatus } = props;
   const history = useHistory();
   const location = useLocation();
+
+  const getNotFound = () => {
+    const offerId = offers[localStorage.getItem('offerId')];
+    const link = `${AppRoute.OFFER}/${localStorage.getItem('offerId')}`;
+    const offerLink = offers.map((it) => it.id).includes(offerId);
+    if ((link !== location.pathname) && (offerLink === false)) {
+      return (
+        <NotFoundPage />
+      );
+    }
+  };
   return (
     <>
       <div style={{ display: 'none' }}>
@@ -30,15 +44,14 @@ function RoomPage(props) {
           </symbol>
         </svg>
       </div>
-
-      <div className="page">
-        <Header />
-        <main className="page__main page__main--property">
-
-          {mapOffersToClient(offers).map((offer) => {
-            const link = `${AppRoute.OFFER}/${offer.id}`;
-            if (link === location.pathname) {
-              return (
+      {offers.map((offer) => {
+        const link = `${AppRoute.OFFER}/${offer.id}`;
+        if (link === location.pathname) {
+          localStorage.setItem('offerId', offer.id);
+          return (
+            <div className="page">
+              <Header />
+              <main className="page__main page__main--property">
                 <section className="property">
                   <div className="property__gallery-container container">
                     <div className="property__gallery">
@@ -57,7 +70,7 @@ function RoomPage(props) {
                         <button
                           className={offer.isFavorite ? 'property__bookmark-button button property__bookmark-button--active' : 'property__bookmark-button button'}
                           type="button"
-                          onClick={() => offers.isFavorite && history.push(AppRoute.FAVORITES) ? history.push(AppRoute.FAVORITES) : history.push(AppRoute.SIGN_IN) }
+                          onClick={() => offers.isFavorite && history.push(AppRoute.FAVORITES) ? history.push(AppRoute.FAVORITES) : history.push(AppRoute.SIGN_IN)}
                         >
                           <svg className="property__bookmark-icon" width="31" height="33">
                             <use xlinkHref="#icon-bookmark"></use>
@@ -106,7 +119,7 @@ function RoomPage(props) {
                       </div>
                       <section className="property__reviews reviews">
                         <ReviewsList reviews={reviews} />
-                        <FormComment />
+                        {authorizationStatus === AuthorizationStatus.AUTH && <FormComment />}
                       </section>
                     </div>
                   </div>
@@ -114,27 +127,30 @@ function RoomPage(props) {
                     <MapRoomPage />
                   </section>
                 </section>
-              );
-            }
-          })}
+                <div className="container">
+                  <section className="near-places places">
+                    <h2 className="near-places__title">Other places in the neighbourhood</h2>
+                    <OtherPlaces />
+                  </section>
+                </div>
+              </main>
+            </div>
+          );
+        }
+      })}
+      {getNotFound()}
 
-          <div className="container">
-            <section className="near-places places">
-              <h2 className="near-places__title">Other places in the neighbourhood</h2>
-              <OtherPlaces />
-            </section>
-          </div>
-        </main>
-      </div>
     </>
   );
 }
 const mapStateToProps = (state) => ({
   offers: state.offers,
+  authorizationStatus: state.authorizationStatus,
 });
 RoomPage.propTypes = {
   offers: offerType.isRequired,
   reviews: reviewsType.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 //export default RoomPage;
 export default connect(mapStateToProps, null)(RoomPage);

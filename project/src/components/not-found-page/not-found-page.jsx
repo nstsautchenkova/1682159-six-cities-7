@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../header/header.jsx';
 
-function HotFoundPage(props) {
+function NotFoundPage(props) {
   return (
     <>
       <div style={{ display: 'none' }}>
@@ -27,11 +27,12 @@ function HotFoundPage(props) {
             '-webkit-box-flex': '1',
             '-ms-flex-positive': '1',
             'flex-grow': '1',
-            'background-color': '#fff',
+            'background-color': '#f5f5f5',
             'overflow-y': 'hidden',
             'justify-content': 'center',
             'align-items': 'center',
             color: '#ff3600',
+            'padding-top': '100px',
           }}
           >
             <svg height="70px" viewBox="0 0 512 512" width="70px" style={{ 'margin-right': '30px' }}>
@@ -52,4 +53,4 @@ function HotFoundPage(props) {
   );
 }
 
-export default HotFoundPage;
+export default NotFoundPage;

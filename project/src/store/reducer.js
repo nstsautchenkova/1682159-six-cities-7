@@ -16,17 +16,14 @@ const initialState = {
   nearby: [],
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   isDataLoaded: false,
-  userEmail:'',
+  userEmail: '',
+  reviews: '',
+  comment: '',
+  commentMessage: '',
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.USER_EMAIL: {
-      return {
-        ...state,
-        userEmail: action.payload,
-      };
-    }
     case ActionType.SELECT_CITY: {
       return {
         ...state,
@@ -69,6 +66,30 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         nearby: action.payload,
+      };
+    }
+    case ActionType.USER_EMAIL: {
+      return {
+        ...state,
+        userEmail: action.payload,
+      };
+    }
+    case ActionType.NEW_COMMENTS: {
+      return {
+        ...state,
+        comment: action.payload,
+      };
+    }
+    case ActionType.REVIEW_LIST: {
+      return {
+        ...state,
+        reviews: action.payload,
+      };
+    }
+    case ActionType.COMMENTS_MESSAGES: {
+      return {
+        ...state,
+        commentMessage: action.payload,
       };
     }
     default: {
