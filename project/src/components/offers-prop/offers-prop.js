@@ -12,7 +12,7 @@ const offerType = PropTypes.exact({
   description: PropTypes.string.isRequired,
   goods: PropTypes.arrayOf(PropTypes.string).isRequired,
   host: PropTypes.exact({
-    avatarUrl: PropTypes.string.isRequired,
+    hostAvatarUrl: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
     isPro: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,

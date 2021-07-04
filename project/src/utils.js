@@ -74,5 +74,42 @@ const mapCommentToClient = (review) => ({
   date: review.date,
 });
 const mapCommentsToClient = (reviews) => reviews.map((it) => mapCommentToClient(it));
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '30px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+  alertContainer.textContent = message;
+  document.body.append(alertContainer);
 
-export { getRatingInPercents, getOfferById, getDefaultMapIcon, getHoverMapIcon, isCheckedAuth, mapOffersToClient, mapCommentsToClient };
+  setTimeout(() => {
+    alertContainer.remove();
+  }, 5000);
+};
+
+const commentFormDefault = () => {
+  const featureCheckbox = document.querySelectorAll('.form__rating-input');
+  featureCheckbox.forEach((element) => element.checked = false);
+  document.querySelector('#review').value = '';
+  document.querySelector('.reviews__submit').disabled = true;
+};
+
+const showSuccess = (success) => {
+  success.current.style.display = 'block';
+  setTimeout(() => {
+    success.current.style.display = 'none';
+  }, 3000);
+};
+const showError = (error) => {
+  error.current.style.display = 'block';
+  setTimeout(() => {
+    error.current.style.display = 'none';
+  }, 3000);
+};
+export { getRatingInPercents, getOfferById, getDefaultMapIcon, getHoverMapIcon, isCheckedAuth, mapOffersToClient, mapCommentsToClient, showAlert, commentFormDefault, showSuccess, showError };

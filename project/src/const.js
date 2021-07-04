@@ -82,8 +82,8 @@ const APIRoute = {
   COMMENT: '/comments',
 };
 const CommentSetting = {
-  COMMENT_LENGHT_MIN: 50,
-  COMMENT_LENGHT_MAX: 300,
-  COMMENT_RATING_MIN: 0,
+  LENGHT_MIN: 50,
+  LENGHT_MAX: 300,
+  RATING_MIN: 0,
 };
 export { AppRoute, SortType, RatingSetting, REVIEWS_COUT, OFFER_COUT, OfferCity, AuthorizationStatus, APIRoute, CommentSetting };

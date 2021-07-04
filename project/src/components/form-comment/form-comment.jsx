@@ -4,31 +4,36 @@ import { connect } from 'react-redux';
 import { newComments } from '../../store/api-actions.js';
 import ratingToValues from '../form-comment/common.js';
 import getRatingsEntries from '../form-comment/helpers.js';
-import {CommentSetting} from '../../const.js';
+import { CommentSetting } from '../../const.js';
+import { commentFormDefault, showSuccess, showError } from '../../utils.js';
 
 function FormComment(props) {
-  const { onSubmit} = props;
+  const { onSubmit } = props;
+
   const commentRef = useRef();
-  const ratingRef = useRef();
   const btnRef = useRef();
   const messageSuccessRef = useRef();
+  const messageErrorRef = useRef();
+
   const ratingsEntries = getRatingsEntries(ratingToValues);
-  const [formCommentRating, setformCommentRating] = useState();
-  const [formCommentValueLength, setformCommentValueLength] = useState(0);
+  const [formRating, setformRating] = useState();
   const handleChangeRating = (evt) => {
-    setformCommentRating(evt.target.value);
+    setformRating(evt.target.value);
   };
+
+  const [formCommentValueLength, setformCommentValueLength] = useState(0);
   const handleChangeComment = (evt) => {
     setformCommentValueLength(evt.target.value);
   };
-  if (((formCommentValueLength.length >= CommentSetting.COMMENT_LENGHT_MIN) || (formCommentValueLength.length <= CommentSetting.COMMENT_LENGHT_MAX)) && ((formCommentRating > CommentSetting.COMMENT_RATING_MIN))) {
+
+  if (((formCommentValueLength.length >= CommentSetting.LENGHT_MIN) || (formCommentValueLength.length <= CommentSetting.LENGHT_MAX)) && ((formRating > CommentSetting.RATING_MIN))) {
     btnRef.current.disabled = false;
   }
-  if ((formCommentValueLength.length < CommentSetting.COMMENT_LENGHT_MIN) || (formCommentValueLength.length > CommentSetting.COMMENT_LENGHT_MAX)) {
+  if ((formCommentValueLength.length < CommentSetting.LENGHT_MIN) || (formCommentValueLength.length > CommentSetting.LENGHT_MAX)) {
     btnRef.current.disabled = true;
   }
   const checkValid = () => {
-    if (((formCommentValueLength.length >= CommentSetting.COMMENT_LENGHT_MIN) || (formCommentValueLength.length <= CommentSetting.COMMENT_LENGHT_MAX)) && ((formCommentRating > CommentSetting.COMMENT_RATING_MIN))) {
+    if (((formCommentValueLength.length >= CommentSetting.LENGHT_MIN) || (formCommentValueLength.length <= CommentSetting.LENGHT_MAX)) && ((formRating > CommentSetting.RATING_MIN))) {
       return true;
     } else {
       return false;
@@ -40,10 +45,13 @@ function FormComment(props) {
     if (checkValid()) {
       onSubmit({
         comment: commentRef.current.value,
-        rating: formCommentRating,
+        rating: formRating,
       });
-      messageSuccessRef.current.style.display = 'block';
+      showSuccess(messageSuccessRef);
+      commentFormDefault();
     }
+    showError(messageErrorRef);
+    commentFormDefault();
   };
   return (
     <form
@@ -64,6 +72,18 @@ function FormComment(props) {
       >
         Comment sent successfully!
       </div>
+      <div
+        className="commentMessageError"
+        ref={messageErrorRef}
+        style={{
+          display: 'none',
+          background: 'rgb(255 203 211)',
+          padding: '20px',
+          'margin-bottom': '20px',
+        }}
+      >
+        Comment sent ERROR!
+      </div>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {ratingsEntries.map(([name, value]) => (
@@ -75,7 +95,6 @@ function FormComment(props) {
               type="radio"
               value={value}
               onChange={handleChangeRating}
-              ref={ratingRef}
             />
             <label htmlFor={`${value}-stars`} className="reviews__rating-label form__rating-label" title={name}>
               <svg className="form__star-image" width="37" height="33">
