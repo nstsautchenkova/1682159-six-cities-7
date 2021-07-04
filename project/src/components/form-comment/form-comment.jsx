@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { newComments } from '../../store/api-actions.js';
 import ratingToValues from '../form-comment/common.js';
 import getRatingsEntries from '../form-comment/helpers.js';
+import {CommentSetting} from '../../const.js';
 
 function FormComment(props) {
   const { onSubmit} = props;
@@ -20,14 +21,14 @@ function FormComment(props) {
   const handleChangeComment = (evt) => {
     setformCommentValueLength(evt.target.value);
   };
-  if (((formCommentValueLength.length >= 50) || (formCommentValueLength.length <= 300)) && ((formCommentRating > 0))) {
+  if (((formCommentValueLength.length >= CommentSetting.COMMENT_LENGHT_MIN) || (formCommentValueLength.length <= CommentSetting.COMMENT_LENGHT_MAX)) && ((formCommentRating > CommentSetting.COMMENT_RATING_MIN))) {
     btnRef.current.disabled = false;
   }
-  if ((formCommentValueLength.length < 50) || (formCommentValueLength.length > 300)) {
+  if ((formCommentValueLength.length < CommentSetting.COMMENT_LENGHT_MIN) || (formCommentValueLength.length > CommentSetting.COMMENT_LENGHT_MAX)) {
     btnRef.current.disabled = true;
   }
   const checkValid = () => {
-    if (((formCommentValueLength.length >= 50) || (formCommentValueLength.length <= 300)) && ((formCommentRating > 0))) {
+    if (((formCommentValueLength.length >= CommentSetting.COMMENT_LENGHT_MIN) || (formCommentValueLength.length <= CommentSetting.COMMENT_LENGHT_MAX)) && ((formCommentRating > CommentSetting.COMMENT_RATING_MIN))) {
       return true;
     } else {
       return false;
