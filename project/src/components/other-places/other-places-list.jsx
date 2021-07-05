@@ -9,7 +9,7 @@ function OtherPlaces(props) {
   return (
     <div className="near-places__list places__list">
       {otherPlacesOffers.map((offer) =>
-        <OtherPlacesCard key={offer.id} offers={offer} />,
+        <OtherPlacesCard key={offer.id} offers={offer}/>,
       )}
     </div>
   );

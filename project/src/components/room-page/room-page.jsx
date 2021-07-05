@@ -1,34 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-//import { Redirect } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AppRoute, AuthorizationStatus } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
 import offerType from '../offers-prop/offers-prop.js';
-import reviewsType from '../reviews-props/reviews-props.js';
 import Header from '../header/header.jsx';
 import FormComment from '../form-comment/form-comment.jsx';
 import ReviewsList from '../reviews/reviews-list.jsx';
 import MapRoomPage from '../map/room-page-map.jsx';
 import OtherPlaces from '../other-places/other-places-list.jsx';
 import NotFoundPage from '../not-found-page/not-found-page.jsx';
+import { fetchNearbyList, fetchComments } from '../../store/api-actions.js';
 function RoomPage(props) {
-  const { offers, reviews, authorizationStatus } = props;
+  const { offers, authorizationStatus, getId } = props;
   const history = useHistory();
   const location = useLocation();
+  let { id } = useParams();
 
   const getNotFound = () => {
-    const offerId = offers[localStorage.getItem('offerId')];
-    const link = `${AppRoute.OFFER}/${localStorage.getItem('offerId')}`;
-    const offerLink = offers.map((it) => it.id).includes(offerId);
+    const link = `${AppRoute.OFFER}/${id}`;
+    const offerLink = offers.map((it) => it.id).includes(id);
     if ((link !== location.pathname) && (offerLink === false)) {
       return (
         <NotFoundPage />
       );
     }
   };
+  getId(id);
   return (
     <>
       <div style={{ display: 'none' }}>
@@ -47,7 +46,7 @@ function RoomPage(props) {
       {offers.map((offer) => {
         const link = `${AppRoute.OFFER}/${offer.id}`;
         if (link === location.pathname) {
-          localStorage.setItem('offerId', offer.id);
+          id = offer.id;
           return (
             <div className="page">
               <Header />
@@ -106,10 +105,10 @@ function RoomPage(props) {
                         <h2 className="property__host-title">Meet the host</h2>
                         <div className="property__host-user user">
                           <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                            <img className="property__avatar user__avatar" src={offer.hostAvatarUrl} width="74" height="74" alt="Host avatar" />
+                            <img className="property__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                           </div>
-                          <span className="property__user-name">{offer.hostName}</span>
-                          {offer.hostIsPro && <span className="property__user-status">Pro</span>}
+                          <span className="property__user-name">{offer.host.name}</span>
+                          {offer.host.isPro && <span className="property__user-status">Pro</span>}
                         </div>
                         <div className="property__description">
                           <p className="property__text">
@@ -118,7 +117,7 @@ function RoomPage(props) {
                         </div>
                       </div>
                       <section className="property__reviews reviews">
-                        <ReviewsList reviews={reviews} />
+                        <ReviewsList />
                         {authorizationStatus === AuthorizationStatus.AUTH && <FormComment />}
                       </section>
                     </div>
@@ -147,10 +146,16 @@ const mapStateToProps = (state) => ({
   offers: state.offers,
   authorizationStatus: state.authorizationStatus,
 });
+const mapDispatchToProps = (dispatch) => ({
+  getId(id) {
+    dispatch(fetchNearbyList(id));
+    dispatch(fetchComments(id));
+  },
+});
 RoomPage.propTypes = {
   offers: offerType.isRequired,
-  reviews: reviewsType.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
+  getId: PropTypes.func.isRequired,
 };
 //export default RoomPage;
-export default connect(mapStateToProps, null)(RoomPage);
+export default connect(mapStateToProps, mapDispatchToProps)(RoomPage);

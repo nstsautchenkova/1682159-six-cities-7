@@ -1,19 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AppRoute } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
 import offerType from '../offers-prop/offers-prop.js';
 import { AuthorizationStatus } from '../../const.js';
-import { fetchNearbyList, fetchComments } from '../../store/api-actions.js';
 function Card(props) {
-  const { offers, onOfferHover, getNearbyId } = props;
+  const { offers, onOfferHover } = props;
   const history = useHistory();
   const getLinkOffer = () => `${AppRoute.OFFER}/${offers.id}`;
   const link = getLinkOffer;
   const { authorizationStatus } = props;
+  const { id } = useParams();
 
   const cardHoverHandler = () => {
     onOfferHover(offers.id);
@@ -24,9 +24,8 @@ function Card(props) {
       id={offers.id}
       className='cities__place-card place-card'
       onMouseEnter={cardHoverHandler}
-      onClick={getNearbyId}
     >
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className="cities__image-wrapper place-card__image-wrapper" id={id}>
         <Link to={link}>
           <img className="place-card__image" src={offers.previewImage} width="260" height="200" alt="Place image" />
         </Link>
@@ -65,18 +64,10 @@ function Card(props) {
 const mapStateToProps = (state) => ({
   authorizationStatus: state.authorizationStatus,
 });
-const mapDispatchToProps = (dispatch) => ({
-  getNearbyId(evt) {
-    localStorage.setItem('offerId', evt.currentTarget.id);
-    dispatch(fetchNearbyList(evt.currentTarget.id));
-    dispatch(fetchComments(evt.currentTarget.id));
-  },
-});
 Card.propTypes = {
   offers: offerType.isRequired,
   onOfferHover: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
-  getNearbyId: PropTypes.func.isRequired,
 };
 //export default Card;
-export default connect(mapStateToProps, mapDispatchToProps)(Card);
+export default connect(mapStateToProps, null)(Card);

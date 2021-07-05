@@ -6,10 +6,12 @@ import ratingToValues from '../form-comment/common.js';
 import getRatingsEntries from '../form-comment/helpers.js';
 import { CommentSetting } from '../../const.js';
 import { commentFormDefault, showSuccess, showError } from '../../utils.js';
+import { fetchComments } from '../../store/api-actions.js';
+import { useParams } from 'react-router-dom';
 
 function FormComment(props) {
-  const { onSubmit } = props;
-
+  const { onSubmit, getId } = props;
+  const { id } = useParams();
   const commentRef = useRef();
   const btnRef = useRef();
   const messageSuccessRef = useRef();
@@ -43,15 +45,20 @@ function FormComment(props) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (checkValid()) {
-      onSubmit({
-        comment: commentRef.current.value,
-        rating: formRating,
-      });
+      onSubmit(
+        id,
+        {
+          comment: commentRef.current.value,
+          rating: formRating,
+        },
+      );
+      getId(id);
       showSuccess(messageSuccessRef);
       commentFormDefault();
+    } else {
+      showError(messageErrorRef);
+      commentFormDefault();
     }
-    showError(messageErrorRef);
-    commentFormDefault();
   };
   return (
     <form
@@ -59,6 +66,7 @@ function FormComment(props) {
       action=""
       method="post"
       onSubmit={handleSubmit}
+      id={id}
     >
       <div
         className="commentMessage"
@@ -131,12 +139,16 @@ function FormComment(props) {
   );
 }
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit(commentData) {
-    dispatch(newComments(commentData));
+  onSubmit(id, commentData) {
+    dispatch(newComments(id, commentData));
+  },
+  getId(id) {
+    dispatch(fetchComments(id));
   },
 });
 FormComment.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  getId: PropTypes.func.isRequired,
 };
 
 //export default FormComment;

@@ -8,7 +8,7 @@ import { fetchNearbyList, fetchComments } from '../../store/api-actions.js';
 import { connect } from 'react-redux';
 
 function OtherPlacesCard(props) {
-  const { offers, getNearbyId } = props;
+  const { offers, getNearbyId} = props;
   const link = `${AppRoute.OFFER}/${offers.id}`;
   return (
     <article id={offers.id} className="near-places__card place-card" onClick={getNearbyId}>

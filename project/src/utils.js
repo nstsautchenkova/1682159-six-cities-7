@@ -44,54 +44,42 @@ const mapOfferToClient = (offer) => ({
   isPremium: offer.is_premium,
   images: offer.images,
   goods: offer.goods,
-  hostAvatarUrl: offer.host.avatar_url,
-  host: offer.host,
-  hostId: offer.host.id,
-  hostName: offer.host.name,
-  hostIsPro: offer.host.is_pro,
+  host:{
+    id: offer.host.id,
+    name: offer.host.name,
+    isPro: offer.host.is_pro,
+    avatarUrl: offer.host.avatar_url,
+  },
   description: offer.description,
-  city: offer.city,
-  cityName: offer.city.name,
-  cityLocation: offer.city.location,
-  cityLatitude: offer.city.location.latitude,
-  cityLongitude: offer.city.location.longitude,
-  cityZoom: offer.city.location.zoom,
-  location: offer.location,
-  latitude: offer.location.latitude,
-  longitude: offer.location.longitude,
-  zoom: offer.location.zoom,
+  city:{
+    name: offer.city.name,
+    location: offer.city.location,
+    latitude: offer.city.location.latitude,
+    longitude: offer.city.location.longitude,
+    zoom: offer.city.location.zoom,
+  },
+  location:{
+    location: offer.location,
+    latitude: offer.location.latitude,
+    longitude: offer.location.longitude,
+    zoom: offer.location.zoom,
+  },
 });
 const mapOffersToClient = (offers) => offers.map((it) => mapOfferToClient(it));
 
 const mapCommentToClient = (review) => ({
   id: review.id,
-  userId: review.user.id,
-  userIsPro: review.user.is_pro,
-  userName: review.user.name,
-  userAvatarUrl: review.user.avatar_url,
+  user:{
+    id: review.user.id,
+    isPro: review.user.is_pro,
+    name: review.user.name,
+    avatarUrl: review.user.avatar_url,
+  },
   rating: review.rating,
   comment: review.comment,
   date: review.date,
 });
 const mapCommentsToClient = (reviews) => reviews.map((it) => mapCommentToClient(it));
-const showAlert = (message) => {
-  const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = 100;
-  alertContainer.style.position = 'absolute';
-  alertContainer.style.left = 0;
-  alertContainer.style.top = 0;
-  alertContainer.style.right = 0;
-  alertContainer.style.padding = '10px 3px';
-  alertContainer.style.fontSize = '30px';
-  alertContainer.style.textAlign = 'center';
-  alertContainer.style.backgroundColor = 'red';
-  alertContainer.textContent = message;
-  document.body.append(alertContainer);
-
-  setTimeout(() => {
-    alertContainer.remove();
-  }, 5000);
-};
 
 const commentFormDefault = () => {
   const featureCheckbox = document.querySelectorAll('.form__rating-input');
@@ -112,4 +100,4 @@ const showError = (error) => {
     error.current.style.display = 'none';
   }, 3000);
 };
-export { getRatingInPercents, getOfferById, getDefaultMapIcon, getHoverMapIcon, isCheckedAuth, mapOffersToClient, mapCommentsToClient, showAlert, commentFormDefault, showSuccess, showError };
+export { getRatingInPercents, getOfferById, getDefaultMapIcon, getHoverMapIcon, isCheckedAuth, mapOffersToClient, mapCommentsToClient, commentFormDefault, showSuccess, showError };

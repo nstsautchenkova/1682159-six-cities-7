@@ -6,7 +6,7 @@ const AppRoute = {
   FAVORITES: '/favorites',
   OFFER_$ID: '/offer/:id',
   OFFER: '/offer',
-  PAGE_NOT_FOUND: '/404',
+  SHOW_ALERT: '/404',
 };
 const RatingSetting = {
   MAX_PERCENTS: 100,

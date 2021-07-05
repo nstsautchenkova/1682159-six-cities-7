@@ -10,7 +10,6 @@ const ActionType = {
   USER_EMAIL: 'data/login',
   REVIEW_LIST: 'data/reviewsList',
   NEW_COMMENTS: 'data/newComments',
-  COMMENTS_MESSAGES: 'data/commentMessage',
 };
 
 const ActionCreator = {
@@ -56,10 +55,6 @@ const ActionCreator = {
   newComment: (comment, rating) => ({
     type: ActionType.NEW_COMMENTS,
     payload: { comment, rating },
-  }),
-  commentMessage: (message) => ({
-    type: ActionType.COMMENTS_MESSAGES,
-    payload: message,
   }),
 };
 export { ActionType, ActionCreator };
