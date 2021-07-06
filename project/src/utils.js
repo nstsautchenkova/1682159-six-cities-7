@@ -85,19 +85,7 @@ const commentFormDefault = () => {
   const featureCheckbox = document.querySelectorAll('.form__rating-input');
   featureCheckbox.forEach((element) => element.checked = false);
   document.querySelector('#review').value = '';
-  document.querySelector('.reviews__submit').disabled = true;
+  document.querySelector('#reviews__submit').disabled = true;
 };
 
-const showSuccess = (success) => {
-  success.current.style.display = 'block';
-  setTimeout(() => {
-    success.current.style.display = 'none';
-  }, 3000);
-};
-const showError = (error) => {
-  error.current.style.display = 'block';
-  setTimeout(() => {
-    error.current.style.display = 'none';
-  }, 3000);
-};
-export { getRatingInPercents, getOfferById, getDefaultMapIcon, getHoverMapIcon, isCheckedAuth, mapOffersToClient, mapCommentsToClient, commentFormDefault, showSuccess, showError };
+export { getRatingInPercents, getOfferById, getDefaultMapIcon, getHoverMapIcon, isCheckedAuth, mapOffersToClient, mapCommentsToClient, commentFormDefault };

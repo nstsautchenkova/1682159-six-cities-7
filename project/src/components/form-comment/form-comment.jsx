@@ -5,17 +5,17 @@ import { newComments } from '../../store/api-actions.js';
 import ratingToValues from '../form-comment/common.js';
 import getRatingsEntries from '../form-comment/helpers.js';
 import { CommentSetting } from '../../const.js';
-import { commentFormDefault, showSuccess, showError } from '../../utils.js';
+import { commentFormDefault } from '../../utils.js';
 import { fetchComments } from '../../store/api-actions.js';
 import { useParams } from 'react-router-dom';
+import { Success, Error } from '../comment-alert/comment-alert.jsx';
+import { ActionCreator } from '../../store/action.js';
 
 function FormComment(props) {
-  const { onSubmit, getId } = props;
+  const { onSubmit, getId, getAlert, commentAlert } = props;
   const { id } = useParams();
   const commentRef = useRef();
   const btnRef = useRef();
-  const messageSuccessRef = useRef();
-  const messageErrorRef = useRef();
 
   const ratingsEntries = getRatingsEntries(ratingToValues);
   const [formRating, setformRating] = useState();
@@ -34,13 +34,7 @@ function FormComment(props) {
   if ((formCommentValueLength.length < CommentSetting.LENGHT_MIN) || (formCommentValueLength.length > CommentSetting.LENGHT_MAX)) {
     btnRef.current.disabled = true;
   }
-  const checkValid = () => {
-    if (((formCommentValueLength.length >= CommentSetting.LENGHT_MIN) || (formCommentValueLength.length <= CommentSetting.LENGHT_MAX)) && ((formRating > CommentSetting.RATING_MIN))) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  const checkValid = () => ((formCommentValueLength.length >= CommentSetting.LENGHT_MIN) || (formCommentValueLength.length <= CommentSetting.LENGHT_MAX)) && ((formRating > CommentSetting.RATING_MIN));
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -53,45 +47,27 @@ function FormComment(props) {
         },
       );
       getId(id);
-      showSuccess(messageSuccessRef);
+      getAlert('Success');
       commentFormDefault();
     } else {
-      showError(messageErrorRef);
+      getAlert('Error');
       commentFormDefault();
     }
+    setTimeout(() => {
+      getAlert(' ');
+      commentFormDefault();
+    }, 1500);
   };
+
   return (
     <form
       className="reviews__form form"
       action=""
       method="post"
       onSubmit={handleSubmit}
-      id={id}
     >
-      <div
-        className="commentMessage"
-        ref={messageSuccessRef}
-        style={{
-          display: 'none',
-          background: '#c6feae',
-          padding: '20px',
-          'margin-bottom': '20px',
-        }}
-      >
-        Comment sent successfully!
-      </div>
-      <div
-        className="commentMessageError"
-        ref={messageErrorRef}
-        style={{
-          display: 'none',
-          background: 'rgb(255 203 211)',
-          padding: '20px',
-          'margin-bottom': '20px',
-        }}
-      >
-        Comment sent ERROR!
-      </div>
+      {commentAlert === 'Success' && <Success />}
+      {commentAlert === 'Error' && <Error />}
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {ratingsEntries.map(([name, value]) => (
@@ -126,6 +102,7 @@ function FormComment(props) {
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
         <button
+          id="reviews__submit"
           className="reviews__submit form__submit button"
           type="submit"
           ref={btnRef}
@@ -138,6 +115,9 @@ function FormComment(props) {
 
   );
 }
+const mapStateToProps = (state) => ({
+  commentAlert: state.commentAlert,
+});
 const mapDispatchToProps = (dispatch) => ({
   onSubmit(id, commentData) {
     dispatch(newComments(id, commentData));
@@ -145,12 +125,17 @@ const mapDispatchToProps = (dispatch) => ({
   getId(id) {
     dispatch(fetchComments(id));
   },
+  getAlert(alert) {
+    dispatch(ActionCreator.commentAlert(alert));
+  },
 });
 FormComment.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   getId: PropTypes.func.isRequired,
+  getAlert: PropTypes.func.isRequired,
+  commentAlert: PropTypes.bool.isRequired,
 };
 
 //export default FormComment;
-export default connect(null, mapDispatchToProps)(FormComment);
+export default connect(mapStateToProps, mapDispatchToProps)(FormComment);
 

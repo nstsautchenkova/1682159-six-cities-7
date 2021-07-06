@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Switch, Route, Router as BrowserRouter } from 'react-router-dom';
-//import { Switch, Route, Router as BrowserRouter } from 'react-router-dom';
 import { AppRoute } from '../../const.js';
 import HomePage from '../home-page/home-page.jsx';
 import LoginPage from '../login-page/login-page.jsx';
@@ -16,11 +15,9 @@ import { AuthorizationStatus } from '../../const.js';
 import PrivateRoute from '../private-route/private-route';
 import browserHistory from '../../browser-history.js';
 import ShowAlert from '../show-alert/show-alert.jsx';
-//import { useParams } from 'react-router-dom';
 function App(props) {
   const { offers } = props;
   const [selectedOffer, setSelectedOffer] = useState(null);
-  //const { id } = useParams();
 
   const onOfferHover = (offerId) => {
     setSelectedOffer(getOfferById(offers, offerId));

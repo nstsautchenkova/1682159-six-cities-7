@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useHistory, useParams} from 'react-router-dom';
+import { useHistory} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AppRoute } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
@@ -13,7 +13,6 @@ function Card(props) {
   const getLinkOffer = () => `${AppRoute.OFFER}/${offers.id}`;
   const link = getLinkOffer;
   const { authorizationStatus } = props;
-  const { id } = useParams();
 
   const cardHoverHandler = () => {
     onOfferHover(offers.id);
@@ -22,10 +21,11 @@ function Card(props) {
   return (
     <article
       id={offers.id}
+      key={offers.id}
       className='cities__place-card place-card'
       onMouseEnter={cardHoverHandler}
     >
-      <div className="cities__image-wrapper place-card__image-wrapper" id={id}>
+      <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={link}>
           <img className="place-card__image" src={offers.previewImage} width="260" height="200" alt="Place image" />
         </Link>

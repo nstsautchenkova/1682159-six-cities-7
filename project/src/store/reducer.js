@@ -7,11 +7,6 @@ const getMapByCity = (activeCity, rezultOffers) => {
   const markerMap = Object.values(rezultOffers).filter((offer) => activeCity === offer.name).reduce((item) => item);
   return markerMap.location;
 };
-/* const getAllComment = (oldComment, newComment) => {
-  const allComment = oldComment;
-  oldComment.push(newComment);
-  return allComment;
-}; */
 const initialState = {
   defaultCity: OfferCity.PARIS.name,
   defaultCityMap: OfferCity.PARIS.location,
@@ -24,10 +19,17 @@ const initialState = {
   reviews: [],
   comment: [],
   allComment: [],
+  commentAlert:'',
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.COMMENT_ALERT: {
+      return {
+        ...state,
+        commentAlert: action.payload,
+      };
+    }
     case ActionType.SELECT_CITY: {
       return {
         ...state,
@@ -82,15 +84,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         reviews: action.payload,
-        //allComment: state.reviews,
       };
     }
     case ActionType.NEW_COMMENTS: {
       return {
         ...state,
         comment: action.payload,
-        //reviews: getAllComment(state.reviews, action.payload),
-        //allComment: state.reviews,
       };
     }
     default: {

@@ -27,7 +27,7 @@ function ShowAlert(props) {
             '-webkit-box-flex': '1',
             '-ms-flex-positive': '1',
             'flex-grow': '1',
-            'background-color': '#f5f5f5',
+            'background': '#f5f5f5',
             'overflow-y': 'hidden',
             'justify-content': 'center',
             'align-items': 'center',

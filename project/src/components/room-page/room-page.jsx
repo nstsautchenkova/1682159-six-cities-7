@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AppRoute, AuthorizationStatus } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
@@ -15,21 +15,24 @@ import { fetchNearbyList, fetchComments } from '../../store/api-actions.js';
 function RoomPage(props) {
   const { offers, authorizationStatus, getId } = props;
   const history = useHistory();
-  const location = useLocation();
-  let { id } = useParams();
+  const { id } = useParams();
 
-  const getNotFound = () => {
-    const link = `${AppRoute.OFFER}/${id}`;
-    const offerLink = offers.map((it) => it.id).includes(id);
-    if ((link !== location.pathname) && (offerLink === false)) {
+  const getOfferLinkFoundPage = () => {
+    const offerLink = offers.map((it) => Number(it.id)).includes(Number(id));
+    if (offerLink === false) {
       return (
         <NotFoundPage />
       );
     }
   };
+  useEffect(() => {
+    getOfferLinkFoundPage();
+  }, [id]);
+
   getId(id);
   return (
     <>
+      {getOfferLinkFoundPage()}
       <div style={{ display: 'none' }}>
         <svg xmlns="http://www.w3.org/2000/svg">
           <symbol id="icon-arrow-select" viewbox="0 0 7 4">
@@ -43,12 +46,11 @@ function RoomPage(props) {
           </symbol>
         </svg>
       </div>
+
       {offers.map((offer) => {
-        const link = `${AppRoute.OFFER}/${offer.id}`;
-        if (link === location.pathname) {
-          id = offer.id;
+        if (Number(offer.id) === Number(id)) {
           return (
-            <div className="page">
+            <div className="page" key={offer.id}>
               <Header />
               <main className="page__main page__main--property">
                 <section className="property">
@@ -137,8 +139,6 @@ function RoomPage(props) {
           );
         }
       })}
-      {getNotFound()}
-
     </>
   );
 }

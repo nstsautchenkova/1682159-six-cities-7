@@ -22,20 +22,8 @@ function NotFoundPage(props) {
         <Header />
 
         <main className="page__main page__main--index">
-          <div className="page__404" style={{
-            display: 'flex',
-            '-webkit-box-flex': '1',
-            '-ms-flex-positive': '1',
-            'flex-grow': '1',
-            'background-color': '#f5f5f5',
-            'overflow-y': 'hidden',
-            'justify-content': 'center',
-            'align-items': 'center',
-            color: '#ff3600',
-            'padding-top': '100px',
-          }}
-          >
-            <svg height="70px" viewBox="0 0 512 512" width="70px" style={{ 'margin-right': '30px' }}>
+          <div className="page__404">
+            <svg height="70px" viewBox="0 0 512 512" width="70px">
               <path d="m0 96v384c0 17.679688 14.320312 32 32 32h448c17.679688 0 32-14.320312 32-32v-384zm0 0" fill="#e1eaf7" />
               <path d="m0 0h512v128h-512zm0 0" fill="#b0bec5" />
               <path d="m64 48h32v32h-32zm0 0" fill="#fff" />

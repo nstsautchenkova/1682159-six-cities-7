@@ -10,9 +10,14 @@ const ActionType = {
   USER_EMAIL: 'data/login',
   REVIEW_LIST: 'data/reviewsList',
   NEW_COMMENTS: 'data/newComments',
+  COMMENT_ALERT:'commemt/commentAlert',
 };
 
 const ActionCreator = {
+  commentAlert: (alert) => ({
+    type: ActionType.COMMENT_ALERT,
+    payload:alert,
+  }),
   selectCity: (activeCity) => ({
     type: ActionType.SELECT_CITY,
     activeCity,
