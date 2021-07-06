@@ -4,8 +4,8 @@ import reviewsType from '../reviews-props/reviews-props.js';
 import { getRatingInPercents } from '../../utils.js';
 import { REVIEWS_COUT } from '../../const.js';
 function ReviewsItem(props) {
-  const { reviews } = props;
-  const reviewsList = reviews.slice(0, REVIEWS_COUT);
+  const { comment } = props;
+  const reviewsList = comment.slice(0, REVIEWS_COUT);
   return (
     <ul className="reviews__list">
       {Object.values(reviewsList).map((review) => (
@@ -28,7 +28,7 @@ function ReviewsItem(props) {
             <p className="reviews__text">
               {review.comment}
             </p>
-            <time className="reviews__time" dateTime="2019-04-24">{review.date}</time>
+            <time className="reviews__time" dateTime="2019-04-24">{new Date(review.date).toLocaleDateString()}</time>
           </div>
         </li>
       ))}
@@ -37,11 +37,11 @@ function ReviewsItem(props) {
 }
 
 const mapStateToProps = (state) => ({
-  reviews: state.reviews,
+  comment: state.comment,
 });
 
 ReviewsItem.propTypes = {
-  reviews: reviewsType.isRequired,
+  comment: reviewsType.isRequired,
 };
 
 //export default ReviewsItem;

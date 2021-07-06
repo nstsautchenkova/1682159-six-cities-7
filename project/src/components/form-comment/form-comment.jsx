@@ -6,13 +6,12 @@ import ratingToValues from '../form-comment/common.js';
 import getRatingsEntries from '../form-comment/helpers.js';
 import { CommentSetting } from '../../const.js';
 import { commentFormDefault } from '../../utils.js';
-import { fetchComments } from '../../store/api-actions.js';
 import { useParams } from 'react-router-dom';
 import { Success, Error } from '../comment-alert/comment-alert.jsx';
 import { ActionCreator } from '../../store/action.js';
 
 function FormComment(props) {
-  const { onSubmit, getId, getAlert, commentAlert } = props;
+  const { onSubmit, getAlert, commentAlert } = props;
   const { id } = useParams();
   const commentRef = useRef();
   const btnRef = useRef();
@@ -46,7 +45,6 @@ function FormComment(props) {
           rating: formRating,
         },
       );
-      getId(id);
       getAlert('Success');
       commentFormDefault();
     } else {
@@ -122,16 +120,12 @@ const mapDispatchToProps = (dispatch) => ({
   onSubmit(id, commentData) {
     dispatch(newComments(id, commentData));
   },
-  getId(id) {
-    dispatch(fetchComments(id));
-  },
   getAlert(alert) {
     dispatch(ActionCreator.commentAlert(alert));
   },
 });
 FormComment.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  getId: PropTypes.func.isRequired,
   getAlert: PropTypes.func.isRequired,
   commentAlert: PropTypes.bool.isRequired,
 };

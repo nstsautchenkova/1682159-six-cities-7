@@ -57,9 +57,9 @@ const ActionCreator = {
     type: ActionType.REVIEW_LIST,
     payload: reviews,
   }),
-  newComment: (comment, rating) => ({
+  newComment: (reviews) => ({
     type: ActionType.NEW_COMMENTS,
-    payload: { comment, rating },
+    payload: reviews,
   }),
 };
 export { ActionType, ActionCreator };

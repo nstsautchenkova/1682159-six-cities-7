@@ -18,7 +18,6 @@ const initialState = {
   userEmail: '',
   reviews: [],
   comment: [],
-  allComment: [],
   commentAlert:'',
 };
 
@@ -84,6 +83,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         reviews: action.payload,
+        comment: state.reviews,
       };
     }
     case ActionType.NEW_COMMENTS: {
