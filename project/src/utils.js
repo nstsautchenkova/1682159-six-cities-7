@@ -84,7 +84,7 @@ const mapCommentsToClient = (reviews) => reviews.map((it) => mapCommentToClient(
 const commentFormDefault = () => {
   const featureCheckbox = document.querySelectorAll('.form__rating-input');
   featureCheckbox.forEach((element) => element.checked = false);
-  document.querySelector('#review').value = '';
+  document.querySelector('#review').value = ' ';
   document.querySelector('#reviews__submit').disabled = true;
 };
 
