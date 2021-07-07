@@ -1,46 +1,48 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import reviewsType from '../reviews-props/reviews-props.js';
 import { getRatingInPercents } from '../../utils.js';
 import { REVIEWS_COUT } from '../../const.js';
-
 function ReviewsItem(props) {
-  const { reviews } = props;
-  const reviewsList = reviews.slice(0, REVIEWS_COUT);
+  const { comment } = props;
+  const reviewsList = comment.slice(0, REVIEWS_COUT);
   return (
     <ul className="reviews__list">
-      {reviewsList.map((review) => {
-        const a = reviews.length;
-        return (
-          <li key={review.id} className="reviews__item">
-            <div className="reviews__user user">
-              <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                <img className="reviews__avatar user__avatar" src={review.avatarUrl} width="54" height="54" alt="Reviews avatar" />
-              </div>
-              <span className="reviews__user-name">
-                {review.name}{a}
-              </span>
+      {Object.values(reviewsList).map((review) => (
+        <li key={review.id} className="reviews__item">
+          <div className="reviews__user user">
+            <div className="reviews__avatar-wrapper user__avatar-wrapper">
+              <img className="reviews__avatar user__avatar" src={review.user.avatarUrl} width="54" height="54" alt="Reviews avatar" />
             </div>
-            <div className="reviews__info">
-              <div className="reviews__rating rating">
-                <div className="reviews__stars rating__stars">
-                  <span style={{ width: `${getRatingInPercents(review.rating)}%` }}></span>
-                  <span className="visually-hidden">Rating</span>
-                </div>
+            <span className="reviews__user-name">
+              {review.user.name}
+            </span>
+          </div>
+          <div className="reviews__info">
+            <div className="reviews__rating rating">
+              <div className="reviews__stars rating__stars">
+                <span style={{ width: `${getRatingInPercents(review.rating)}%` }}></span>
+                <span className="visually-hidden">Rating</span>
               </div>
-              <p className="reviews__text">
-                {review.description}
-              </p>
-              <time className="reviews__time" dateTime="2019-04-24">{review.date}</time>
             </div>
-          </li>
-        );
-      })}
+            <p className="reviews__text">
+              {review.comment}
+            </p>
+            <time className="reviews__time" dateTime="2019-04-24">{new Date(review.date).toLocaleDateString()}</time>
+          </div>
+        </li>
+      ))}
     </ul>
   );
 }
 
+const mapStateToProps = (state) => ({
+  comment: state.comment,
+});
+
 ReviewsItem.propTypes = {
-  reviews: reviewsType.isRequired,
+  comment: reviewsType.isRequired,
 };
 
-export default ReviewsItem;
+//export default ReviewsItem;
+export default connect(mapStateToProps, null)(ReviewsItem);

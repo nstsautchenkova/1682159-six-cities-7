@@ -8,12 +8,15 @@ const ActionType = {
   LOGOUT: 'user/logout',
   REDIRECT_TO_ROUTE: 'game/redirectToRoute',
   USER_EMAIL: 'data/login',
+  REVIEW_LIST: 'data/reviewsList',
+  NEW_COMMENTS: 'data/newComments',
+  COMMENT_ALERT:'commemt/commentAlert',
 };
 
 const ActionCreator = {
-  userEmail: (login) => ({
-    type: ActionType.USER_EMAIL,
-    payload: login,
+  commentAlert: (alert) => ({
+    type: ActionType.COMMENT_ALERT,
+    payload:alert,
   }),
   selectCity: (activeCity) => ({
     type: ActionType.SELECT_CITY,
@@ -45,6 +48,18 @@ const ActionCreator = {
   redirectToRoute: (url) => ({
     type: ActionType.REDIRECT_TO_ROUTE,
     payload: url,
+  }),
+  userEmail: (login) => ({
+    type: ActionType.USER_EMAIL,
+    payload: login,
+  }),
+  reviewsList: (reviews) => ({
+    type: ActionType.REVIEW_LIST,
+    payload: reviews,
+  }),
+  newComment: (reviews) => ({
+    type: ActionType.NEW_COMMENTS,
+    payload: reviews,
   }),
 };
 export { ActionType, ActionCreator };

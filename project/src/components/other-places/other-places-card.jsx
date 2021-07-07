@@ -1,17 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import offerType from '../offers-prop/offers-prop.js';
 import { AppRoute } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
-import { fetchNearbyList } from '../../store/api-actions.js';
-import { connect } from 'react-redux';
-
 function OtherPlacesCard(props) {
-  const { offers, getNearbyId } = props;
+  const { offers} = props;
   const link = `${AppRoute.OFFER}/${offers.id}`;
   return (
-    <article id={offers.id} className="near-places__card place-card" onClick={getNearbyId}>
+    <article id={offers.id} className="near-places__card place-card"  key={offers.id}>
       <div className="near-places__image-wrapper place-card__image-wrapper">
         <Link
           to={link}
@@ -50,14 +46,8 @@ function OtherPlacesCard(props) {
     </article>
   );
 }
-const mapDispatchToProps = (dispatch) => ({
-  getNearbyId(evt) {
-    dispatch(fetchNearbyList(evt.currentTarget.id));
-  },
-});
+
 OtherPlacesCard.propTypes = {
   offers: offerType.isRequired,
-  getNearbyId: PropTypes.func.isRequired,
 };
-//export default OtherPlacesCard;
-export default connect(null, mapDispatchToProps)(OtherPlacesCard);
+export default OtherPlacesCard;

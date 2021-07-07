@@ -50,3 +50,27 @@
     animation-iteration-count: infinite;
     animation-timing-function: ease-in-out;
 }
+.page__404{
+    display: flex;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    background-color: rgb(245, 245, 245);
+    overflow-y: hidden;
+    justify-content: center;
+    align-items: center;
+    color: rgb(255, 54, 0);
+    padding-top: 100px;
+}
+.page__404 svg{
+    margin-right: 30px;
+}
+.commentMessageSuccess{
+    background: #c6feae;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.commentMessageError{
+    background: rgb(255 203 211);
+    padding: 20px;
+    margin-bottom: 20px;
+}

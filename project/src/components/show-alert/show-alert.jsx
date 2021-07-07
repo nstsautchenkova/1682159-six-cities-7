@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../header/header.jsx';
 
-function NotFoundPage(props) {
+function ShowAlert(props) {
   return (
     <>
       <div style={{ display: 'none' }}>
@@ -22,8 +22,20 @@ function NotFoundPage(props) {
         <Header />
 
         <main className="page__main page__main--index">
-          <div className="page__404">
-            <svg height="70px" viewBox="0 0 512 512" width="70px">
+          <div className="page__404" style={{
+            display: 'flex',
+            '-webkit-box-flex': '1',
+            '-ms-flex-positive': '1',
+            'flex-grow': '1',
+            'background': '#f5f5f5',
+            'overflow-y': 'hidden',
+            'justify-content': 'center',
+            'align-items': 'center',
+            color: '#ff3600',
+            'padding-top': '100px',
+          }}
+          >
+            <svg height="70px" viewBox="0 0 512 512" width="70px" style={{ 'margin-right': '30px' }}>
               <path d="m0 96v384c0 17.679688 14.320312 32 32 32h448c17.679688 0 32-14.320312 32-32v-384zm0 0" fill="#e1eaf7" />
               <path d="m0 0h512v128h-512zm0 0" fill="#b0bec5" />
               <path d="m64 48h32v32h-32zm0 0" fill="#fff" />
@@ -32,7 +44,7 @@ function NotFoundPage(props) {
               <path d="m384 320c0 70.691406-57.308594 128-128 128s-128-57.308594-128-128 57.308594-128 128-128 128 57.308594 128 128zm0 0" fill="#e76e54" />
               <path d="m315.3125 283.3125-22.625-22.625-36.6875 36.6875-36.6875-36.6875-22.625 22.625 36.6875 36.6875-36.6875 36.6875 22.625 22.625 36.6875-36.6875 36.6875 36.6875 22.625-22.625-36.6875-36.6875zm0 0" fill="#fff" />
             </svg>
-            <h1>404 Not Found</h1>
+            <h1>Не удалось получить данные. Попробуйте обновить страницу</h1>
           </div>
         </main>
 
@@ -41,4 +53,4 @@ function NotFoundPage(props) {
   );
 }
 
-export default NotFoundPage;
+export default ShowAlert;

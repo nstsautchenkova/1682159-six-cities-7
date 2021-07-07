@@ -6,6 +6,7 @@ const AppRoute = {
   FAVORITES: '/favorites',
   OFFER_$ID: '/offer/:id',
   OFFER: '/offer',
+  SHOW_ALERT: '/404',
 };
 const RatingSetting = {
   MAX_PERCENTS: 100,
@@ -77,5 +78,12 @@ const APIRoute = {
   LOGIN: '/login',
   LOGOUT: '/logout',
   NEARBY: '/nearby',
+  REVIEWS: '/comments',
+  COMMENT: '/comments',
 };
-export { AppRoute, SortType, RatingSetting, REVIEWS_COUT, OFFER_COUT, OfferCity, AuthorizationStatus, APIRoute };
+const CommentSetting = {
+  LENGHT_MIN: 50,
+  LENGHT_MAX: 300,
+  RATING_MIN: 0,
+};
+export { AppRoute, SortType, RatingSetting, REVIEWS_COUT, OFFER_COUT, OfferCity, AuthorizationStatus, APIRoute, CommentSetting };

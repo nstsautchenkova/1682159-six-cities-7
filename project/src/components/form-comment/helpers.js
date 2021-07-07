@@ -1,2 +1,4 @@
+import { CommentSetting } from '../../const.js';
 const getRatingsEntries = (ratingToValues) => Object.entries(ratingToValues);
-export default getRatingsEntries;
+const checkIsFormValid = (comment) => ((comment.length < CommentSetting.LENGHT_MIN) || (comment.length > CommentSetting.LENGHT_MAX));
+export { getRatingsEntries, checkIsFormValid };
