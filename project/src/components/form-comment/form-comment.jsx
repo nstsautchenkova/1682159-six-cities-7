@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { newComments } from '../../store/api-actions.js';
 import ratingToValues from '../form-comment/common.js';
 import { getRatingsEntries, checkIsFormValid } from '../form-comment/helpers.js';
-import { CommentSetting } from '../../const.js';
 import { useParams } from 'react-router-dom';
 import { Success, Error } from '../comment-alert/comment-alert.jsx';
 import { ActionCreator } from '../../store/action.js';
@@ -13,7 +12,6 @@ function FormComment(props) {
   const { onSubmit, getAlert, commentAlert } = props;
   const { id } = useParams();
   const ratingsEntries = getRatingsEntries(ratingToValues);
-  let submitBtn = true;
   const [formState, setFormState] = useState({
     rating: 0,
     comment: '',
@@ -33,13 +31,7 @@ function FormComment(props) {
     });
   };
 
-  const isFormValid = checkIsFormValid(comment, CommentSetting);
-  if (isFormValid) {
-    submitBtn = true;
-  } else {
-    submitBtn = false;
-  }
-
+  const isFormValid = checkIsFormValid(comment);
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (!isFormValid) {
@@ -54,7 +46,6 @@ function FormComment(props) {
         rating: 0,
         comment: '',
       });
-      submitBtn = true;
       getAlert('Success');
     } else {
       getAlert('Error');
@@ -109,7 +100,7 @@ function FormComment(props) {
           id="reviews__submit"
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={submitBtn}
+          disabled={isFormValid}
         >
           Submit
         </button>
