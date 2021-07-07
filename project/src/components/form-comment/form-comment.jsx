@@ -17,7 +17,11 @@ function FormComment(props) {
     comment: '',
   });
   const { rating, comment } = formState;
-
+  const [formCommentDate, setformCommentDate] = useState();
+  const handleChangeComment = (evt) => {
+    setformCommentDate(evt.target.value);
+  };
+  const [formCommentRating, setformCommentRating] = useState();
   const handleChangeRating = (evt) => {
     setFormState({
       ...formState,
