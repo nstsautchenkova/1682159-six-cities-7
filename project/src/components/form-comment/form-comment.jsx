@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { newComments } from '../../store/api-actions.js';
 import ratingToValues from '../form-comment/common.js';
-import { getRatingsEntries, checkValid } from '../form-comment/helpers.js';
+import { getRatingsEntries, checkIsFormValid } from '../form-comment/helpers.js';
 import { CommentSetting } from '../../const.js';
 import { useParams } from 'react-router-dom';
 import { Success, Error } from '../comment-alert/comment-alert.jsx';
@@ -13,40 +13,36 @@ function FormComment(props) {
   const { onSubmit, getAlert, commentAlert } = props;
   const { id } = useParams();
   const ratingsEntries = getRatingsEntries(ratingToValues);
-
-  const [formState, setformState] = useState({
+  let submitBtn = true;
+  const [formState, setFormState] = useState({
     rating: 0,
     comment: '',
-    btn: true,
-    ratingCheck: false,
   });
-  const { rating, comment, ratingCheck } = formState;
-  let { btn } = formState;
+  const { rating, comment } = formState;
+
   const handleChangeRating = (evt) => {
-    setformState({
+    setFormState({
+      ...formState,
       rating: evt.target.value,
-      comment: comment,
-      btn: btn,
     });
   };
   const handleChangeComment = (evt) => {
-    setformState({
+    setFormState({
+      ...formState,
       comment: evt.target.value,
-      rating: rating,
-      btn: btn,
     });
   };
 
-  if (((comment.length >= CommentSetting.LENGHT_MIN) || (comment.length <= CommentSetting.LENGHT_MAX)) && ((rating > CommentSetting.RATING_MIN))) {
-    btn = false;
-  }
-  if ((comment.length < CommentSetting.LENGHT_MIN) || (comment.length > CommentSetting.LENGHT_MAX)) {
-    btn = true;
+  const isFormValid = checkIsFormValid(comment, CommentSetting);
+  if (isFormValid) {
+    submitBtn = true;
+  } else {
+    submitBtn = false;
   }
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    if (checkValid(comment, rating, CommentSetting)) {
+    if (!isFormValid) {
       onSubmit(
         id,
         {
@@ -54,12 +50,11 @@ function FormComment(props) {
           rating: rating,
         },
       );
-      setformState({
+      setFormState({
         rating: 0,
         comment: '',
-        btn: true,
-        ratingCheck: false,
       });
+      submitBtn = true;
       getAlert('Success');
     } else {
       getAlert('Error');
@@ -87,7 +82,7 @@ function FormComment(props) {
               type="radio"
               value={value}
               onChange={handleChangeRating}
-              checked={ratingCheck}
+              checked={rating === value}
             />
             <label htmlFor={`${value}-stars`} className="reviews__rating-label form__rating-label" title={name}>
               <svg className="form__star-image" width="37" height="33">
@@ -114,7 +109,7 @@ function FormComment(props) {
           id="reviews__submit"
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={btn}
+          disabled={submitBtn}
         >
           Submit
         </button>
