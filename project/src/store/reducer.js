@@ -16,7 +16,6 @@ const initialState = {
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   isDataLoaded: false,
   userEmail: '',
-  reviews: [],
   comment: [],
   commentAlert:'',
 };
@@ -82,8 +81,7 @@ const reducer = (state = initialState, action) => {
     case ActionType.REVIEW_LIST: {
       return {
         ...state,
-        reviews: action.payload,
-        comment: state.reviews,
+        comment: action.payload,
       };
     }
     case ActionType.NEW_COMMENTS: {

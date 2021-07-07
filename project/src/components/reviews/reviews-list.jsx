@@ -4,8 +4,8 @@ import reviewsType from '../reviews-props/reviews-props.js';
 import ReviewsItem from '../reviews/reviews-item.jsx';
 
 function ReviewsList(props) {
-  const { reviews } = props;
-  const reviewsCout = reviews.length;
+  const { comment } = props;
+  const reviewsCout = comment.length;
   return (
     <>
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewsCout}</span></h2>
@@ -14,10 +14,10 @@ function ReviewsList(props) {
   );
 }
 const mapStateToProps = (state) => ({
-  reviews: state.reviews,
+  comment: state.comment,
 });
 ReviewsList.propTypes = {
-  reviews: reviewsType.isRequired,
+  comment: reviewsType.isRequired,
 };
 
 //export default ReviewsList;

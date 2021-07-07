@@ -81,11 +81,5 @@ const mapCommentToClient = (review) => ({
 });
 const mapCommentsToClient = (reviews) => reviews.map((it) => mapCommentToClient(it));
 
-const commentFormDefault = () => {
-  const featureCheckbox = document.querySelectorAll('.form__rating-input');
-  featureCheckbox.forEach((element) => element.checked = false);
-  document.querySelector('#review').value = ' ';
-  document.querySelector('#reviews__submit').disabled = true;
-};
 
-export { getRatingInPercents, getOfferById, getDefaultMapIcon, getHoverMapIcon, isCheckedAuth, mapOffersToClient, mapCommentsToClient, commentFormDefault };
+export { getRatingInPercents, getOfferById, getDefaultMapIcon, getHoverMapIcon, isCheckedAuth, mapOffersToClient, mapCommentsToClient };

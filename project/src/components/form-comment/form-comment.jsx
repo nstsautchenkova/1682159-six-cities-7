@@ -1,11 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { newComments } from '../../store/api-actions.js';
 import ratingToValues from '../form-comment/common.js';
-import getRatingsEntries from '../form-comment/helpers.js';
+import { getRatingsEntries, checkValid } from '../form-comment/helpers.js';
 import { CommentSetting } from '../../const.js';
-import { commentFormDefault } from '../../utils.js';
 import { useParams } from 'react-router-dom';
 import { Success, Error } from '../comment-alert/comment-alert.jsx';
 import { ActionCreator } from '../../store/action.js';
@@ -13,48 +12,59 @@ import { ActionCreator } from '../../store/action.js';
 function FormComment(props) {
   const { onSubmit, getAlert, commentAlert } = props;
   const { id } = useParams();
-  const commentRef = useRef();
-  const btnRef = useRef();
-
   const ratingsEntries = getRatingsEntries(ratingToValues);
-  const [formRating, setformRating] = useState();
+
+  const [formState, setformState] = useState({
+    rating: 0,
+    comment: '',
+    btn: true,
+    ratingCheck: false,
+  });
+  const { rating, comment, ratingCheck } = formState;
+  let { btn } = formState;
   const handleChangeRating = (evt) => {
-    setformRating(evt.target.value);
+    setformState({
+      rating: evt.target.value,
+      comment: comment,
+      btn: btn,
+    });
   };
-
-  const [formCommentValueLength, setformCommentValueLength] = useState(0);
   const handleChangeComment = (evt) => {
-    setformCommentValueLength(evt.target.value);
+    setformState({
+      comment: evt.target.value,
+      rating: rating,
+      btn: btn,
+    });
   };
 
-  if (((formCommentValueLength.length >= CommentSetting.LENGHT_MIN) || (formCommentValueLength.length <= CommentSetting.LENGHT_MAX)) && ((formRating > CommentSetting.RATING_MIN))) {
-    btnRef.current.disabled = false;
+  if (((comment.length >= CommentSetting.LENGHT_MIN) || (comment.length <= CommentSetting.LENGHT_MAX)) && ((rating > CommentSetting.RATING_MIN))) {
+    btn = false;
   }
-  if ((formCommentValueLength.length < CommentSetting.LENGHT_MIN) || (formCommentValueLength.length > CommentSetting.LENGHT_MAX)) {
-    btnRef.current.disabled = true;
+  if ((comment.length < CommentSetting.LENGHT_MIN) || (comment.length > CommentSetting.LENGHT_MAX)) {
+    btn = true;
   }
-  const checkValid = () => ((formCommentValueLength.length >= CommentSetting.LENGHT_MIN) || (formCommentValueLength.length <= CommentSetting.LENGHT_MAX)) && ((formRating > CommentSetting.RATING_MIN));
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    if (checkValid()) {
+    if (checkValid(comment, rating, CommentSetting)) {
       onSubmit(
         id,
         {
-          comment: commentRef.current.value,
-          rating: formRating,
+          comment: comment,
+          rating: rating,
         },
       );
+      setformState({
+        rating: 0,
+        comment: '',
+        btn: true,
+        ratingCheck: false,
+      });
       getAlert('Success');
-      commentFormDefault();
     } else {
       getAlert('Error');
-      commentFormDefault();
     }
-    setTimeout(() => {
-      getAlert(' ');
-      commentFormDefault();
-    }, 1500);
+    setTimeout(() => { getAlert(''); }, 1500);
   };
 
   return (
@@ -77,6 +87,7 @@ function FormComment(props) {
               type="radio"
               value={value}
               onChange={handleChangeRating}
+              checked={ratingCheck}
             />
             <label htmlFor={`${value}-stars`} className="reviews__rating-label form__rating-label" title={name}>
               <svg className="form__star-image" width="37" height="33">
@@ -91,7 +102,7 @@ function FormComment(props) {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        ref={commentRef}
+        value={comment}
         onChange={handleChangeComment}
       >
       </textarea>
@@ -103,8 +114,7 @@ function FormComment(props) {
           id="reviews__submit"
           className="reviews__submit form__submit button"
           type="submit"
-          ref={btnRef}
-          disabled
+          disabled={btn}
         >
           Submit
         </button>
