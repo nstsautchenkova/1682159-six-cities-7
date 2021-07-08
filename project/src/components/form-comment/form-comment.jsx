@@ -74,6 +74,7 @@ function FormComment(props) {
         {ratingsEntries.map(([name, value]) => (
           <>
             <input
+              key={value}
               className="form__rating-input visually-hidden"
               name="rating"
               id={`${value}-stars`}
@@ -82,7 +83,7 @@ function FormComment(props) {
               onChange={handleChangeRating}
               checked={rating === value}
             />
-            <label htmlFor={`${value}-stars`} className="reviews__rating-label form__rating-label" title={name}>
+            <label key={name} htmlFor={`${value}-stars`} className="reviews__rating-label form__rating-label" title={name}>
               <svg className="form__star-image" width="37" height="33">
                 <use xlinkHref="#icon-star"></use>
               </svg>

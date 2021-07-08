@@ -53,7 +53,7 @@ function Map(props) {
   );
 }
 Map.propTypes = {
-  selectedOffer: PropTypes.node.isRequired,
+  selectedOffer: PropTypes.object,
 };
 
-export default { Map };
+export default Map;

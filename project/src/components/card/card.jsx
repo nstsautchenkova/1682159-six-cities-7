@@ -5,41 +5,39 @@ import { useHistory} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AppRoute } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
-import offerType from '../offers-prop/offers-prop.js';
 import { AuthorizationStatus } from '../../const.js';
 import { getAuthorizationStatus } from '../../store/user/selectors.js';
 
 function Card(props) {
-  const { offers, onOfferHover } = props;
+  const { offer, onOfferHover } = props;
   const history = useHistory();
-  const getLinkOffer = () => `${AppRoute.OFFER}/${offers.id}`;
+  const getLinkOffer = () => `${AppRoute.OFFER}/${offer.id}`;
   const link = getLinkOffer;
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
   const cardHoverHandler = () => {
-    onOfferHover(offers.id);
+    onOfferHover(offer.id);
   };
 
   return (
     <article
-      id={offers.id}
-      key={offers.id}
+      key={offer.id}
       className='cities__place-card place-card'
       onMouseEnter={cardHoverHandler}
     >
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={link}>
-          <img className="place-card__image" src={offers.previewImage} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image" />
         </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">€{offers.price}</b>
+            <b className="place-card__price-value">€{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={offers.isFavorite ? 'place-card__bookmark-button button place-card__bookmark-button--active' : 'place-card__bookmark-button button'}
+            className={offer.isFavorite ? 'place-card__bookmark-button button place-card__bookmark-button--active' : 'place-card__bookmark-button button'}
             type="button"
             onClick={() => authorizationStatus === AuthorizationStatus.AUTH ? history.push(AppRoute.FAVORITES) : history.push(AppRoute.SIGN_IN)}
           >
@@ -51,21 +49,21 @@ function Card(props) {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${getRatingInPercents(offers.rating)}%` }}></span>
+            <span style={{ width: `${getRatingInPercents(offer.rating)}%` }}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={link}>{offers.title}</Link>
+          <Link to={link}>{offer.title}</Link>
         </h2>
-        <p className="place-card__type">{offers.type}</p>
+        <p className="place-card__type">{offer.type}</p>
       </div>
     </article>
   );
 }
 
 Card.propTypes = {
-  offers: offerType.isRequired,
+  offer: PropTypes.object.isRequired,
   onOfferHover: PropTypes.func.isRequired,
 };
 export default Card;

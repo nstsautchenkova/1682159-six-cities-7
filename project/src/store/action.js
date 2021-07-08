@@ -1,4 +1,5 @@
 import {createAction} from '@reduxjs/toolkit';
+
 const ActionType = {
   SELECT_CITY: 'citiesList/selectCity',
   SELECT_LIST_RENT: 'citiesList/selectListRent',
@@ -13,6 +14,7 @@ const ActionType = {
   NEW_COMMENTS: 'data/newComments',
   COMMENT_ALERT: 'commemt/commentAlert',
 };
+
 const commentsAlert = createAction(ActionType.COMMENT_ALERT, (alert) => ({
   payload: alert,
 }));

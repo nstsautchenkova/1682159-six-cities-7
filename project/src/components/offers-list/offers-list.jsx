@@ -5,11 +5,11 @@ import { SortType } from '../../const.js';
 import Card from '../card/card.jsx';
 import getSortedOffers from './helpers.js';
 import { getDefaultCity, getListOffers } from '../../store/process/selectors.js';
+
 function OfferList(props) {
   const { onOfferHover } = props;
   const activeCity = useSelector(getDefaultCity);
   const listOffers = useSelector(getListOffers);
-  //const offers = useSelector(getOffers);
 
   const [isOpen, setOpen] = useState(false);
   const placesOptionsOpen = () => {
@@ -57,7 +57,7 @@ function OfferList(props) {
       </form>
       <div className="cities__places-list places__list tabs__content">
         {sortedOffers.map((offer) =>
-          <Card offers={offer} id={offer.id} key={offer.id} onOfferHover={onOfferHover} />,
+          <Card offer={offer} key={offer.id} onOfferHover={onOfferHover} />,
         )}
       </div>
     </>
@@ -68,5 +68,5 @@ OfferList.propTypes = {
   onOfferHover: PropTypes.func.isRequired,
 };
 
-export default { OfferList };
+export default OfferList;
 

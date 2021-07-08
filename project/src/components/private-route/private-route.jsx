@@ -27,4 +27,4 @@ PrivateRoute.propTypes = {
   render: PropTypes.func.isRequired,
 };
 
-export default { PrivateRoute };
+export default PrivateRoute;

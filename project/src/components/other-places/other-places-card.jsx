@@ -1,13 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import offerType from '../offers-prop/offers-prop.js';
 import { AppRoute } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
 function OtherPlacesCard(props) {
   const { offers} = props;
   const link = `${AppRoute.OFFER}/${offers.id}`;
   return (
-    <article id={offers.id} className="near-places__card place-card"  key={offers.id}>
+    <article className="near-places__card place-card"  key={offers.id}>
       <div className="near-places__image-wrapper place-card__image-wrapper">
         <Link
           to={link}
@@ -48,6 +48,6 @@ function OtherPlacesCard(props) {
 }
 
 OtherPlacesCard.propTypes = {
-  offers: offerType.isRequired,
+  offers: PropTypes.object.isRequired,
 };
 export default OtherPlacesCard;

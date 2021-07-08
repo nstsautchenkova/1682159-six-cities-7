@@ -10,7 +10,7 @@ import NotFoundPage from '../not-found-page/not-found-page.jsx';
 import { getOfferById, isCheckedAuth } from '../../utils.js';
 import { Preloader } from '../preloader/preloader.jsx';
 import { AuthorizationStatus } from '../../const.js';
-import PrivateRoute from '../private-route/private-route';
+import PrivateRoute from '../private-route/private-route.jsx';
 import browserHistory from '../../browser-history.js';
 import ShowAlert from '../show-alert/show-alert.jsx';
 import { getAuthorizationStatus } from '../../store/user/selectors.js';
