@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import offerType from '../offers-prop/offers-prop.js';
 import { AppRoute } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
 function OtherPlacesCard(props) {
@@ -48,6 +48,6 @@ function OtherPlacesCard(props) {
 }
 
 OtherPlacesCard.propTypes = {
-  offers: PropTypes.object.isRequired,
+  offers: offerType.isRequired,
 };
 export default OtherPlacesCard;

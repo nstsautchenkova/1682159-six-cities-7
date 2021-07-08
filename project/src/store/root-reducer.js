@@ -3,14 +3,16 @@ import { process } from './process/process';
 import { data } from './data/data';
 import { user } from './user/user';
 
-export const NameSpace = {
+const NameSpace = {
   DATA: 'DATA',
   PROCESS: 'PROCESS',
   USER: 'USER',
 };
 
-export default combineReducers({
+const rootReducer = combineReducers({
   [NameSpace.DATA]: data,
   [NameSpace.PROCESS]: process,
   [NameSpace.USER]: user,
 });
+
+export { NameSpace, rootReducer };

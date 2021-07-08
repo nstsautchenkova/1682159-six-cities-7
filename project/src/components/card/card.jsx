@@ -5,6 +5,7 @@ import { useHistory} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AppRoute } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
+import offerType from '../offers-prop/offers-prop.js';
 import { AuthorizationStatus } from '../../const.js';
 import { getAuthorizationStatus } from '../../store/user/selectors.js';
 
@@ -63,7 +64,7 @@ function Card(props) {
 }
 
 Card.propTypes = {
-  offer: PropTypes.object.isRequired,
+  offer: offerType.isRequired,
   onOfferHover: PropTypes.func.isRequired,
 };
 export default Card;

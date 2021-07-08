@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import {configureStore} from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import App from './components/app/app';
 import { createAPI } from './services/api.js';
-import rootReducer from './store/root-reducer';
+import { rootReducer } from './store/root-reducer';
 import { requireAuthorization } from './store/action.js';
 import { checkAuth, fetchOffersList } from './store/api-actions.js';
 import { AuthorizationStatus } from '../src/const.js';
