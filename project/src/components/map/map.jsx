@@ -1,14 +1,17 @@
 import React, { useRef, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import PropTypes from 'prop-types';
 import useMap from './use-map.js';
-import offerType from '../offers-prop/offers-prop.js';
 import { getDefaultMapIcon, getHoverMapIcon } from '../../utils.js';
-import сityType from '../city-prop/city-prop.js';
+import { getListOffers, getDefaultCityMap } from '../../store/process/selectors.js';
 function Map(props) {
-  const { selectedOffer, listOffers, defaultCityMap } = props;
+  const { selectedOffer } = props;
+
+  const listOffers= useSelector(getListOffers);
+  const defaultCityMap= useSelector(getDefaultCityMap);
+
   const mapRef = useRef(null);
   const map = useMap(mapRef, defaultCityMap);
   const markerLayer = leaflet.layerGroup();
@@ -49,15 +52,8 @@ function Map(props) {
     </div>
   );
 }
-const mapStateToProps = (state) => ({
-  listOffers: state.listOffers,
-  defaultCityMap: state.defaultCityMap,
-});
 Map.propTypes = {
   selectedOffer: PropTypes.node.isRequired,
-  listOffers: offerType.isRequired,
-  defaultCityMap: PropTypes.exact(сityType).isRequired,
 };
 
-export { Map };
-export default connect(mapStateToProps, null)(Map);
+export default { Map };

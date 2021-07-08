@@ -16,7 +16,7 @@ const initialState = {
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   isDataLoaded: false,
   userEmail: '',
-  comment: [],
+  comments: [],
   commentAlert:'',
 };
 
@@ -31,13 +31,13 @@ const reducer = (state = initialState, action) => {
     case ActionType.SELECT_CITY: {
       return {
         ...state,
-        defaultCity: action.activeCity,
+        defaultCity: action.payload,
       };
     }
     case ActionType.SELECT_LIST_RENT: {
       return {
         ...state,
-        listOffers: getOffersByCity(action.activeCity, state.offers),
+        listOffers: getOffersByCity(action.payload, state.offers),
       };
     }
     case ActionType.LOAD_OFFERS: {
@@ -63,7 +63,7 @@ const reducer = (state = initialState, action) => {
     case ActionType.DEFAULT_CITY_MAP: {
       return {
         ...state,
-        defaultCityMap: getMapByCity(action.activeCity, OfferCity),
+        defaultCityMap: getMapByCity(action.payload, OfferCity),
       };
     }
     case ActionType.NEARBY_LIST: {
@@ -81,13 +81,13 @@ const reducer = (state = initialState, action) => {
     case ActionType.REVIEW_LIST: {
       return {
         ...state,
-        comment: action.payload,
+        comments: action.payload,
       };
     }
     case ActionType.NEW_COMMENTS: {
       return {
         ...state,
-        comment: action.payload,
+        comments: action.payload,
       };
     }
     default: {

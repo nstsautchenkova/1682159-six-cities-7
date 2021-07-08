@@ -4,6 +4,7 @@ import Header from '../header/header.jsx';
 import OfferList from '../offers-list/offers-list.jsx';
 import Map from '../map/map.jsx';
 import CitiesList from '../сities-list/сities-list.jsx';
+
 function HomePage(props) {
   const { onOfferHover, selectedOffer } = props;
   return (
@@ -41,12 +42,9 @@ function HomePage(props) {
 
               <div className="cities__right-section">
                 <section className="cities__map map">
-                  <Map
-                    selectedOffer={selectedOffer}
-                  />
+                  <Map selectedOffer={selectedOffer} />
                 </section>
               </div>
-
             </div>
           </div>
         </main>

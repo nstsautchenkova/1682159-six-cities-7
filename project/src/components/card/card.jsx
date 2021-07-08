@@ -2,17 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useHistory} from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AppRoute } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
 import offerType from '../offers-prop/offers-prop.js';
 import { AuthorizationStatus } from '../../const.js';
+import { getAuthorizationStatus } from '../../store/user/selectors.js';
+
 function Card(props) {
   const { offers, onOfferHover } = props;
   const history = useHistory();
   const getLinkOffer = () => `${AppRoute.OFFER}/${offers.id}`;
   const link = getLinkOffer;
-  const { authorizationStatus } = props;
+  const authorizationStatus = useSelector(getAuthorizationStatus);
 
   const cardHoverHandler = () => {
     onOfferHover(offers.id);
@@ -61,13 +63,9 @@ function Card(props) {
     </article>
   );
 }
-const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
-});
+
 Card.propTypes = {
   offers: offerType.isRequired,
   onOfferHover: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
 };
-//export default Card;
-export default connect(mapStateToProps, null)(Card);
+export default Card;

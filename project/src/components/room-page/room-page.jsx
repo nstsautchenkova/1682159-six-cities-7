@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useHistory, useParams } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { AppRoute, AuthorizationStatus } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
-import offerType from '../offers-prop/offers-prop.js';
 import Header from '../header/header.jsx';
 import FormComment from '../form-comment/form-comment.jsx';
 import ReviewsList from '../reviews/reviews-list.jsx';
@@ -13,8 +11,19 @@ import OtherPlaces from '../other-places/other-places-list.jsx';
 import NotFoundPage from '../not-found-page/not-found-page.jsx';
 import { fetchNearbyList, fetchComments } from '../../store/api-actions.js';
 import getOfferById from '../room-page/helpers.js';
+import { getOffers } from '../../store/process/selectors.js';
+import { getAuthorizationStatus } from '../../store/user/selectors.js';
+
+
 function RoomPage(props) {
-  const { offers, authorizationStatus, getFetchId } = props;
+  const offers = useSelector(getOffers);
+  const authorizationStatus = useSelector(getAuthorizationStatus);
+  const dispatch = useDispatch();
+  const getFetchId = (offerId) => {
+    dispatch(fetchNearbyList(offerId));
+    dispatch(fetchComments(offerId));
+  };
+
   const history = useHistory();
   const { id } = useParams();
 
@@ -133,20 +142,5 @@ function RoomPage(props) {
     );
   }
 }
-const mapStateToProps = (state) => ({
-  offers: state.offers,
-  authorizationStatus: state.authorizationStatus,
-});
-const mapDispatchToProps = (dispatch) => ({
-  getFetchId(id) {
-    dispatch(fetchNearbyList(id));
-    dispatch(fetchComments(id));
-  },
-});
-RoomPage.propTypes = {
-  offers: offerType.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-  getFetchId: PropTypes.func.isRequired,
-};
-//export default RoomPage;
-export default connect(mapStateToProps, mapDispatchToProps)(RoomPage);
+
+export default RoomPage;
