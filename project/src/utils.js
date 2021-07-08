@@ -44,21 +44,21 @@ const mapOfferToClient = (offer) => ({
   isPremium: offer.is_premium,
   images: offer.images,
   goods: offer.goods,
-  host:{
+  host: {
     id: offer.host.id,
     name: offer.host.name,
     isPro: offer.host.is_pro,
     avatarUrl: offer.host.avatar_url,
   },
   description: offer.description,
-  city:{
+  city: {
     name: offer.city.name,
     location: offer.city.location,
     latitude: offer.city.location.latitude,
     longitude: offer.city.location.longitude,
     zoom: offer.city.location.zoom,
   },
-  location:{
+  location: {
     location: offer.location,
     latitude: offer.location.latitude,
     longitude: offer.location.longitude,
@@ -69,7 +69,7 @@ const mapOffersToClient = (offers) => offers.map((it) => mapOfferToClient(it));
 
 const mapCommentToClient = (review) => ({
   id: review.id,
-  user:{
+  user: {
     id: review.user.id,
     isPro: review.user.is_pro,
     name: review.user.name,
@@ -81,5 +81,11 @@ const mapCommentToClient = (review) => ({
 });
 const mapCommentsToClient = (reviews) => reviews.map((it) => mapCommentToClient(it));
 
+const getOffersByCity = (activeCity, rezultOffers) => rezultOffers.filter((offer) => activeCity === offer.city.name);
+const getMapByCity = (activeCity, rezultOffers) => {
+  const markerMap = Object.values(rezultOffers).filter((offer) => activeCity === offer.name).reduce((item) => item);
+  return markerMap.location;
+};
 
-export { getRatingInPercents, getOfferById, getDefaultMapIcon, getHoverMapIcon, isCheckedAuth, mapOffersToClient, mapCommentsToClient };
+
+export { getRatingInPercents, getOfferById, getDefaultMapIcon, getHoverMapIcon, isCheckedAuth, mapOffersToClient, mapCommentsToClient, getOffersByCity, getMapByCity };

@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import offerType from '../offers-prop/offers-prop.js';
 import { SortType } from '../../const.js';
 import Card from '../card/card.jsx';
 import getSortedOffers from './helpers.js';
+import { getDefaultCity, getListOffers } from '../../store/process/selectors.js';
+
 function OfferList(props) {
-  const { onOfferHover, activeCity, listOffers } = props;
+  const { onOfferHover } = props;
+  const activeCity = useSelector(getDefaultCity);
+  const listOffers = useSelector(getListOffers);
 
   const [isOpen, setOpen] = useState(false);
   const placesOptionsOpen = () => {
@@ -54,22 +57,16 @@ function OfferList(props) {
       </form>
       <div className="cities__places-list places__list tabs__content">
         {sortedOffers.map((offer) =>
-          <Card offers={offer} id={offer.id} key={offer.id} onOfferHover={onOfferHover} />,
+          <Card offer={offer} key={offer.id} onOfferHover={onOfferHover} />,
         )}
       </div>
     </>
   );
 }
-const mapStateToProps = (state) => ({
-  activeCity: state.defaultCity,
-  listOffers: state.listOffers,
-  offers: state.offers,
-});
+
 OfferList.propTypes = {
   onOfferHover: PropTypes.func.isRequired,
-  activeCity: PropTypes.node.isRequired,
-  listOffers: offerType.isRequired,
 };
 
-export { OfferList };
-export default connect(mapStateToProps)(OfferList);
+export default OfferList;
+

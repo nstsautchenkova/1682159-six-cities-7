@@ -1,5 +1,7 @@
 const REVIEWS_COUT = 10;
 const OFFER_COUT = 3;
+const OFFER_IMG_COUT = 6;
+
 const AppRoute = {
   MAIN: '/',
   SIGN_IN: '/login',
@@ -86,4 +88,4 @@ const CommentSetting = {
   LENGHT_MAX: 300,
   RATING_MIN: 0,
 };
-export { AppRoute, SortType, RatingSetting, REVIEWS_COUT, OFFER_COUT, OfferCity, AuthorizationStatus, APIRoute, CommentSetting };
+export { AppRoute, SortType, RatingSetting, REVIEWS_COUT, OFFER_COUT, OfferCity, AuthorizationStatus, APIRoute, CommentSetting, OFFER_IMG_COUT };

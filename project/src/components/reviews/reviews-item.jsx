@@ -1,11 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import reviewsType from '../reviews-props/reviews-props.js';
+import { useSelector } from 'react-redux';
 import { getRatingInPercents } from '../../utils.js';
 import { REVIEWS_COUT } from '../../const.js';
+import { getComments } from '../../store/data/selectors.js';
+
+
 function ReviewsItem(props) {
-  const { comment } = props;
-  const reviewsList = comment.slice(0, REVIEWS_COUT);
+  const comments = useSelector(getComments);
+  const reviewsList = comments.slice(0, REVIEWS_COUT);
   return (
     <ul className="reviews__list">
       {Object.values(reviewsList).map((review) => (
@@ -36,13 +38,4 @@ function ReviewsItem(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  comment: state.comment,
-});
-
-ReviewsItem.propTypes = {
-  comment: reviewsType.isRequired,
-};
-
-//export default ReviewsItem;
-export default connect(mapStateToProps, null)(ReviewsItem);
+export default ReviewsItem;

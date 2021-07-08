@@ -7,7 +7,7 @@ function OtherPlacesCard(props) {
   const { offers} = props;
   const link = `${AppRoute.OFFER}/${offers.id}`;
   return (
-    <article id={offers.id} className="near-places__card place-card"  key={offers.id}>
+    <article className="near-places__card place-card"  key={offers.id}>
       <div className="near-places__image-wrapper place-card__image-wrapper">
         <Link
           to={link}

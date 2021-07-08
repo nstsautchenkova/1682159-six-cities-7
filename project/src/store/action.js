@@ -1,3 +1,5 @@
+import {createAction} from '@reduxjs/toolkit';
+
 const ActionType = {
   SELECT_CITY: 'citiesList/selectCity',
   SELECT_LIST_RENT: 'citiesList/selectListRent',
@@ -10,56 +12,42 @@ const ActionType = {
   USER_EMAIL: 'data/login',
   REVIEW_LIST: 'data/reviewsList',
   NEW_COMMENTS: 'data/newComments',
-  COMMENT_ALERT:'commemt/commentAlert',
+  COMMENT_ALERT: 'commemt/commentAlert',
 };
 
-const ActionCreator = {
-  commentAlert: (alert) => ({
-    type: ActionType.COMMENT_ALERT,
-    payload:alert,
-  }),
-  selectCity: (activeCity) => ({
-    type: ActionType.SELECT_CITY,
-    activeCity,
-  }),
-  selectListRent: (activeCity) => ({
-    type: ActionType.SELECT_LIST_RENT,
-    activeCity: activeCity,
-  }),
-  defaultCityMap: (activeCity) => ({
-    type: ActionType.DEFAULT_CITY_MAP,
-    activeCity: activeCity,
-  }),
-  loadOffers: (offers) => ({
-    type: ActionType.LOAD_OFFERS,
-    payload: offers,
-  }),
-  nearbyList: (nearby) => ({
-    type: ActionType.NEARBY_LIST,
-    payload: nearby,
-  }),
-  requireAuthorization: (status) => ({
-    type: ActionType.REQUIRED_AUTHORIZATION,
-    payload: status,
-  }),
-  logout: () => ({
-    type: ActionType.LOGOUT,
-  }),
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
-    payload: url,
-  }),
-  userEmail: (login) => ({
-    type: ActionType.USER_EMAIL,
-    payload: login,
-  }),
-  reviewsList: (reviews) => ({
-    type: ActionType.REVIEW_LIST,
-    payload: reviews,
-  }),
-  newComment: (reviews) => ({
-    type: ActionType.NEW_COMMENTS,
-    payload: reviews,
-  }),
-};
-export { ActionType, ActionCreator };
+const commentsAlert = createAction(ActionType.COMMENT_ALERT, (alert) => ({
+  payload: alert,
+}));
+const selectCity = createAction(ActionType.SELECT_CITY, (activeCity) => ({
+  payload: activeCity,
+}));
+const selectListRent = createAction(ActionType.SELECT_LIST_RENT, (activeCity) => ({
+  payload: activeCity,
+}));
+const defaultCityMap = createAction(ActionType.DEFAULT_CITY_MAP, (activeCity) => ({
+  payload: activeCity,
+}));
+const loadOffers = createAction(ActionType.LOAD_OFFERS, (offers) => ({
+  payload: offers,
+}));
+const nearbyList = createAction(ActionType.NEARBY_LIST, (nearby) => ({
+  payload: nearby,
+}));
+const requireAuthorization = createAction(ActionType.REQUIRED_AUTHORIZATION, (status) => ({
+  payload: status,
+}));
+const userLogout = createAction(ActionType.LOGOUT);
+const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
+  payload: url,
+}));
+const userEmail = createAction(ActionType.USER_EMAIL, (login) => ({
+  payload: login,
+}));
+const reviewsList = createAction(ActionType.REVIEW_LIST, (reviews) => ({
+  payload: reviews,
+}));
+const comments = createAction(ActionType.NEW_COMMENTS, (reviews) => ({
+  payload: reviews,
+}));
+
+export { ActionType, commentsAlert, selectCity, selectListRent, defaultCityMap, loadOffers, nearbyList, requireAuthorization, userLogout, redirectToRoute, userEmail, reviewsList, comments };

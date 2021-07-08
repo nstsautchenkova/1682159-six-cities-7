@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 
 const offerType = PropTypes.exact({
+  id: PropTypes.number.isRequired,
   bedrooms: PropTypes.number.isRequired,
   city: PropTypes.exact({
     location: PropTypes.exact({
@@ -17,14 +18,13 @@ const offerType = PropTypes.exact({
     isPro: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
   }).isRequired,
-  id: PropTypes.number.isRequired,
   images: PropTypes.arrayOf(PropTypes.string).isRequired,
   isFavorite: PropTypes.bool.isRequired,
   isPremium: PropTypes.bool.isRequired,
   location: PropTypes.exact({
     latitude: PropTypes.number.isRequired,
     longitude: PropTypes.number.isRequired,
-    iszoomPro: PropTypes.number.isRequired,
+    zoom: PropTypes.number.isRequired,
   }).isRequired,
   maxAdults: PropTypes.number.isRequired,
   previewImage: PropTypes.string.isRequired,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { ActionCreator } from '../../store/action.js';
+import { selectCity, selectListRent, defaultCityMap } from '../../store/action.js';
 import PropTypes from 'prop-types';
 import { OfferCity } from '../../const.js';
 function CitiesList(props) {
@@ -21,17 +21,17 @@ function CitiesList(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  activeCity: state.defaultCity,
-  listOffers: state.listOffers,
-  defaultCityMap: state.defaultCityMap,
+const mapStateToProps = ({PROCESS, DATA}) => ({
+  activeCity: PROCESS.defaultCity,
+  listOffers: DATA.listOffers,
+  defaultCityMap: PROCESS.defaultCityMap,
 });
 const mapDispatchToProps = (dispatch) => ({
   onSelectCity(evt) {
     const activeCity = evt.target.textContent;
-    dispatch(ActionCreator.selectCity(activeCity));
-    dispatch(ActionCreator.selectListRent(activeCity));
-    dispatch(ActionCreator.defaultCityMap(activeCity));
+    dispatch(selectCity(activeCity));
+    dispatch(selectListRent(activeCity));
+    dispatch(defaultCityMap(activeCity));
   },
 });
 

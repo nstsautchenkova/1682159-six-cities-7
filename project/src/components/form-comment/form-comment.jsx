@@ -1,15 +1,23 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { newComments } from '../../store/api-actions.js';
 import ratingToValues from '../form-comment/common.js';
 import { getRatingsEntries, checkIsFormValid } from '../form-comment/helpers.js';
 import { useParams } from 'react-router-dom';
 import { Success, Error } from '../comment-alert/comment-alert.jsx';
-import { ActionCreator } from '../../store/action.js';
+import { commentsAlert } from '../../store/action.js';
+import { getCommentAlert } from '../../store/process/selectors.js';
 
 function FormComment(props) {
-  const { onSubmit, getAlert, commentAlert } = props;
+  const commentAlert = useSelector(getCommentAlert);
+  const dispatch = useDispatch();
+  const onSubmit = (offerId, commentData) => {
+    dispatch(newComments(offerId, commentData));
+  };
+  const getAlert = (alert) => {
+    dispatch(commentsAlert(alert));
+  };
+
   const { id } = useParams();
   const ratingsEntries = getRatingsEntries(ratingToValues);
   const [formState, setFormState] = useState({
@@ -17,11 +25,6 @@ function FormComment(props) {
     comment: '',
   });
   const { rating, comment } = formState;
-  const [formCommentDate, setformCommentDate] = useState();
-  const handleChangeComment = (evt) => {
-    setformCommentDate(evt.target.value);
-  };
-  const [formCommentRating, setformCommentRating] = useState();
   const handleChangeRating = (evt) => {
     setFormState({
       ...formState,
@@ -71,6 +74,7 @@ function FormComment(props) {
         {ratingsEntries.map(([name, value]) => (
           <>
             <input
+              key={value}
               className="form__rating-input visually-hidden"
               name="rating"
               id={`${value}-stars`}
@@ -79,7 +83,7 @@ function FormComment(props) {
               onChange={handleChangeRating}
               checked={rating === value}
             />
-            <label htmlFor={`${value}-stars`} className="reviews__rating-label form__rating-label" title={name}>
+            <label key={name} htmlFor={`${value}-stars`} className="reviews__rating-label form__rating-label" title={name}>
               <svg className="form__star-image" width="37" height="33">
                 <use xlinkHref="#icon-star"></use>
               </svg>
@@ -113,23 +117,6 @@ function FormComment(props) {
 
   );
 }
-const mapStateToProps = (state) => ({
-  commentAlert: state.commentAlert,
-});
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(id, commentData) {
-    dispatch(newComments(id, commentData));
-  },
-  getAlert(alert) {
-    dispatch(ActionCreator.commentAlert(alert));
-  },
-});
-FormComment.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  getAlert: PropTypes.func.isRequired,
-  commentAlert: PropTypes.bool.isRequired,
-};
 
-//export default FormComment;
-export default connect(mapStateToProps, mapDispatchToProps)(FormComment);
+export default FormComment;
 
