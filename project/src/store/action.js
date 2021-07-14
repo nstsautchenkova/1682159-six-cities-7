@@ -14,7 +14,6 @@ const ActionType = {
   NEW_COMMENTS: 'data/newComments',
   COMMENT_ALERT: 'commemt/commentAlert',
   FAVORITE: 'data/favorite',
-  FAVORITE_STATUS:'data/favoriteStatus',
 };
 const commentsAlert = createAction(ActionType.COMMENT_ALERT, (alert) => ({
   payload: alert,
@@ -53,8 +52,5 @@ const comments = createAction(ActionType.NEW_COMMENTS, (reviews) => ({
 const favoriteHotel = createAction(ActionType.FAVORITE, (favorite) => ({
   payload: favorite,
 }));
-const favoriteHotelStatus = createAction(ActionType.FAVORITE_STATUS, (hotelId,status) => ({
-  payload: {status, hotelId},
-}));
 
-export { ActionType, commentsAlert, selectCity, selectListRent, defaultCityMap, loadOffers, nearbyList, requireAuthorization, userLogout, redirectToRoute, userEmail, reviewsList, comments, favoriteHotel, favoriteHotelStatus };
+export { ActionType, commentsAlert, selectCity, selectListRent, defaultCityMap, loadOffers, nearbyList, requireAuthorization, userLogout, redirectToRoute, userEmail, reviewsList, comments, favoriteHotel };

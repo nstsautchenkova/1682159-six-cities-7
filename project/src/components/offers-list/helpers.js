@@ -30,4 +30,4 @@ const getSortedOffers = (arr, sort) => {
 
   return arr;
 };
-export default getSortedOffers;
+export { getSortedOffers, getSortedItems };

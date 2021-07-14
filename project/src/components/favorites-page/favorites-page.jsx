@@ -3,13 +3,13 @@ import { useSelector } from 'react-redux';
 import Header from '../header/header.jsx';
 import Footer from '../footer/footer.jsx';
 import FavoritesPageCard from './favorites-page-card.jsx';
-import { getFavoriteHotel } from '../../store/process/selectors.js';
-import { getFavorit } from '../favorites-page/helpers.js';
+import { getOffers } from '../../store/process/selectors.js';
+import { hasFavorit, getFavorits } from '../favorites-page/helpers.js';
 
 
 function FavoritesPage(props) {
-  const favoriteList = useSelector(getFavoriteHotel);
-  const hasFavorites = Boolean(getFavorit(favoriteList));
+  const offers = useSelector(getOffers);
+  const hasFavorites = Boolean(hasFavorit(offers));
 
   if (hasFavorites) {
     return (
@@ -36,8 +36,8 @@ function FavoritesPage(props) {
               <section className="favorites">
                 <h1 className="favorites__title">Saved listing</h1>
                 <ul className="favorites__list">
-                  {favoriteList.map((favorite) =>
-                    <FavoritesPageCard favorite={favorite} key={favorite.id}/>,
+                  {getFavorits(offers).map((offer) =>
+                    <FavoritesPageCard offer={offer} key={offer.id} />,
                   )}
                 </ul>
               </section>

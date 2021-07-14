@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { SortType } from '../../const.js';
 import Card from '../card/card.jsx';
-import getSortedOffers from './helpers.js';
+import { getSortedOffers } from './helpers.js';
 import { getDefaultCity, getListOffers } from '../../store/process/selectors.js';
 
 function OfferList(props) {

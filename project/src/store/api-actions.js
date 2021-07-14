@@ -1,4 +1,4 @@
-import { loadOffers, redirectToRoute, nearbyList, requireAuthorization, userEmail, userLogout, reviewsList, comments, favoriteHotel, favoriteHotelStatus } from './action.js';
+import { loadOffers, redirectToRoute, nearbyList, requireAuthorization, userEmail, userLogout, reviewsList, comments, favoriteHotel } from './action.js';
 import { AuthorizationStatus, AppRoute, APIRoute } from '../const.js';
 import { mapOffersToClient, mapCommentsToClient, mapFavoriteToClient } from '../utils.js';
 
@@ -47,7 +47,7 @@ const newComments = (offerId, { comment, rating }) => (dispatch, _getState, api)
 const fetchFavorite = (hotelId, status) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.FAVORITE}/${hotelId}/${status}`)
     .then(({ data }) => dispatch(favoriteHotel(mapFavoriteToClient(data))))
-    .then(() => dispatch(favoriteHotelStatus(hotelId, status)))
+    //.then(() => dispatch(loadOffers(mapOffersToClient(offerF))))
 );
 
 export { fetchOffersList, fetchNearbyList, checkAuth, login, logout, fetchComments, newComments, fetchFavorite };

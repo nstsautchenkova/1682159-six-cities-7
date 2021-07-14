@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React,{ useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
@@ -13,8 +13,7 @@ import { fetchFavorite } from '../../store/api-actions.js';
 function Card(props) {
   const { offer, onOfferHover } = props;
   const history = useHistory();
-  const getLinkOffer = () => `${AppRoute.OFFER}/${offer.id}`;
-  const link = getLinkOffer;
+  const link = `${AppRoute.OFFER}/${offer.id}`;
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
   const cardHoverHandler = () => {
@@ -26,31 +25,22 @@ function Card(props) {
   const onSubmit = (hotelId, status) => {
     dispatch(fetchFavorite(hotelId, status));
   };
-
-  const [isFavorite, setIsFavorite] = useState();
-
+  const offerId = useRef();
   const handleSubmit = () => {
-    const hotelId = offer.id;
+    const hotelId = offerId.current.id;
     let status = 0;
 
     if (authorizationStatus === AuthorizationStatus.AUTH) {
-      setIsFavorite(true);
+      if (offer.isFavorite) {
+        status = 0;
+      } else{
+        status = 1;
+      }
+      onSubmit(
+        hotelId, status,
+      );
     } else {
       history.push(AppRoute.SIGN_IN);
-    }
-
-    if (isFavorite === true) {
-      status = 0;
-      onSubmit(
-        hotelId, status,
-      );
-      setIsFavorite(false);
-    } else{
-      status = 1;
-      onSubmit(
-        hotelId, status,
-      );
-      setIsFavorite(true);
     }
   };
 
@@ -59,6 +49,8 @@ function Card(props) {
       key={offer.id}
       className='cities__place-card place-card'
       onMouseEnter={cardHoverHandler}
+      id={offer.id}
+      ref={offerId}
     >
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={link}>
@@ -72,7 +64,7 @@ function Card(props) {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button
-            className={isFavorite ? 'place-card__bookmark-button button place-card__bookmark-button--active' : 'place-card__bookmark-button button'}
+            className={offer.isFavorite ? 'place-card__bookmark-button button place-card__bookmark-button--active' : 'place-card__bookmark-button button'}
             type="button"
             onClick={handleSubmit}
           >
