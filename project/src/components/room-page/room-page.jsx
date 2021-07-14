@@ -37,22 +37,14 @@ function RoomPage(props) {
   const offerImg = offerById.images.slice(0, OFFER_IMG_COUT);
 
   //Favorite
-  const onSubmit = (hotelId, status) => {
-    dispatch(fetchFavorite(hotelId, status));
+  const onSubmit = (offerIsFavorite) => {
+    dispatch(fetchFavorite(offerIsFavorite));
   };
 
   const handleSubmit = () => {
-    const hotelId = offerById.id;
-    let status = 0;
-
     if (authorizationStatus === AuthorizationStatus.AUTH) {
-      if (offerById.isFavorite) {
-        status = 0;
-      } else{
-        status = 1;
-      }
       onSubmit(
-        hotelId, status,
+        offerById,
       );
     } else {
       history.push(AppRoute.SIGN_IN);

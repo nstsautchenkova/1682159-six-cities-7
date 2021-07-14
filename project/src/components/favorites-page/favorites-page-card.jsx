@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { fetchFavorite } from '../../store/api-actions.js';
@@ -10,22 +10,13 @@ function FavoritesPageCard(props) {
   const { offer } = props;
 
   const dispatch = useDispatch();
-  const onSubmit = (hotelId, status) => {
-    dispatch(fetchFavorite(hotelId, status));
+  const onSubmit = (offerIsFavorite) => {
+    dispatch(fetchFavorite(offerIsFavorite));
   };
-  const offerId = useRef();
 
   const handleSubmit = () => {
-    const hotelId = offerId.current.id;
-    let status = 0;
-
-    if (offer.isFavorite) {
-      status = 0;
-    } else {
-      status = 1;
-    }
     onSubmit(
-      hotelId, status,
+      offer,
     );
   };
   const link = `${AppRoute.OFFER}/${offer.id}`;
@@ -40,7 +31,7 @@ function FavoritesPageCard(props) {
         </div>
       </div>
       <div className="favorites__places">
-        <article id={offer.id} className="favorites__card place-card" ref={offerId}>
+        <article id={offer.id} className="favorites__card place-card">
           <div className="favorites__image-wrapper place-card__image-wrapper">
             <Link to={link}>
               <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place image" />

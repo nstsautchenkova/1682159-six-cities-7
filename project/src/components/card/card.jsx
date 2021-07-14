@@ -1,4 +1,4 @@
-import React,{ useRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
@@ -22,22 +22,13 @@ function Card(props) {
 
   //Favorite
   const dispatch = useDispatch();
-  const onSubmit = (hotelId, status) => {
-    dispatch(fetchFavorite(hotelId, status));
+  const onSubmit = (offerIsFavorite) => {
+    dispatch(fetchFavorite(offerIsFavorite));
   };
-  const offerId = useRef();
   const handleSubmit = () => {
-    const hotelId = offerId.current.id;
-    let status = 0;
-
     if (authorizationStatus === AuthorizationStatus.AUTH) {
-      if (offer.isFavorite) {
-        status = 0;
-      } else{
-        status = 1;
-      }
       onSubmit(
-        hotelId, status,
+        offer,
       );
     } else {
       history.push(AppRoute.SIGN_IN);
@@ -50,7 +41,6 @@ function Card(props) {
       className='cities__place-card place-card'
       onMouseEnter={cardHoverHandler}
       id={offer.id}
-      ref={offerId}
     >
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={link}>

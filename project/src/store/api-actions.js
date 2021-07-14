@@ -44,10 +44,14 @@ const newComments = (offerId, { comment, rating }) => (dispatch, _getState, api)
     .then(({ data }) => mapCommentsToClient(data))
     .then((reviews) => dispatch(comments(reviews)))
 );
-const fetchFavorite = (hotelId, status) => (dispatch, _getState, api) => (
+/* const fetchFavorite = (hotelId, status) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.FAVORITE}/${hotelId}/${status}`)
     .then(({ data }) => dispatch(favoriteHotel(mapFavoriteToClient(data))))
-    //.then(() => dispatch(loadOffers(mapOffersToClient(offerF))))
-);
+); */
+const fetchFavorite = (offer) => (dispatch, _getState, api) => {
+  const status = offer.isFavorite ? 0 : 1;
+  api.post(`${APIRoute.FAVORITE}/${offer.id}/${status}`)
+    .then(({ data }) => dispatch(favoriteHotel(mapFavoriteToClient(data))));
+};
 
 export { fetchOffersList, fetchNearbyList, checkAuth, login, logout, fetchComments, newComments, fetchFavorite };

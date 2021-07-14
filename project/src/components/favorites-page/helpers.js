@@ -2,10 +2,7 @@ const hasFavorit = (favoritList) => favoritList.find((it) => it.isFavorite === t
 const getFavorits = (offers) => {
   const offersFavoritList = [];
   offers.map((it) => {
-    if (it.isFavorite) {
-      offersFavoritList.push(it);
-    }
-    return offersFavoritList;
+    it.isFavorite && offersFavoritList.push(it);
   });
   return offersFavoritList;
 };
