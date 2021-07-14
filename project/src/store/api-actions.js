@@ -1,12 +1,12 @@
-import { loadOffers,redirectToRoute,nearbyList,requireAuthorization,userEmail,userLogout,reviewsList,comments } from './action.js';
+import { loadOffers, redirectToRoute, nearbyList, requireAuthorization, userEmail, userLogout, reviewsList, comments, favoriteHotel } from './action.js';
 import { AuthorizationStatus, AppRoute, APIRoute } from '../const.js';
-import { mapOffersToClient, mapCommentsToClient } from '../utils.js';
+import { mapOffersToClient, mapCommentsToClient, mapFavoriteToClient } from '../utils.js';
 
 const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS)
     .then(({ data }) => mapOffersToClient(data))
     .then((offers) => dispatch(loadOffers(offers)))
-    .catch(() => { dispatch(redirectToRoute(AppRoute.SHOW_ALERT)); })
+    .catch(() => { dispatch(redirectToRoute(AppRoute.MAIN_EMPTY)); })
 );
 
 const fetchNearbyList = (offerId) => (dispatch, _getState, api) => (
@@ -25,8 +25,8 @@ const login = ({ login: email, password }) => (dispatch, _getState, api) => (
   api.post(APIRoute.LOGIN, { email, password })
     .then(({ data }) => localStorage.setItem('token', data.token))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
-    .then(() => dispatch(redirectToRoute(AppRoute.MAIN)))
     .then(() => dispatch(userEmail(email)))
+    .then(() => dispatch(redirectToRoute(AppRoute.MAIN)))
 );
 
 const logout = () => (dispatch, _getState, api) => (
@@ -40,9 +40,18 @@ const fetchComments = (reviewsId) => (dispatch, _getState, api) => (
     .then((reviews) => dispatch(reviewsList(reviews)))
 );
 const newComments = (offerId, { comment, rating }) => (dispatch, _getState, api) => (
-  api.post(`${APIRoute.COMMENT}/${offerId}`, { comment, rating })
+  api.post(`${APIRoute.REVIEWS}/${offerId}`, { comment, rating })
     .then(({ data }) => mapCommentsToClient(data))
     .then((reviews) => dispatch(comments(reviews)))
 );
+/* const fetchFavorite = (hotelId, status) => (dispatch, _getState, api) => (
+  api.post(`${APIRoute.FAVORITE}/${hotelId}/${status}`)
+    .then(({ data }) => dispatch(favoriteHotel(mapFavoriteToClient(data))))
+); */
+const fetchFavorite = (offer) => (dispatch, _getState, api) => {
+  const status = offer.isFavorite ? 0 : 1;
+  api.post(`${APIRoute.FAVORITE}/${offer.id}/${status}`)
+    .then(({ data }) => dispatch(favoriteHotel(mapFavoriteToClient(data))));
+};
 
-export { fetchOffersList, fetchNearbyList, checkAuth, login, logout, fetchComments, newComments };
+export { fetchOffersList, fetchNearbyList, checkAuth, login, logout, fetchComments, newComments, fetchFavorite };

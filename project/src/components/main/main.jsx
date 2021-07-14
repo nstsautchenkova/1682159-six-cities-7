@@ -5,7 +5,7 @@ import OfferList from '../offers-list/offers-list.jsx';
 import Map from '../map/map.jsx';
 import CitiesList from '../сities-list/сities-list.jsx';
 
-function HomePage(props) {
+function Main(props) {
   const { onOfferHover, selectedOffer } = props;
   return (
     <>
@@ -53,9 +53,9 @@ function HomePage(props) {
   );
 }
 
-HomePage.propTypes = {
+Main.propTypes = {
   onOfferHover: PropTypes.func,
   selectedOffer: PropTypes.object,
 };
 
-export default HomePage;
+export default Main;

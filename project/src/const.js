@@ -8,7 +8,7 @@ const AppRoute = {
   FAVORITES: '/favorites',
   OFFER_$ID: '/offer/:id',
   OFFER: '/offer',
-  SHOW_ALERT: '/404',
+  MAIN_EMPTY: '/empty',
 };
 const RatingSetting = {
   MAX_PERCENTS: 100,
@@ -81,7 +81,7 @@ const APIRoute = {
   LOGOUT: '/logout',
   NEARBY: '/nearby',
   REVIEWS: '/comments',
-  COMMENT: '/comments',
+  FAVORITE: '/favorite',
 };
 const CommentSetting = {
   LENGHT_MIN: 50,

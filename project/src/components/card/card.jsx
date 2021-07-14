@@ -1,23 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useHistory} from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { AppRoute } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
 import offerType from '../offers-prop/offers-prop.js';
 import { AuthorizationStatus } from '../../const.js';
 import { getAuthorizationStatus } from '../../store/user/selectors.js';
+import { fetchFavorite } from '../../store/api-actions.js';
 
 function Card(props) {
   const { offer, onOfferHover } = props;
   const history = useHistory();
-  const getLinkOffer = () => `${AppRoute.OFFER}/${offer.id}`;
-  const link = getLinkOffer;
+  const link = `${AppRoute.OFFER}/${offer.id}`;
   const authorizationStatus = useSelector(getAuthorizationStatus);
 
   const cardHoverHandler = () => {
     onOfferHover(offer.id);
+  };
+
+  //Favorite
+  const dispatch = useDispatch();
+  const onSubmit = (offerIsFavorite) => {
+    dispatch(fetchFavorite(offerIsFavorite));
+  };
+  const handleSubmit = () => {
+    if (authorizationStatus === AuthorizationStatus.AUTH) {
+      onSubmit(
+        offer,
+      );
+    } else {
+      history.push(AppRoute.SIGN_IN);
+    }
   };
 
   return (
@@ -25,6 +40,7 @@ function Card(props) {
       key={offer.id}
       className='cities__place-card place-card'
       onMouseEnter={cardHoverHandler}
+      id={offer.id}
     >
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={link}>
@@ -40,7 +56,7 @@ function Card(props) {
           <button
             className={offer.isFavorite ? 'place-card__bookmark-button button place-card__bookmark-button--active' : 'place-card__bookmark-button button'}
             type="button"
-            onClick={() => authorizationStatus === AuthorizationStatus.AUTH ? history.push(AppRoute.FAVORITES) : history.push(AppRoute.SIGN_IN)}
+            onClick={handleSubmit}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>

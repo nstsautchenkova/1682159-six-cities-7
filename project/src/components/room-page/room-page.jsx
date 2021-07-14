@@ -14,6 +14,7 @@ import getOfferById from '../room-page/helpers.js';
 import { getOffers } from '../../store/process/selectors.js';
 import { getAuthorizationStatus } from '../../store/user/selectors.js';
 import {OFFER_IMG_COUT} from '../../const.js';
+import { fetchFavorite } from '../../store/api-actions.js';
 
 
 function RoomPage(props) {
@@ -34,6 +35,21 @@ function RoomPage(props) {
   const offerById = getOfferById(offers, id);
   const hasOffer = Boolean(offerById);
   const offerImg = offerById.images.slice(0, OFFER_IMG_COUT);
+
+  //Favorite
+  const onSubmit = (offerIsFavorite) => {
+    dispatch(fetchFavorite(offerIsFavorite));
+  };
+
+  const handleSubmit = () => {
+    if (authorizationStatus === AuthorizationStatus.AUTH) {
+      onSubmit(
+        offerById,
+      );
+    } else {
+      history.push(AppRoute.SIGN_IN);
+    }
+  };
 
   if (!hasOffer) {
     return <NotFoundPage />;
@@ -75,7 +91,7 @@ function RoomPage(props) {
                     <button
                       className={offerById.isFavorite ? 'property__bookmark-button button property__bookmark-button--active' : 'property__bookmark-button button'}
                       type="button"
-                      onClick={() => offerById.isFavorite && history.push(AppRoute.FAVORITES) ? history.push(AppRoute.FAVORITES) : history.push(AppRoute.SIGN_IN)}
+                      onClick={handleSubmit}
                     >
                       <svg className="property__bookmark-icon" width="31" height="33">
                         <use xlinkHref="#icon-bookmark"></use>
