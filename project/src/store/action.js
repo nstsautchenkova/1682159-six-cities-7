@@ -1,4 +1,4 @@
-import {createAction} from '@reduxjs/toolkit';
+import { createAction } from '@reduxjs/toolkit';
 
 const ActionType = {
   SELECT_CITY: 'citiesList/selectCity',
@@ -13,8 +13,9 @@ const ActionType = {
   REVIEW_LIST: 'data/reviewsList',
   NEW_COMMENTS: 'data/newComments',
   COMMENT_ALERT: 'commemt/commentAlert',
+  FAVORITE: 'data/favorite',
+  FAVORITE_STATUS:'data/favoriteStatus',
 };
-
 const commentsAlert = createAction(ActionType.COMMENT_ALERT, (alert) => ({
   payload: alert,
 }));
@@ -49,5 +50,11 @@ const reviewsList = createAction(ActionType.REVIEW_LIST, (reviews) => ({
 const comments = createAction(ActionType.NEW_COMMENTS, (reviews) => ({
   payload: reviews,
 }));
+const favoriteHotel = createAction(ActionType.FAVORITE, (favorite) => ({
+  payload: favorite,
+}));
+const favoriteHotelStatus = createAction(ActionType.FAVORITE_STATUS, (hotelId,status) => ({
+  payload: {status, hotelId},
+}));
 
-export { ActionType, commentsAlert, selectCity, selectListRent, defaultCityMap, loadOffers, nearbyList, requireAuthorization, userLogout, redirectToRoute, userEmail, reviewsList, comments };
+export { ActionType, commentsAlert, selectCity, selectListRent, defaultCityMap, loadOffers, nearbyList, requireAuthorization, userLogout, redirectToRoute, userEmail, reviewsList, comments, favoriteHotel, favoriteHotelStatus };

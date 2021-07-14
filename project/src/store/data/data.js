@@ -1,5 +1,5 @@
-import {createReducer} from '@reduxjs/toolkit';
-import {nearbyList,reviewsList,comments} from '../action.js';
+import { createReducer } from '@reduxjs/toolkit';
+import { nearbyList, reviewsList, comments } from '../action.js';
 
 const initialState = {
   nearby: [],

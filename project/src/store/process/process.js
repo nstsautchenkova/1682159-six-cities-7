@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { selectListRent, loadOffers, selectCity, defaultCityMap, commentsAlert } from '../action.js';
+import { selectListRent, loadOffers, selectCity, defaultCityMap, commentsAlert, favoriteHotel, favoriteHotelStatus } from '../action.js';
 import { getMapByCity, getOffersByCity } from '../../utils.js';
 import { OfferCity } from '../../const.js';
 
@@ -10,6 +10,8 @@ const initialState = {
   defaultCityMap: OfferCity.PARIS.location,
   isDataLoaded: false,
   commentAlert: '',
+  favoriteHotelStatus: { status: 0, hotelId: 0 },
+  favoriteHotel: [],
 };
 const process = createReducer(initialState, (builder) => {
   builder
@@ -29,6 +31,17 @@ const process = createReducer(initialState, (builder) => {
     })
     .addCase(commentsAlert, (state, action) => {
       state.commentAlert = action.payload;
+    })
+    .addCase(favoriteHotelStatus, (state, action) => {
+      state.favoriteHotelStatus = action.payload;
+    })
+    .addCase(favoriteHotel, (state, action) => {
+      state.favoriteHotel = state.favoriteHotel.concat(action.payload);
+      /* if (Number(state.favoriteHotelStatus.status) === 1) {
+        state.favoriteHotel = state.favoriteHotel.concat(action.payload);
+      }
+      if (Number(state.favoriteHotelStatus.status) === 0) {
+      } */
     });
 });
 

@@ -1,10 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { selectCity, selectListRent, defaultCityMap } from '../../store/action.js';
-import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCity, selectListRent,defaultCityMap } from '../../store/action.js';
 import { OfferCity } from '../../const.js';
+import { getDefaultCity } from '../../store/process/selectors.js';
+
 function CitiesList(props) {
-  const { onSelectCity, activeCity } = props;
+  const activeCity = useSelector(getDefaultCity);
+  const dispatch = useDispatch();
+  const onSelectCity = (evt) => {
+    dispatch(selectCity(evt.target.textContent));
+    dispatch(selectListRent(evt.target.textContent));
+    dispatch(defaultCityMap(evt.target.textContent));
+  };
   return (
     <ul className="locations__list tabs__list">
       {Object.values(OfferCity).map((city) => (
@@ -21,25 +28,5 @@ function CitiesList(props) {
   );
 }
 
-const mapStateToProps = ({PROCESS, DATA}) => ({
-  activeCity: PROCESS.defaultCity,
-  listOffers: DATA.listOffers,
-  defaultCityMap: PROCESS.defaultCityMap,
-});
-const mapDispatchToProps = (dispatch) => ({
-  onSelectCity(evt) {
-    const activeCity = evt.target.textContent;
-    dispatch(selectCity(activeCity));
-    dispatch(selectListRent(activeCity));
-    dispatch(defaultCityMap(activeCity));
-  },
-});
-
-CitiesList.propTypes = {
-  onSelectCity: PropTypes.func.isRequired,
-  activeCity: PropTypes.node.isRequired,
-};
-
-export { CitiesList };
-export default connect(mapStateToProps, mapDispatchToProps)(CitiesList);
+export default CitiesList;
 

@@ -26,6 +26,7 @@ const store = configureStore({
 store.dispatch(checkAuth());
 store.dispatch(fetchOffersList());
 
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
