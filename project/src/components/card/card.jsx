@@ -55,7 +55,7 @@ function Card(props) {
           <button
             className={offer.isFavorite ? 'place-card__bookmark-button button place-card__bookmark-button--active' : 'place-card__bookmark-button button'}
             type="button"
-            onClick={handleSubmit}
+            onClick={() => handleSubmit()}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>

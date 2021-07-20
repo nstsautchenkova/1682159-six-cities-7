@@ -46,7 +46,7 @@ function Header(props) {
                   </li>
                 </> :
                 <li className="header__nav-item">
-                  <Link className="header__nav-link" to='/login'>
+                  <Link className="header__nav-link" to={AppRoute.SIGN_IN}>
                     <span className="header__signout">Sign in</span>
                   </Link>
                 </li>}

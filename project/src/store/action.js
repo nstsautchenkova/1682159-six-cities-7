@@ -8,7 +8,7 @@ const ActionType = {
   NEARBY_LIST: 'data/nearbyList',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
-  REDIRECT_TO_ROUTE: 'game/redirectToRoute',
+  REDIRECT_TO_ROUTE: 'main/redirectToRoute',
   USER_EMAIL: 'data/login',
   REVIEW_LIST: 'data/reviewsList',
   NEW_COMMENTS: 'data/newComments',
