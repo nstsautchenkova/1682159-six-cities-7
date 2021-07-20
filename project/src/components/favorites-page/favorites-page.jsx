@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Header from '../header/header.jsx';
 import Footer from '../footer/footer.jsx';
 import FavoritesCard from '../favorites-card/favorites-card.jsx';
@@ -43,9 +44,9 @@ function FavoritesPage(props) {
                     <li className="favorites__locations-items" key={it}>
                       <div className="favorites__locations locations locations--current">
                         <div className="locations__item">
-                          <a className="locations__item-link" href="#">
+                          <Link className="locations__item-link" to='/'>
                             <span>{it}</span>
-                          </a>
+                          </Link>
                         </div>
                       </div>
                       <div className="favorites__places">
