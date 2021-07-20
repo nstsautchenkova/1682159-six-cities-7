@@ -3,19 +3,13 @@ import { useSelector } from 'react-redux';
 import { getRatingInPercents } from '../../utils.js';
 import { REVIEWS_COUT } from '../../const.js';
 import { getComments } from '../../store/data/selectors.js';
-import { Month } from '../../const.js';
+import getFormattedDate from './helpers.js';
 
 
 function ReviewsItem(props) {
   const comments = useSelector(getComments);
   const reviewsList = comments.slice(0, REVIEWS_COUT);
-  const getDate = (date) => {
-    const newDate = new Date(date);
-    const dateDateYear = newDate.getFullYear();
-    const getDateMonth = newDate.getMonth();
-    const getDateMonthName = Month[getDateMonth];
-    return `${getDateMonthName} ${dateDateYear}`;
-  };
+
   return (
     <ul className="reviews__list">
       {Object.values(reviewsList).reverse().map((review) => (
@@ -38,7 +32,7 @@ function ReviewsItem(props) {
             <p className="reviews__text">
               {review.comment}
             </p>
-            <time className="reviews__time" dateTime="2019-04-24">{getDate(review.date)}</time>
+            <time className="reviews__time" dateTime="2019-04-24">{getFormattedDate(review.date)}</time>
           </div>
         </li>
       ))}

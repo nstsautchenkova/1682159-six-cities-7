@@ -6,13 +6,14 @@ import configureStore from 'redux-mock-store';
 import { Provider } from 'react-redux';
 import userEvent from '@testing-library/user-event';
 import LoginPage from './login-page.jsx';
+import { AppRoute } from '../../const';
 
 const mockStore = configureStore({});
 
 describe('Component: LoginPage', () => {
   it('should render "LoginPage" when user navigate to "login" url', () => {
     const history = createMemoryHistory();
-    history.push('/login');
+    history.push(AppRoute.SIGN_IN);
 
     render(
       <Provider store={mockStore({})}>

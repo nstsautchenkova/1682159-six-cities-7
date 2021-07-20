@@ -4,7 +4,7 @@ import Header from '../header/header.jsx';
 import Footer from '../footer/footer.jsx';
 import FavoritesCard from '../favorites-card/favorites-card.jsx';
 import { getOffers } from '../../store/process/selectors.js';
-import { hasFavorit, getFavorits, uniqueValue } from '../favorites-page/helpers.js';
+import { hasFavorit, getFavorits, uniqueValue, favoritesOffersFilter } from '../favorites-page/helpers.js';
 
 
 function FavoritesPage(props) {
@@ -49,7 +49,9 @@ function FavoritesPage(props) {
                         </div>
                       </div>
                       <div className="favorites__places">
-                        {favoritesOffers.map((offer) => offer.city.name === it && <FavoritesCard offer={offer} key={offer.id} />)}
+                        {favoritesOffers.map((offer) =>
+                          favoritesOffersFilter(offer, it) && <FavoritesCard offer={offer} key={offer.id} />,
+                        )}
                       </div>
                     </li>
                   ))}
