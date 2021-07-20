@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../header/header.jsx';
+//import Header from '../header/header.jsx';
 
 function NotFoundPage(props) {
   return (
@@ -19,7 +19,7 @@ function NotFoundPage(props) {
       </div>
 
       <div className="page page--gray page--main">
-        <Header />
+        {/* <Header /> */}
 
         <main className="page__main page__main--index">
           <div className="page__404">

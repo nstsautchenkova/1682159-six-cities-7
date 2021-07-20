@@ -4,17 +4,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AuthorizationStatus, AppRoute } from '../../const.js';
 import Logo from '../logo/logo.jsx';
 import { logout } from '../../store/api-actions.js';
-import { getAuthorizationStatus, getUserEmail } from '../../store/user/selectors.js';
+import { getAuthorizationStatus } from '../../store/user/selectors.js';
 
 
 function Header(props) {
   const authorizationStatus = useSelector(getAuthorizationStatus);
-  const userEmail = useSelector(getUserEmail);
+  const userEmail = localStorage.getItem('email');
   const dispatch = useDispatch();
   const signOut = () => {
     dispatch(logout());
   };
-
   return (
     <header className="header">
       <div className="container">

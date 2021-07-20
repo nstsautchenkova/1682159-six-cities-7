@@ -6,4 +6,13 @@ const getFavorits = (offers) => {
   });
   return offersFavoritList;
 };
-export  { hasFavorit, getFavorits };
+const uniqueValue = (arr) => {
+  const result = [];
+  for (const str of arr) {
+    if (!result.includes(str)) {
+      result.push(str);
+    }
+  }
+  return result;
+};
+export  { hasFavorit, getFavorits, uniqueValue };

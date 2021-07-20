@@ -5,7 +5,7 @@ import { AppRoute, AuthorizationStatus } from '../../const.js';
 import { getRatingInPercents } from '../../utils.js';
 import Header from '../header/header.jsx';
 import FormComment from '../form-comment/form-comment.jsx';
-import ReviewsList from '../reviews/reviews-list.jsx';
+import Reviews from '../reviews/reviews.jsx';
 import MapRoomPage from '../map/room-page-map.jsx';
 import OtherPlaces from '../other-places/other-places-list.jsx';
 import NotFoundPage from '../not-found-page/not-found-page.jsx';
@@ -34,7 +34,6 @@ function RoomPage(props) {
   }, [id]);
   const offerById = getOfferById(offers, id);
   const hasOffer = Boolean(offerById);
-  const offerImg = offerById.images.slice(0, OFFER_IMG_COUT);
 
   //Favorite
   const onSubmit = (offerIsFavorite) => {
@@ -76,9 +75,9 @@ function RoomPage(props) {
             <section className="property">
               <div className="property__gallery-container container">
                 <div className="property__gallery">
-                  {offerImg.map((images) => (
-                    <div key={images} className="property__image-wrapper">
-                      <img className="property__image" src={images} alt="Photo studio" />
+                  {offerById.images.slice(0, OFFER_IMG_COUT).map((img) => (
+                    <div key={img} className="property__image-wrapper">
+                      <img className="property__image" src={img} alt="Photo studio" />
                     </div>
                   ))}
                 </div>
@@ -139,7 +138,7 @@ function RoomPage(props) {
                     </div>
                   </div>
                   <section className="property__reviews reviews">
-                    <ReviewsList />
+                    <Reviews />
                     {authorizationStatus === AuthorizationStatus.AUTH && <FormComment />}
                   </section>
                 </div>

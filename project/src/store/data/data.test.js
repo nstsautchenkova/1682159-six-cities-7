@@ -1,0 +1,128 @@
+import { data } from './data.js';
+import {
+    ActionType,
+} from '../action.js';
+
+const nearby = [
+    {
+        "id": 1,
+        "previewImage": "https://7.react.pages.academy/static/hotel/15.jpg",
+        "price": 291,
+        "rating": 4.3,
+        "title": "Penthouse, 4-5 rooms + 5 balconies",
+        "type": "hotel",
+        "bedrooms": 3,
+        "maxAdults": 8,
+        "isFavorite": false,
+        "isPremium": false,
+        "images": [
+            "https://7.react.pages.academy/static/hotel/12.jpg",
+            "https://7.react.pages.academy/static/hotel/18.jpg",
+            "https://7.react.pages.academy/static/hotel/20.jpg",
+            "https://7.react.pages.academy/static/hotel/13.jpg",
+            "https://7.react.pages.academy/static/hotel/10.jpg",
+            "https://7.react.pages.academy/static/hotel/4.jpg",
+            "https://7.react.pages.academy/static/hotel/7.jpg",
+            "https://7.react.pages.academy/static/hotel/15.jpg",
+            "https://7.react.pages.academy/static/hotel/2.jpg",
+            "https://7.react.pages.academy/static/hotel/17.jpg",
+            "https://7.react.pages.academy/static/hotel/16.jpg",
+            "https://7.react.pages.academy/static/hotel/6.jpg",
+            "https://7.react.pages.academy/static/hotel/11.jpg",
+            "https://7.react.pages.academy/static/hotel/3.jpg"
+        ],
+        "goods": [
+            "Towels",
+            "Fridge",
+            "Air conditioning",
+            "Washing machine",
+            "Breakfast",
+            "Dishwasher",
+            "Laptop friendly workspace",
+            "Coffee machine",
+            "Washer",
+            "Baby seat"
+        ],
+        "host": {
+            "id": 25,
+            "name": "Angelina",
+            "isPro": true,
+            "avatarUrl": "img/avatar-angelina.jpg"
+        },
+        "description": "I rent out a very sunny and bright apartment only 7 minutes walking distance to the metro station. The apartment has a spacious living room with a kitchen, one bedroom and a bathroom with mit bath. A terrace can be used in summer.",
+        "city": {
+            "name": "Paris",
+            "location": {
+                "latitude": 48.85661,
+                "longitude": 2.351499,
+                "zoom": 13
+            },
+            "latitude": 48.85661,
+            "longitude": 2.351499,
+            "zoom": 13
+        },
+        "location": {
+            "location": {
+                "latitude": 48.83961,
+                "longitude": 2.342499,
+                "zoom": 16
+            },
+            "latitude": 48.83961,
+            "longitude": 2.342499,
+            "zoom": 16
+        }
+    },
+];
+const reviews = {
+    '0': {
+        id: 1,
+        user: {
+            id: 15,
+            isPro: false,
+            name: 'Kendall',
+            avatarUrl: 'https://7.react.pages.academy/static/avatar/6.jpg'
+        },
+        rating: 3,
+        comment: 'We loved it so much, the house, the veiw, the location just great.. Highly reccomend :)',
+        date: '2021-06-22T16:51:35.215Z'
+    }
+};
+describe('Reducer: data', () => {
+    it('without additional parameters should return initial state', () => {
+        expect(data(undefined, {}))
+            .toEqual({ nearby: [], comments: [], });
+    });
+
+    it('nearbyList', () => {
+        const state = { nearby: [] };
+        const nearbyListAction = {
+            type: ActionType.NEARBY_LIST,
+            payload: nearby,
+        };
+
+        expect(data(state, nearbyListAction))
+            .toEqual({ nearby: nearbyListAction.payload, });
+    });
+
+    it('reviewsList', () => {
+        const state = { comments: [] };
+        const reviewsListAction = {
+            type: ActionType.REVIEW_LIST,
+            payload: reviews,
+        };
+
+        expect(data(state, reviewsListAction))
+            .toEqual({ comments: reviewsListAction.payload, });
+    });
+
+    it('comments', () => {
+        const state = { comments: [] };
+        const commentsAction = {
+            type: ActionType.NEW_COMMENTS,
+            payload: reviews,
+        };
+
+        expect(data(state, commentsAction))
+            .toEqual({ comments: commentsAction.payload, });
+    });
+});

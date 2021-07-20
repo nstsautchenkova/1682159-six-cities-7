@@ -48,6 +48,6 @@ function OtherPlacesCard(props) {
 }
 
 OtherPlacesCard.propTypes = {
-  offers: offerType.isRequired,
+  offers: offerType,
 };
 export default OtherPlacesCard;

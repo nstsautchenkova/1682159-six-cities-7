@@ -88,4 +88,18 @@ const CommentSetting = {
   LENGHT_MAX: 300,
   RATING_MIN: 0,
 };
-export { AppRoute, SortType, RatingSetting, REVIEWS_COUT, OFFER_COUT, OfferCity, AuthorizationStatus, APIRoute, CommentSetting, OFFER_IMG_COUT };
+const Month = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'Novermber',
+  'December',
+];
+export { AppRoute, SortType, RatingSetting, REVIEWS_COUT, OFFER_COUT, OfferCity, AuthorizationStatus, APIRoute, CommentSetting, OFFER_IMG_COUT, Month };
