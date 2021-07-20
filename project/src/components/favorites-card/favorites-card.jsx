@@ -1,52 +1,34 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { AppRoute } from '../../const.js';
+import { useDispatch } from 'react-redux';
+import { fetchFavorite } from '../../store/api-actions.js';
 import { getRatingInPercents } from '../../utils.js';
 import offerType from '../offers-prop/offers-prop.js';
-import { AuthorizationStatus } from '../../const.js';
-import { getAuthorizationStatus } from '../../store/user/selectors.js';
-import { fetchFavorite } from '../../store/api-actions.js';
+import { AppRoute } from '../../const.js';
 
-function Card(props) {
-  const { offer, onOfferHover } = props;
-  const history = useHistory();
-  const link = `${AppRoute.OFFER}/${offer.id}`;
-  const authorizationStatus = useSelector(getAuthorizationStatus);
+function FavoritesCard(props) {
+  const { offer } = props;
 
-  const cardHoverHandler = () => {
-    onOfferHover(offer.id);
-  };
-
-  //Favorite
   const dispatch = useDispatch();
   const onSubmit = (offerIsFavorite) => {
     dispatch(fetchFavorite(offerIsFavorite));
   };
+
   const handleSubmit = () => {
-    if (authorizationStatus === AuthorizationStatus.AUTH) {
-      onSubmit(
-        offer,
-      );
-    } else {
-      history.push(AppRoute.SIGN_IN);
-    }
+    onSubmit(
+      offer,
+    );
   };
+  const link = `${AppRoute.OFFER}/${offer.id}`;
 
   return (
-    <article
-      key={offer.id}
-      className='cities__place-card place-card'
-      onMouseEnter={cardHoverHandler}
-    >
-      <div className="cities__image-wrapper place-card__image-wrapper">
+    <article id={offer.id} className="favorites__card place-card">
+      <div className="favorites__image-wrapper place-card__image-wrapper">
         <Link to={link}>
-          <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place image" />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">€{offer.price}</b>
@@ -77,9 +59,8 @@ function Card(props) {
     </article>
   );
 }
-
-Card.propTypes = {
+FavoritesCard.propTypes = {
   offer: offerType,
-  onOfferHover: PropTypes.func.isRequired,
 };
-export default Card;
+
+export default FavoritesCard;

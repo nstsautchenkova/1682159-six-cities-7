@@ -6,4 +6,6 @@ const getFavorits = (offers) => {
   });
   return offersFavoritList;
 };
-export  { hasFavorit, getFavorits };
+const uniqueValue = (arr) => Array.from(new Set(arr));
+const favoritesOffersFilter = (offer, name) => offer.city.name === name;
+export { hasFavorit, getFavorits, uniqueValue, favoritesOffersFilter };

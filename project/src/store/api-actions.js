@@ -1,18 +1,16 @@
-import { loadOffers, redirectToRoute, nearbyList, requireAuthorization, userEmail, userLogout, reviewsList, comments, favoriteHotel } from './action.js';
+import { loadOffers, redirectToRoute, nearbyList, requireAuthorization, userLogout, reviewsList, comments, favoriteHotel } from './action.js';
 import { AuthorizationStatus, AppRoute, APIRoute } from '../const.js';
 import { mapOffersToClient, mapCommentsToClient, mapFavoriteToClient } from '../utils.js';
 
 const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS)
-    .then(({ data }) => mapOffersToClient(data))
-    .then((offers) => dispatch(loadOffers(offers)))
+    .then(({ data }) => dispatch(loadOffers(mapOffersToClient(data))))
     .catch(() => { dispatch(redirectToRoute(AppRoute.MAIN_EMPTY)); })
 );
 
 const fetchNearbyList = (offerId) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.OFFERS}/${offerId}${APIRoute.NEARBY}`)
-    .then(({ data }) => mapOffersToClient(data))
-    .then((nearby) => dispatch(nearbyList(nearby)))
+    .then(({ data }) => dispatch(nearbyList(mapOffersToClient(data))))
 );
 
 const checkAuth = () => (dispatch, _getState, api) => (
@@ -24,8 +22,8 @@ const checkAuth = () => (dispatch, _getState, api) => (
 const login = ({ login: email, password }) => (dispatch, _getState, api) => (
   api.post(APIRoute.LOGIN, { email, password })
     .then(({ data }) => localStorage.setItem('token', data.token))
+    .then(() => localStorage.setItem('email', email))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
-    .then(() => dispatch(userEmail(email)))
     .then(() => dispatch(redirectToRoute(AppRoute.MAIN)))
 );
 
@@ -36,21 +34,15 @@ const logout = () => (dispatch, _getState, api) => (
 );
 const fetchComments = (reviewsId) => (dispatch, _getState, api) => (
   api.get(`${APIRoute.REVIEWS}/${reviewsId}`)
-    .then(({ data }) => mapCommentsToClient(data))
-    .then((reviews) => dispatch(reviewsList(reviews)))
+    .then(({ data }) => dispatch(reviewsList(mapCommentsToClient(data))))
 );
 const newComments = (offerId, { comment, rating }) => (dispatch, _getState, api) => (
   api.post(`${APIRoute.REVIEWS}/${offerId}`, { comment, rating })
-    .then(({ data }) => mapCommentsToClient(data))
-    .then((reviews) => dispatch(comments(reviews)))
+    .then(({ data }) => dispatch(comments(mapCommentsToClient(data))))
 );
-/* const fetchFavorite = (hotelId, status) => (dispatch, _getState, api) => (
-  api.post(`${APIRoute.FAVORITE}/${hotelId}/${status}`)
-    .then(({ data }) => dispatch(favoriteHotel(mapFavoriteToClient(data))))
-); */
 const fetchFavorite = (offer) => (dispatch, _getState, api) => {
   const status = offer.isFavorite ? 0 : 1;
-  api.post(`${APIRoute.FAVORITE}/${offer.id}/${status}`)
+  return api.post(`${APIRoute.FAVORITE}/${offer.id}/${status}`)
     .then(({ data }) => dispatch(favoriteHotel(mapFavoriteToClient(data))));
 };
 

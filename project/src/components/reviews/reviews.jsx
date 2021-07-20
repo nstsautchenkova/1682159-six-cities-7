@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import ReviewsItem from '../reviews/reviews-item.jsx';
+import ReviewsItem from '../reviews-item/reviews-item.jsx';
 import { getComments } from '../../store/data/selectors.js';
 
 
-function ReviewsList(props) {
+function Reviews(props) {
   const comments = useSelector(getComments);
   const reviewsCout = comments.length;
   return (
@@ -15,4 +15,4 @@ function ReviewsList(props) {
   );
 }
 
-export default ReviewsList;
+export default Reviews;

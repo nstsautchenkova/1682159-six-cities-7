@@ -1,15 +1,19 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Header from '../header/header.jsx';
 import Footer from '../footer/footer.jsx';
-import FavoritesPageCard from './favorites-page-card.jsx';
+import FavoritesCard from '../favorites-card/favorites-card.jsx';
 import { getOffers } from '../../store/process/selectors.js';
-import { hasFavorit, getFavorits } from '../favorites-page/helpers.js';
+import { hasFavorit, getFavorits, uniqueValue, favoritesOffersFilter } from '../favorites-page/helpers.js';
 
 
 function FavoritesPage(props) {
   const offers = useSelector(getOffers);
   const hasFavorites = Boolean(hasFavorit(offers));
+  const favoritesOffers = getFavorits(offers);
+
+  const getName = uniqueValue(favoritesOffers.map((it) => it.city.name));
 
   if (hasFavorites) {
     return (
@@ -36,9 +40,22 @@ function FavoritesPage(props) {
               <section className="favorites">
                 <h1 className="favorites__title">Saved listing</h1>
                 <ul className="favorites__list">
-                  {getFavorits(offers).map((offer) =>
-                    <FavoritesPageCard offer={offer} key={offer.id} />,
-                  )}
+                  {getName.map((it) => (
+                    <li className="favorites__locations-items" key={it}>
+                      <div className="favorites__locations locations locations--current">
+                        <div className="locations__item">
+                          <Link className="locations__item-link" to='/'>
+                            <span>{it}</span>
+                          </Link>
+                        </div>
+                      </div>
+                      <div className="favorites__places">
+                        {favoritesOffers.map((offer) =>
+                          favoritesOffersFilter(offer, it) && <FavoritesCard offer={offer} key={offer.id} />,
+                        )}
+                      </div>
+                    </li>
+                  ))}
                 </ul>
               </section>
             </div>

@@ -2,14 +2,14 @@ import React from 'react';
 
 function Success(props) {
   return (
-    <div className="commentMessageSuccess">
+    <div className="commentMessageSuccess" data-testid="Success">
       Comment sent successfully!
     </div>
   );
 }
 function Error(props) {
   return (
-    <div className="commentMessageError">
+    <div className="commentMessageError" data-testid="ERROR">
       Comment sent ERROR!
     </div>
   );

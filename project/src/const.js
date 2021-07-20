@@ -88,4 +88,5 @@ const CommentSetting = {
   LENGHT_MAX: 300,
   RATING_MIN: 0,
 };
+
 export { AppRoute, SortType, RatingSetting, REVIEWS_COUT, OFFER_COUT, OfferCity, AuthorizationStatus, APIRoute, CommentSetting, OFFER_IMG_COUT };

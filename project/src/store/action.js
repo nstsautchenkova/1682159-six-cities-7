@@ -40,9 +40,6 @@ const userLogout = createAction(ActionType.LOGOUT);
 const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({
   payload: url,
 }));
-const userEmail = createAction(ActionType.USER_EMAIL, (login) => ({
-  payload: login,
-}));
 const reviewsList = createAction(ActionType.REVIEW_LIST, (reviews) => ({
   payload: reviews,
 }));
@@ -53,4 +50,4 @@ const favoriteHotel = createAction(ActionType.FAVORITE, (favorite) => ({
   payload: favorite,
 }));
 
-export { ActionType, commentsAlert, selectCity, selectListRent, defaultCityMap, loadOffers, nearbyList, requireAuthorization, userLogout, redirectToRoute, userEmail, reviewsList, comments, favoriteHotel };
+export { ActionType, commentsAlert, selectCity, selectListRent, defaultCityMap, loadOffers, nearbyList, requireAuthorization, userLogout, redirectToRoute, reviewsList, comments, favoriteHotel };

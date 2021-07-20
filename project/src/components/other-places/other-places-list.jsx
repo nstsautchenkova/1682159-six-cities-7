@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import OtherPlacesCard from '../other-places/other-places-card.jsx';
+import OtherPlacesCard from '../other-places-card/other-places-card.jsx';
 import { OFFER_COUT } from '../../const.js';
 import { getNearby } from '../../store/data/selectors.js';
 

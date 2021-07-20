@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Switch, Route, Router as BrowserRouter } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { AppRoute } from '../../const.js';
 import Main from '../main/main.jsx';
 import LoginPage from '../login-page/login-page.jsx';
@@ -12,7 +12,6 @@ import { getOfferById, isCheckedAuth } from '../../utils.js';
 import { Preloader } from '../preloader/preloader.jsx';
 import { AuthorizationStatus } from '../../const.js';
 import PrivateRoute from '../private-route/private-route.jsx';
-import browserHistory from '../../browser-history.js';
 import { getAuthorizationStatus } from '../../store/user/selectors.js';
 import { getIsDataLoaded, getOffers } from '../../store/process/selectors.js';
 
@@ -34,35 +33,33 @@ function App(props) {
   }
 
   return (
-    <BrowserRouter history={browserHistory}>
-      <Switch>
-        <Route exact path={AppRoute.MAIN}>
-          <Main
-            onOfferHover={onOfferHover}
-            selectedOffer={selectedOffer}
-          />
-        </Route>
-        <Route path={AppRoute.MAIN_EMPTY}>
-          <MainEmpty />
-        </Route>
-        <Route exact path={AppRoute.SIGN_IN}>
-          <LoginPage />
-        </Route>
-        <PrivateRoute
-          exact
-          path={AppRoute.FAVORITES}
-          render={() => (
-            <FavoritesPage />
-          )}
+    <Switch>
+      <Route exact path={AppRoute.MAIN}>
+        <Main
+          onOfferHover={onOfferHover}
+          selectedOffer={selectedOffer}
         />
-        <Route exact path={AppRoute.OFFER_$ID} component={RoomPage}>
-          <RoomPage />
-        </Route>
-        <Route>
-          <NotFoundPage />
-        </Route>
-      </Switch>
-    </BrowserRouter>
+      </Route>
+      <Route path={AppRoute.MAIN_EMPTY}>
+        <MainEmpty />
+      </Route>
+      <Route exact path={AppRoute.SIGN_IN}>
+        <LoginPage />
+      </Route>
+      <PrivateRoute
+        exact
+        path={AppRoute.FAVORITES}
+        render={() => (
+          <FavoritesPage />
+        )}
+      />
+      <Route exact path={AppRoute.OFFER_$ID} component={RoomPage}>
+        <RoomPage />
+      </Route>
+      <Route>
+        <NotFoundPage />
+      </Route>
+    </Switch>
   );
 }
 

@@ -96,6 +96,7 @@ function LoginPage(props) {
                     placeholder="Email"
                     ref={loginRef}
                     required=""
+                    data-testid="login"
                   />
                   <div
                     className="form__valid-login"
@@ -114,6 +115,7 @@ function LoginPage(props) {
                     placeholder="Password"
                     ref={passwordRef}
                     required=""
+                    data-testid="password"
                   />
                   <div
                     className="form__valid-login"
@@ -123,7 +125,7 @@ function LoginPage(props) {
                     Enter password!
                   </div>
                 </div>
-                <button className="login__submit form__submit button" type="submit">Sign in</button>
+                <button className="login__submit form__submit button" type="submit" data-testid="Sign in">Sign in</button>
               </form>
             </section>
           </div>
