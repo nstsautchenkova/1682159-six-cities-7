@@ -4,23 +4,24 @@ import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createMemoryHistory } from 'history';
 import configureStore from 'redux-mock-store';
-import NotFoundPage from '../not-found-page/not-found-page.jsx';
+import MainEmpty from './main-empty.jsx';
 import { AuthorizationStatus } from '../../const.js';
 
 const history = createMemoryHistory();
 const mockStore = configureStore({});
-describe('Component: NotFoundPage', () => {
+describe('Component: MainEmpty', () => {
   it('should render correctly', () => {
     const store = mockStore({
-      USER: { authorizationStatus: AuthorizationStatus.NO_AUTH },
+      USER: { authorizationStatus: AuthorizationStatus.AUTH },
+      PROCESS: { defaultCityMap: { 'lat': 48.864716, 'lng': 2.349014, 'zoom': 12 } },
     });
     render(
       <Provider store={store}>
         <Router history={history}>
-          <NotFoundPage />
+          <MainEmpty />
         </Router>
       </Provider>,
     );
-    expect(screen.queryByText(/404 Not Found/i)).toBeInTheDocument();
+    expect(screen.queryByText(/No places to stay available/i)).toBeInTheDocument();
   });
 });

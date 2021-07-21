@@ -88,5 +88,12 @@ const CommentSetting = {
   LENGHT_MAX: 300,
   RATING_MIN: 0,
 };
+const CustomHttpHeader = {
+  X_TOKEN: 'x-token',
+};
 
-export { AppRoute, SortType, RatingSetting, REVIEWS_COUT, OFFER_COUT, OfferCity, AuthorizationStatus, APIRoute, CommentSetting, OFFER_IMG_COUT };
+const StorageKey = {
+  TOKEN: 'token',
+};
+
+export { AppRoute, SortType, RatingSetting, REVIEWS_COUT, OFFER_COUT, OfferCity, AuthorizationStatus, APIRoute, CommentSetting, OFFER_IMG_COUT, CustomHttpHeader, StorageKey };

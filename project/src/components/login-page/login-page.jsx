@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../../store/api-actions.js';
 import Logo from '../logo/logo.jsx';
+import { validateEmail } from '../../utils.js';
 
 function LoginPage(props) {
   const dispatch = useDispatch();
@@ -15,11 +16,7 @@ function LoginPage(props) {
   const formValidPasswordRef = useRef();
 
   const checkValid = () => {
-    if (loginRef.current.value === '') {
-      loginRef.current.style.border = '1px solid red';
-      formValidLoginRef.current.style.display = 'block';
-    }
-    if (loginRef.current.value === '') {
+    if (!validateEmail(loginRef.current.value)) {
       loginRef.current.style.border = '1px solid red';
       formValidLoginRef.current.style.display = 'block';
     } else {
@@ -103,7 +100,7 @@ function LoginPage(props) {
                     ref={formValidLoginRef}
                     style={{ display: 'none', padding: '10px', position: 'relative', top: '-10px', background: '#ffd6d6' }}
                   >
-                    Enter email!
+                    Enter email in the format <b>email@gmail.com</b>!
                   </div>
                 </div>
                 <div className="login__input-wrapper form__input-wrapper">

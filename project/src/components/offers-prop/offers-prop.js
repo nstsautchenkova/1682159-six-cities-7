@@ -16,7 +16,7 @@ const offerType = PropTypes.exact({
   host: PropTypes.shape({
     avatarUrl: PropTypes.string,
     id: PropTypes.number.isRequired,
-    isPro: PropTypes.bool.isRequired,
+    isPro: PropTypes.bool,
     name: PropTypes.string.isRequired,
   }).isRequired,
   images: PropTypes.arrayOf(PropTypes.string).isRequired,

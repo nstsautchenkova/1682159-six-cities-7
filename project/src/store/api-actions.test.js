@@ -1,7 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { createAPI } from '../services/api.js';
 import { ActionType } from './action.js';
-import { fetchOffersList, fetchNearbyList, checkAuth, login, fetchComments, newComments, fetchFavorite } from './api-actions';
+import { fetchOffersList, fetchNearbyList, checkAuth, login, fetchComments, newComments, fetchFavorite, logout } from './api-actions';
 import { AuthorizationStatus, AppRoute, APIRoute } from '../const.js';
 import { mapOffersToClient, mapCommentsToClient, mapFavoriteToClient } from '../utils.js';
 
@@ -68,7 +68,7 @@ describe('Async operations', () => {
           'location': {
             'latitude': 52.370216,
             'longitude': 4.895168,
-            'zoom': 10
+            'zoom': 10,
           },
           'name': 'Amsterdam',
         },
@@ -95,7 +95,7 @@ describe('Async operations', () => {
         'rating': 4.8,
         'title': 'Beautiful & luxurious studio at great location',
         'type': 'apartment',
-      }
+      },
     ];
 
     apiMock
@@ -125,9 +125,9 @@ describe('Async operations', () => {
           'location': {
             'latitude': 52.370216,
             'longitude': 4.895168,
-            'zoom': 10
+            'zoom': 10,
           },
-          'name': 'Amsterdam'
+          'name': 'Amsterdam',
         },
         'description': 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
         'goods': ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
@@ -135,7 +135,7 @@ describe('Async operations', () => {
           'avatar_url': 'img/1.png',
           'id': 3,
           'is_pro': true,
-          'name': 'Angelina'
+          'name': 'Angelina',
         },
         'id': 1,
         'images': ['img/1.png', 'img/2.png'],
@@ -144,15 +144,15 @@ describe('Async operations', () => {
         'location': {
           'latitude': 52.35514938496378,
           'longitude': 4.673877537499948,
-          'zoom': 8
+          'zoom': 8,
         },
         'max_adults': 4,
         'preview_image': 'img/1.png',
         'price': 120,
         'rating': 4.8,
         'title': 'Beautiful & luxurious studio at great location',
-        'type': 'apartment'
-      }
+        'type': 'apartment',
+      },
     ];
 
     apiMock
@@ -186,8 +186,8 @@ describe('Async operations', () => {
           'id': 4,
           'is_pro': false,
           'name': 'Max',
-        }
-      }
+        },
+      },
     ];
 
     apiMock
@@ -224,8 +224,8 @@ describe('Async operations', () => {
           'id': 4,
           'is_pro': false,
           'name': 'Max',
-        }
-      }
+        },
+      },
     ];
     apiMock
       .onPost(`${APIRoute.REVIEWS}/${offerId}`, fakeComment)
@@ -294,6 +294,29 @@ describe('Async operations', () => {
           type: ActionType.FAVORITE,
           payload: mapFavoriteToClient(fakeOfferFavorite),
         });
+      });
+  });
+
+  it('should make a correct API call to DELETE /logout', () => {
+    const apiMock = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const logoutLoader = logout();
+
+    Storage.prototype.removeItem = jest.fn();
+
+    apiMock
+      .onDelete(APIRoute.LOGOUT)
+      .reply(204, [{fake: true}]);
+
+    return logoutLoader(dispatch, jest.fn(() => {}), api)
+      .then(() => {
+        expect(dispatch).toBeCalledTimes(1);
+        expect(dispatch).nthCalledWith(1, {
+          type: ActionType.LOGOUT,
+        });
+
+        expect(Storage.prototype.removeItem).toBeCalledTimes(1);
+        expect(Storage.prototype.removeItem).nthCalledWith(1, 'token');
       });
   });
 });

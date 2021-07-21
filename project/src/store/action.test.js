@@ -11,7 +11,7 @@ import {
   redirectToRoute,
   reviewsList,
   comments,
-  favoriteHotel,
+  favoriteHotel
 } from './action.js';
 
 describe('Actions', () => {

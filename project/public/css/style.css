@@ -73,3 +73,6 @@
     padding: 20px;
     margin-bottom: 20px;
 }
+.locations__item-link{
+  cursor: pointer;
+}

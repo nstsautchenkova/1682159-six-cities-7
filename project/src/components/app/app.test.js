@@ -5,6 +5,7 @@ import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import userEvent from '@testing-library/user-event';
+import * as Redux from 'react-redux';
 import { AuthorizationStatus, AppRoute } from '../../const';
 import App from './app';
 
@@ -61,7 +62,7 @@ describe('Application Routing', () => {
             'rating': 4.8,
             'title': 'Beautiful & luxurious studio at great location',
             'type': 'apartment',
-          }
+          },
         ],
         offers: [
           {
@@ -97,8 +98,8 @@ describe('Application Routing', () => {
             'rating': 4.8,
             'title': 'Beautiful & luxurious studio at great location',
             'type': 'apartment',
-          }
-        ]
+          },
+        ],
       },
     });
 
@@ -139,6 +140,14 @@ describe('Application Routing', () => {
 
   it('should render "FAVORITES" when user navigate to "/favorites"', () => {
     history.push(AppRoute.FAVORITES);
+    render(fakeApp);
+  });
+
+  it('should render "OFFER_$ID" when user navigate to "/OFFER_$ID"', () => {
+    history.push(AppRoute.OFFER_$ID);
+    const dispatch = jest.fn();
+    const useDispatch = jest.spyOn(Redux, 'useDispatch');
+    useDispatch.mockReturnValue(dispatch);
     render(fakeApp);
   });
 
