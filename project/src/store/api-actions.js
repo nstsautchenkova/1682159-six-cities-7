@@ -1,6 +1,6 @@
 import { loadOffers, redirectToRoute, nearbyList, requireAuthorization, userLogout, reviewsList, comments, favoriteHotel } from './action.js';
-import { AuthorizationStatus, AppRoute, APIRoute } from '../const.js';
-import { mapOffersToClient, mapCommentsToClient, mapFavoriteToClient } from '../utils.js';
+import { AuthorizationStatus, AppRoute, APIRoute, StorageKey } from '../const.js';
+import { mapOffersToClient, mapCommentsToClient, mapFavoriteToClient,setApiTokenHeader } from '../utils.js';
 
 const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS)
@@ -21,7 +21,10 @@ const checkAuth = () => (dispatch, _getState, api) => (
 
 const login = ({ login: email, password }) => (dispatch, _getState, api) => (
   api.post(APIRoute.LOGIN, { email, password })
-    .then(({ data }) => localStorage.setItem('token', data.token))
+    .then(({ data }) => {
+      localStorage.setItem(StorageKey.TOKEN, data.token);
+      setApiTokenHeader(api, data.token);
+    })
     .then(() => localStorage.setItem('email', email))
     .then(() => dispatch(requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(redirectToRoute(AppRoute.MAIN)))

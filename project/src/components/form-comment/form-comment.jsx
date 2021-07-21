@@ -82,6 +82,7 @@ function FormComment(props) {
               value={value}
               onChange={handleChangeRating}
               checked={rating === value}
+              data-testid="rating"
             />
             <label key={name} htmlFor={`${value}-stars`} className="reviews__rating-label form__rating-label" title={name}>
               <svg className="form__star-image" width="37" height="33">
@@ -98,6 +99,7 @@ function FormComment(props) {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={comment}
         onChange={handleChangeComment}
+        data-testid="review"
       >
       </textarea>
       <div className="reviews__button-wrapper">

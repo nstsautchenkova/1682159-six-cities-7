@@ -1,6 +1,7 @@
 import { RatingSetting } from '../src/const.js';
 import pin from '../src/components/map/pin.svg';
 import pinActive from '../src/components/map/pin-active.svg';
+import { CustomHttpHeader } from '../src/const.js';
 
 const getRatingInPercents = (rating) => {
   const offerRatingInPercents = (Math.round(rating) / RatingSetting.MAX_OFFER_RATING) * RatingSetting.MAX_PERCENTS;
@@ -122,5 +123,11 @@ const getMapByCity = (activeCity, rezultOffers) => {
   return markerMap.location;
 };
 
-
-export { getRatingInPercents, getOfferById, getDefaultMapIcon, getHoverMapIcon, isCheckedAuth, mapOffersToClient, mapCommentsToClient, getOffersByCity, getMapByCity, mapFavoriteToClient };
+const setApiTokenHeader = (api, token) => {
+  api.defaults.headers.common[CustomHttpHeader.X_TOKEN] = token;
+};
+function validateEmail(email) {
+  const re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+  return re.test(String(email).toLowerCase());
+}
+export { getRatingInPercents, getOfferById, getDefaultMapIcon, getHoverMapIcon, isCheckedAuth, mapOffersToClient, mapCommentsToClient, getOffersByCity, getMapByCity, mapFavoriteToClient, setApiTokenHeader, validateEmail };

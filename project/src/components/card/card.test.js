@@ -1,7 +1,15 @@
-import { data } from './data.js';
-import { ActionType } from '../action.js';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import { Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createMemoryHistory } from 'history';
+import configureStore from 'redux-mock-store';
+import Card from './card';
+import { AuthorizationStatus } from '../../const.js';
 
-const nearby = [
+const history = createMemoryHistory();
+const mockStore = configureStore({});
+const offer = [
   {
     'id': 1,
     'previewImage': 'https://7.react.pages.academy/static/hotel/15.jpg',
@@ -71,56 +79,19 @@ const nearby = [
     },
   },
 ];
-const reviews = {
-  '0': {
-    id: 1,
-    user: {
-      id: 15,
-      isPro: false,
-      name: 'Kendall',
-      avatarUrl: 'https://7.react.pages.academy/static/avatar/6.jpg'
-    },
-    rating: 3,
-    comment: 'We loved it so much, the house, the veiw, the location just great.. Highly reccomend :)',
-    date: '2021-06-22T16:51:35.215Z',
-  },
-};
-describe('Reducer: data', () => {
-  it('without additional parameters should return initial state', () => {
-    expect(data(undefined, {}))
-      .toEqual({ nearby: [], comments: [] });
-  });
+describe('Component: Card', () => {
+  it('should render correctly', () => {
+    const store = mockStore({
+      USER: { authorizationStatus: AuthorizationStatus.NO_AUTH },
+    });
 
-  it('nearbyList', () => {
-    const state = { nearby: [] };
-    const nearbyListAction = {
-      type: ActionType.NEARBY_LIST,
-      payload: nearby,
-    };
-
-    expect(data(state, nearbyListAction))
-      .toEqual({ nearby: nearbyListAction.payload });
-  });
-
-  it('reviewsList', () => {
-    const state = { comments: [] };
-    const reviewsListAction = {
-      type: ActionType.REVIEW_LIST,
-      payload: reviews,
-    };
-
-    expect(data(state, reviewsListAction))
-      .toEqual({ comments: reviewsListAction.payload });
-  });
-
-  it('comments', () => {
-    const state = { comments: [] };
-    const commentsAction = {
-      type: ActionType.NEW_COMMENTS,
-      payload: reviews,
-    };
-
-    expect(data(state, commentsAction))
-      .toEqual({ comments: commentsAction.payload });
+    render(
+      <Provider store={store}>
+        <Router history={history}>
+          <Card offer={offer}/>
+        </Router>
+      </Provider>,
+    );
+    expect(screen.getByRole('article')).toBeInTheDocument();
   });
 });
