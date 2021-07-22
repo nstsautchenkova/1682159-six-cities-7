@@ -126,8 +126,9 @@ const getMapByCity = (activeCity, rezultOffers) => {
 const setApiTokenHeader = (api, token) => {
   api.defaults.headers.common[CustomHttpHeader.X_TOKEN] = token;
 };
-function validateEmail(email) {
+
+const validateEmail = (email) => {
   const re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
   return re.test(String(email).toLowerCase());
-}
+};
 export { getRatingInPercents, getOfferById, getDefaultMapIcon, getHoverMapIcon, isCheckedAuth, mapOffersToClient, mapCommentsToClient, getOffersByCity, getMapByCity, mapFavoriteToClient, setApiTokenHeader, validateEmail };
