@@ -8,7 +8,7 @@ import { Success, Error } from '../comment-alert/comment-alert.jsx';
 import { commentsAlert } from '../../store/action.js';
 import { getCommentAlert } from '../../store/process/selectors.js';
 
-function FormComment(props) {
+function FormComment() {
   const commentAlert = useSelector(getCommentAlert);
   const dispatch = useDispatch();
   const onSubmit = (offerId, commentData) => {

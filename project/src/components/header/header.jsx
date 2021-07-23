@@ -7,7 +7,7 @@ import { logout } from '../../store/api-actions.js';
 import { getAuthorizationStatus } from '../../store/user/selectors.js';
 
 
-function Header(props) {
+function Header() {
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const userEmail = localStorage.getItem('email');
   const dispatch = useDispatch();

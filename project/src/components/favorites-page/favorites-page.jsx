@@ -5,13 +5,13 @@ import Header from '../header/header.jsx';
 import Footer from '../footer/footer.jsx';
 import FavoritesCard from '../favorites-card/favorites-card.jsx';
 import { getOffers } from '../../store/process/selectors.js';
-import { hasFavorit, getFavorits, uniqueValue, favoritesOffersFilter } from '../favorites-page/helpers.js';
+import { hasFavorite, getFavorites, uniqueValue, favoritesOffersFilter } from '../favorites-page/helpers.js';
 
 
-function FavoritesPage(props) {
+function FavoritesPage() {
   const offers = useSelector(getOffers);
-  const hasFavorites = Boolean(hasFavorit(offers));
-  const favoritesOffers = getFavorits(offers);
+  const hasFavorites = Boolean(hasFavorite(offers));
+  const favoritesOffers = getFavorites(offers);
 
   const getName = uniqueValue(favoritesOffers.map((it) => it.city.name));
 

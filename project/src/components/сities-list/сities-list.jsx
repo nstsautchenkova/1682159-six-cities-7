@@ -4,7 +4,7 @@ import { selectCity, selectListRent,defaultCityMap } from '../../store/action.js
 import { OfferCity } from '../../const.js';
 import { getDefaultCity } from '../../store/process/selectors.js';
 
-function CitiesList(props) {
+function CitiesList() {
   const activeCity = useSelector(getDefaultCity);
   const dispatch = useDispatch();
   const onSelectCity = (evt) => {

@@ -4,7 +4,7 @@ import { login } from '../../store/api-actions.js';
 import Logo from '../logo/logo.jsx';
 import { validateEmail } from '../../utils.js';
 
-function LoginPage(props) {
+function LoginPage() {
   const dispatch = useDispatch();
   const onSubmit = (authData) => {
     dispatch(login(authData));

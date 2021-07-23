@@ -117,9 +117,9 @@ const mapFavoriteToClient = (offer) => ({
   },
 });
 
-const getOffersByCity = (activeCity, rezultOffers) => rezultOffers.filter((offer) => activeCity === offer.city.name);
-const getMapByCity = (activeCity, rezultOffers) => {
-  const markerMap = Object.values(rezultOffers).filter((offer) => activeCity === offer.name).reduce((item) => item);
+const getOffersByCity = (activeCity, resultOffers) => resultOffers.filter((offer) => activeCity === offer.city.name);
+const getMapByCity = (activeCity, resultOffers) => {
+  const markerMap = Object.values(resultOffers).filter((offer) => activeCity === offer.name).reduce((item) => item);
   return markerMap.location;
 };
 

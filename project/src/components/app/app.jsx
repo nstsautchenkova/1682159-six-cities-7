@@ -16,7 +16,7 @@ import { getAuthorizationStatus } from '../../store/user/selectors.js';
 import { getIsDataLoaded, getOffers } from '../../store/process/selectors.js';
 
 
-function App(props) {
+function App() {
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const isDataLoaded = useSelector(getIsDataLoaded);
   const offers = useSelector(getOffers);

@@ -88,7 +88,7 @@ describe('Reducer: process', () => {
   });
 
   it('selectListRent', () => {
-    const state = { listOffers: [], offers: [], };
+    const state = { listOffers: [], offers: [] };
     const selectListRentAction = {
       type: ActionType.SELECT_LIST_RENT,
       payload: getOffersByCity(listOffers, state.offers),
@@ -110,7 +110,7 @@ describe('Reducer: process', () => {
   });
 
   it('selectCity', () => {
-    const state = { defaultCity: 'Paris', };
+    const state = { defaultCity: 'Paris' };
     const selectCityAction = {
       type: ActionType.SELECT_CITY,
       payload: 'Paris',

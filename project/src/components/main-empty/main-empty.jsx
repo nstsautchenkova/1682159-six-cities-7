@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../header/header.jsx';
 import CitiesList from '../сities-list/сities-list.jsx';
 
-function MainEmpty(props) {
+function MainEmpty() {
   return (
     <>
       <div style={{ display: 'none' }}>

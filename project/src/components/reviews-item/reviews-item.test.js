@@ -15,7 +15,7 @@ const review = {
     id: 15,
     isPro: false,
     name: 'Kendall',
-    avatarUrl: 'https://7.react.pages.academy/static/avatar/6.jpg'
+    avatarUrl: 'https://7.react.pages.academy/static/avatar/6.jpg',
   },
   rating: 3,
   comment: 'We loved it so much, the house, the veiw, the location just great.. Highly reccomend :)',

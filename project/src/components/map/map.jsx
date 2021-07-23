@@ -9,8 +9,8 @@ import { getListOffers, getDefaultCityMap } from '../../store/process/selectors.
 function Map(props) {
   const { selectedOffer } = props;
 
-  const listOffers= useSelector(getListOffers);
-  const defaultCityMap= useSelector(getDefaultCityMap);
+  const listOffers = useSelector(getListOffers);
+  const defaultCityMap = useSelector(getDefaultCityMap);
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, defaultCityMap);
@@ -41,7 +41,7 @@ function Map(props) {
         markerLayer.clearLayers();
       }
     };
-  }, [map, listOffers, selectedOffer]);
+  }, [map, listOffers, selectedOffer, defaultCityMap.lat, defaultCityMap.lng, markerLayer]);
 
   return (
     <div

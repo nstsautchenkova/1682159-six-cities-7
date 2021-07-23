@@ -1,6 +1,6 @@
-const REVIEWS_COUT = 10;
-const OFFER_COUT = 3;
-const OFFER_IMG_COUT = 6;
+const REVIEWS_COUNT = 10;
+const OFFER_COUNT = 3;
+const OFFER_IMG_COUNT = 6;
 
 const AppRoute = {
   MAIN: '/',
@@ -84,8 +84,8 @@ const APIRoute = {
   FAVORITE: '/favorite',
 };
 const CommentSetting = {
-  LENGHT_MIN: 50,
-  LENGHT_MAX: 300,
+  LENGTH_MIN: 50,
+  LENGTH_MAX: 300,
   RATING_MIN: 0,
 };
 const CustomHttpHeader = {
@@ -96,4 +96,4 @@ const StorageKey = {
   TOKEN: 'token',
 };
 
-export { AppRoute, SortType, RatingSetting, REVIEWS_COUT, OFFER_COUT, OfferCity, AuthorizationStatus, APIRoute, CommentSetting, OFFER_IMG_COUT, CustomHttpHeader, StorageKey };
+export { AppRoute, SortType, RatingSetting, REVIEWS_COUNT, OFFER_COUNT, OfferCity, AuthorizationStatus, APIRoute, CommentSetting, OFFER_IMG_COUNT, CustomHttpHeader, StorageKey };

@@ -13,11 +13,11 @@ import { fetchNearbyList, fetchComments } from '../../store/api-actions.js';
 import getOfferById from '../room-page/helpers.js';
 import { getOffers } from '../../store/process/selectors.js';
 import { getAuthorizationStatus } from '../../store/user/selectors.js';
-import {OFFER_IMG_COUT} from '../../const.js';
+import {OFFER_IMG_COUNT} from '../../const.js';
 import { fetchFavorite } from '../../store/api-actions.js';
 
 
-function RoomPage(props) {
+function RoomPage() {
   const offers = useSelector(getOffers);
   const authorizationStatus = useSelector(getAuthorizationStatus);
   const dispatch = useDispatch();
@@ -75,7 +75,7 @@ function RoomPage(props) {
             <section className="property">
               <div className="property__gallery-container container">
                 <div className="property__gallery">
-                  {offerById.images.slice(0, OFFER_IMG_COUT).map((img) => (
+                  {offerById.images.slice(0, OFFER_IMG_COUNT).map((img) => (
                     <div key={img} className="property__image-wrapper">
                       <img className="property__image" src={img} alt="Photo studio" />
                     </div>

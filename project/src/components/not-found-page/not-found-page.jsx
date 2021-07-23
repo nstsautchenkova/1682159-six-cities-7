@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../header/header.jsx';
 
-function NotFoundPage(props) {
+function NotFoundPage() {
   return (
     <>
       <div style={{ display: 'none' }}>
